@@ -13,7 +13,7 @@ package controller
 import "net/http"
 
 func ShowLogin(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("ShowLogin\n"))
+	http.ServeFile(w, r, "tmpl/login.html")
 }
 
 //==================================== END ======================================

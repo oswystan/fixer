@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>fixer-user</title>
+
+    <script type="text/javascript" src="static/js/jquery.js"></script>
+    <script type="text/javascript" src="static/js/filter.js"></script>
+    <link rel="stylesheet" type="text/css" href="static/css/fixer.css"/>
+</head>
+<body data-user="1" data-user-nicky="wystan">
+<!------------------------------------------------------------------------
+-
+- NAV bar
+-
+-------------------------------------------------------------------------->
+<div id="nav">
+    <h3>fixer</h3>
+    <ul>
+        <li><a name="nav-teamlist" href="javascript:void(0)"">TEAM</a></li>
+        <li><a name="nav-buglist" href="javascript:void(0)">BUGS</a></li>
+        <li><a name="nav-stat" href="javascript:void(0)">STAT</a></li>
+        <li><a name="nav-setting" href="javascript:void(0)">SETTING</a></li>
+        <li><a name="nav-logout" href="login.html">LOGOUT</a></li>
+    </ul>
+    <ul class="userinfo">
+        <li><img src="static/images/1.jpg"/></li>
+        <li><a href="javascript: void(0)">winner</a></li>
+    </ul>
+</div>
+
+
+<div align="center">
+    <!------------------------------------------------------------------------
+    -
+    - teamlist-joined
+    -
+    -------------------------------------------------------------------------->
+    <div id="teamlist-joined" class="container" style="width: 580px">
+        <h3>TEAM-JOINED</h3>
+        <div class="operation">
+            <input name="op-name" type="text" placeholder="team name to filter...">
+        </div>
+        <div class="team-list" name="team-list">
+            <ul>
+                <li class="team-id"><a name="team-id" href="javascript:void(0)">1</a></li>
+                <li class="team-name"><a name="team-name" href="javascript:void(0)">FOX</a></li>
+                <li class="user-nicky"><a name="team-leader" href="javascript:void(0)">wystan</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!------------------------------------------------------------------------
+    -
+    - teamlist-created
+    -
+    -------------------------------------------------------------------------->
+
+    <div id="teamlist-created" class="container" style="width: 530px">
+        <h3>TEAM-CREATED</h3>
+        <div class="operation">
+            <input name="op-name" type="text" placeholder="team name to filter...">
+            <a name="op-new" class="btn" href="javascript:void(0)">NEW</a>
+        </div>
+
+        <div class="team-list" name="team-list">
+            <ul>
+                <li class="team-id"><a name="team-id" href="javascript: void(0)">1</a></li>
+                <li class="team-name"><a name="team-name" href="javascript: void(0)">FOX</a></li>
+                <li class="date">2012-12-25</li>
+            </ul>
+        </div>
+    </div>
+
+    <!------------------------------------------------------------------------
+    -
+    - buglist
+    -
+    -------------------------------------------------------------------------->
+    <div id="buglist" class="container" style="width: 900px;">
+        <h3>BUGLIST</h3>
+        <div class="filter-section">
+            <ul>
+                <li data-label="TEAM-NAME"><input name="TEAM-NAME" type="text"/></li>
+                <li data-label="PRIORITY"><input name="PRIORITY" type="text"/></li>
+                <li data-label="STATUS"><input name="STATUS" type="text"/></li>
+                <li data-label="HANDLER"><input name="HANDLER" type="text"/></li>
+                <li data-label="CREATED"><input name="CREATED" type="text"/></li>
+                <br>
+                <li data-label="DATE-FROM"><input name="DATE-FROM" type="date"/></li>
+                <li data-label="DATE-TO"><input name="DATE-TO" type="date"/></li>
+            </ul>
+        </div>
+        <div class="operation">
+            <a name="op-search"     class="btn" href="javascript:void(0)">SEARCH..</a>
+            <a name="op-new"        class="btn" href="javascript:void(0)">NEW</a>
+            <a name="op-export"     class="btn" href="javascript:void(0)">EXPORT</a>
+            <a name="op-export-all" class="btn" href="javascript:void(0)">EXPORT-ALL</a>
+        </div>
+        <table name="buglist">
+            <tr name="header">
+                <th class="id"><a href="javascript: void(0)">ID</a></th>
+                <th class="handler"><a href="javascript: void(0)">HANDLER</a></th>
+                <th class="priority"><a href="javascript: void(0)">PRIORITY</a></th>
+                <th class="status"><a href="javascript: void(0)">STATUS</a></th>
+                <th class="user"><a href="javascript: void(0)">CREATED-BY</a></th>
+                <th class="date"><a href="javascript: void(0)">DATE</a></th>
+                <th>TITLE</th>
+            </tr>
+            <tr>
+                <td><a name="id" href="javascript:void(0)">3</a></td>
+                <td><a name="handler" href="javascript:void(0)">wystan</a></td>
+                <td name="priority">high</td>
+                <td name="status">open</td>
+                <td><a name="created_by" href="javascript:void(0)">wystan</a></td>
+                <td name="date">2012-12-24 12:12:12</td>
+                <td><a name="title" data_id="3" href="javascript:void(0)">[FEATURE]need feature to sort by priority</a>
+                </td>
+            </tr>
+        </table>
+        <div class="page-section">
+            <a href="javascript:void(0)">FIRST</a>
+            <a href="javascript:void(0)">1</a>
+            <a href="javascript:void(0)">2</a>
+            <a href="javascript:void(0)">3</a>
+            <a href="javascript:void(0)">4</a>
+            <a href="javascript:void(0)">5</a>
+            <a href="javascript:void(0)">6</a>
+            <a href="javascript:void(0)">7</a>
+            <a href="javascript:void(0)">LAST</a>
+        </div>
+    </div>
+
+    <!------------------------------------------------------------------------
+    -
+    - detail-team-modify
+    -
+    -------------------------------------------------------------------------->
+    <div id="detail-team-modify" class="container" style="width: 800px">
+        <h3>TEAM-FOX</h3>
+        <img name="logo" class="logo" src="static/images/sherlock.jpg" alt=""/>
+        <ul class="labeled">
+            <li name="team-id" data-label="ID">1</li>
+            <li data-label="LEADER"><a name="team-leader" href="javascript:void(0)">wystan</a></li>
+            <li name="date" data-label="DATE">2012-08-25</li>
+            <li name="bug_tab" data-label="BUG_TAB">aef45612234</li>
+            <li name="but_tab_status" data-label="BUG_TAB_STATUS">ACTIVE</li>
+            <li name="status" data-label="STATUS">ACTIVE</li>
+        </ul>
+        <ul class="labeled">
+            <li class="filled" data-label="NAME">
+                <input type="text" name="team-name" value="FOX"></li>
+            <li class="filled" data-label="ACTIVE">
+                <input type="checkbox" name="check-active" value="active">
+            </li>
+        </ul>
+        <ul>
+            <textarea name="team-goal" rows="5">A team</textarea>
+        </ul>
+
+        <div name="team-members" class="users">
+            <ul class="user-list">
+                <li><input name="check" type="checkbox"></li>
+                <li><img name="portrait" class="portrait" src="static/images/1.jpg"></li>
+                <li class="user-id"><a name="user-id" href="javascript:void(0)">1</a></li>
+                <li class="user-nicky"><a name="user-nicky" href="javascript:void(0)">wystan</a></li>
+                <li name="user-email" class="email">wystan@sogo.com</li>
+            </ul>
+        </div>
+
+        <div name="opertion" class="operation">
+            <input type="text" value="" name="member-name" placeholder="input member name...">
+            <a name="op-add" class="btn" href="javascript:void(0)">ADD</a>
+            <a name="op-delete" class="btn" href="javascript:void(0)">DELETE</a>
+            <a name="op-submit" class="btn orange" href="javascript:void(0)">SUBMIT</a>
+        </div>
+
+    </div>
+
+    <!------------------------------------------------------------------------
+    -
+    - detail-user-modify
+    -
+    -------------------------------------------------------------------------->
+    <div id="detail-user-modify" class="container" style="width: 500px">
+        <h3>USER</h3>
+        <ul class="labeled">
+            <li data-label="NICKY-NAME"><input type="text" name="nicky"></li>
+            <li data-label="EMAIL"><input type="email" name="email"></li>
+            <li data-label="PORTRAIT"><input type="file" name="portrait"></li>
+        </ul>
+        <div class="blanker"></div>
+        <div align="center" style="margin: 0 0 10px 0; clear: both;">
+            <a class="btn" href="javascript:void(0)">SUBMIT</a>
+        </div>
+    </div>
+
+    <!------------------------------------------------------------------------
+    -
+    - setting-pwd-modify
+    -
+    -------------------------------------------------------------------------->
+    <div id="setting-pwd-modify" class="container" style="width: 500px">
+        <h3>PASSWORD</h3>
+        <ul class="labeled">
+            <li data-label="OLD"><input type="password" name="old"></li>
+            <li data-label="NEW"><input type="password" name="new"></li>
+            <li data-label="CONFIRM"><input type="password" name="confirm"></li>
+        </ul>
+        <div class="blanker"></div>
+        <div align="center" style="margin: 0 0 10px 0; clear: both;">
+            <a class="btn" href="javascript:void(0)">SUBMIT</a>
+        </div>
+    </div>
+
+    <!------------------------------------------------------------------------
+    -
+    -
+    -
+    -------------------------------------------------------------------------->
+    <div id="detail-team-show" class="container" style="width: 700px">
+        <h3>TEAM-FOX</h3>
+        <img name="team-logo" class="logo" src="static/images/sherlock.jpg" alt=""/>
+        <ul name="team-detail" class="labeled">
+            <li name="team-id" data-label="ID">1</li>
+            <li name="team-name" data-label="NAME">FOX</li>
+            <li data-label="LEADER"><a name="team-leader" href="javascript:void(0)">wystan</a></li>
+            <li name="date" data-label="DATE">2012-08-25</li>
+            <li name="bug-tab" data-label="BUG_TAB">aef45612234</li>
+            <li name="bug-tab-status" data-label="BUG_TAB_STATUS">ACTIVE</li>
+            <li name="status" data-label="STATUS">ACTIVE</li>
+            <li data-label="BUGLIST"><a name="buglist" href="javascript:void(0)">buglist</a></li>
+        </ul>
+        <ul>
+            <p name="team-goal" style="line-height: 1.4em; font-size: 1.2em;">A team is a group of people or other
+                animals linked in a
+                common
+                purpose. Human teams are especially appropriate for conducting tasks that are high in complexity and
+                have
+                many interdependent subtasks</p>
+        </ul>
+
+        <div class="user-list" name="team-members">
+            <ul>
+                <li><img name="portrait" class="portrait" src="static/images/1.jpg"></li>
+                <li class="user-id"><a name="user-id" href="javascript:void(0)">1</a></li>
+                <li class="user-nicky"><a name="user-nicky" href="javascript:void(0)">wystan</a></li>
+                <li name="user-email" class="email">wystan@sogo.com</li>
+            </ul>
+        </div>
+
+        <div name="operation_section" class="operation">
+            <a name="op_modify" class="btn orange" href="javascript:void(0)">MODIFY</a>
+        </div>
+    </div>
+
+    <!------------------------------------------------------------------------
+    -
+    -
+    -
+    -------------------------------------------------------------------------->
+    <div id="detail-user-show" class="container" style="width: 600px">
+        <h3>PROFILE</h3>
+        <div class="portrait">
+            <img name="portrait" src="static/images/1.jpg" alt="">
+        </div>
+        <div class="detail">
+            <ul class="labeled">
+                <li name="id" data-label="ID">1</li>
+                <li name="nicky" data-label="NICKY-NAME">wystan</li>
+                <li name="email" data-label="EMAIL">wystan@sogo.com</li>
+            </ul>
+        </div>
+        <div class="blanker"></div>
+        <ul style="height:0; padding: 0 10px;"></ul>
+
+        <h4>TEAMS JOINED</h4>
+        <div class="user-list" name="teamlist-joined">
+            <ul>
+                <li class="team-id"><a name="team-id" href="javascript:void(0)">1</a></li>
+                <li class="team-name"><a name="team-name" href="javascript:void(0)">FEED</a></li>
+                <li class="user-nicky"><a name="team-leader" href="javascript:void(0)">moniu</a></li>
+            </ul>
+        </div>
+
+        <div class="blanker"></div>
+        <h4>TEAMS CREATED</h4>
+        <div class="team-list" name="teamlist-created">
+            <ul>
+                <li class="team-id"><a name="team-id" href="javascript:void(0)">2</a></li>
+                <li class="team-name"><a name="team-name" href="javascript:void(0)">wystan-studio-font</a></li>
+                <li class="date">2015-10-28</li>
+            </ul>
+        </div>
+    </div>
+
+    <!------------------------------------------------------------------------
+    -
+    -
+    -
+    -------------------------------------------------------------------------->
+    <div id="team-new" class="container" style="width: 660px">
+        <h3>NEW</h3>
+        <div name="input-section">
+            <ul class="labeled">
+                <li data-label="NAME" class="filled"><input name="team-name" type="text"></li>
+                <li data-label="GOAL" class="filled"><textarea></textarea></li>
+                <li data-label="LOGO">
+                    <a name="logo" class="btn" href="javascript:void(0)">SELECT A LOGO</a>
+                    <input name="input-logo" type="file" style="display: none;">
+                </li>
+            </ul>
+            <ul>
+                <img name="team-logo" src="" alt="" width="100%">
+            </ul>
+        </div>
+
+        <div class="user-list" name="team-members">
+            <ul>
+                <li><input name="check" type="checkbox"></li>
+                <li><img name="portrait" class="portrait" src="static/images/1.jpg"></li>
+                <li class="user-id"><a name="user-id" href="javascript:void(0)">1</a></li>
+                <li class="user-nicky"><a name="user-nicky" href="javascript:void(0)">wystan</a></li>
+                <li name="user-email" class="email">wystan@sogo.com</li>
+            </ul>
+        </div>
+        <div name="operation" class="operation">
+            <input type="text" value="" name="member-name" placeholder="input member name...">
+            <a name="op-add" class="btn" href="javascript:void(0)">ADD</a>
+            <a name="op-delete" class="btn" href="javascript:void(0)">DELETE</a>
+            <a name="op-submit" class="btn orange" href="javascript:void(0)">SUBMIT</a>
+        </div>
+    </div>
+
+    <!------------------------------------------------------------------------
+    -
+    -
+    -
+    -------------------------------------------------------------------------->
+    <div id="bug-new" class="container" style="width: 840px">
+        <h3>NEW</h3>
+        <div name="input-section">
+            <ul class="labeled">
+                <li data-label="TITLE"><input name="title" type="text"></li>
+                <li data-label="DETAIL"><textarea name="detail"></textarea></li>
+                <li data-label="TEAM"><input name="team-name" type="text"></li>
+                <li data-label="ASSIGN TO"><input name="handler" type="text"></li><br>
+                <li data-label="TEMPLATE">
+                    <select name="template">
+                        <option value="1">TMPLATE1</option>
+                    </select>
+                </li>
+                <li data-label="PRIORITY">
+                    <select name="priority" >
+                        <option value="1">normal</option>
+                        <option value="2">high</option>
+                        <option value="3">suggestion</option>
+                        <option value="4">fatal</option>
+                    </select>
+                </li><br>
+                <li data-label="ATTACHMENT">
+                    <a name="attachment" class="btn" href="javascript:void(0)">ADD</a>
+                    <input name="input-attachment" type="file" multiple="multiple" style="display: none;">
+                </li>
+            </ul>
+        </div>
+        <div name="opertion" class="operation">
+            <a name="op-submit" class="btn orange" href="javascript:void(0)">SUBMIT</a>
+        </div>
+    </div>
+
+    <!------------------------------------------------------------------------
+    -
+    -
+    -
+    -------------------------------------------------------------------------->
+    <div id="bug-modify" class="container" style="width: 840px">
+        <h3>NEW</h3>
+        <div name="input-section">
+            <ul name="info" class="labeled">
+                <li data-label="ID">1</li>
+                <li data-label="TEAM">fox</li>
+                <li data-label="CREATED-BY">wystan</li>
+                <li data-label="DATE">2012-12-25</li>
+                <li data-label="HANDLER">wystan</li>
+                <li data-label="STATUS">OPEN</li>
+            </ul>
+            <ul class="labeled">
+                <li data-label="ATTACHMENT">
+                    <a href="static/images/2.jpg">2.jpg</a>
+                    <a href="static/images/1.jpg">1.jpg</a>
+                    <a href="static/images/sherlock.jpg">sherlock.jpg</a>
+                </li>
+            </ul>
+            <ul class="labeled">
+                <li data-label="TITLE"><input name="title" type="text"></li>
+                <li data-label="OPINION"><textarea name="detail"></textarea></li>
+                <li data-label="NEXT-STEP">
+                    <input type="radio" name="opinion" checked="checked" value="FIX"> FIX
+                    <input type="radio" name="opinion" value="CLOSE"> CLOSE
+                    <input type="radio" name="opinion" value="TEST"> TEST
+                    <input type="radio" name="opinion" value="ASSIGN TO"> ASSIGN-TO
+                    <input name="handler" type="text">
+                </li>
+
+                <li data-label="ATTACHMENT">
+                    <a name="attachment" class="btn" href="javascript:void(0)">ADD</a>
+                    <input name="input-attachment" type="file" multiple="multiple" style="display: none;">
+                </li>
+
+            </ul>
+        </div>
+        <div name="operation" class="operation">
+            <a name="op-submit" class="btn orange" href="javascript:void(0)">SUBMIT</a>
+        </div>
+        <div name="changelog">
+            <ul>
+                HISTORY:
+                <li class="filled">
+                    <p>
+                        2012-12-26 21:12:20<br>
+                        wystan raised this bug.
+                    </p>
+                    <p>
+                        2012-12-26 21:12:20<br>
+                        wystan fixed this bug.
+                    </p>
+                    <p>
+                        2012-12-26 21:12:20<br>
+                        The EP consists entirely of upbeat tracks which have a rock and roll, jazz, and swing feel. It does not contain any examples of the relaxed tempo songs Dire Straits had been known for. It is the first release to feature drummer Terry Williams, who filled the spot after drummer Pick Withers left the group in August 1982. The tracks 'Badges, Posters, Stickers & T-Shirts' and 'If I Had You' have never been released on cd.
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+</div>
+<!------------------------------------------------------------------------
+-
+-
+-
+-------------------------------------------------------------------------->
+<div class="blanker"></div>
+<div class="footer"> Copyright (C) wystan 2015 | About Us | Contact Us | Join Us</div>
+
+</body>
+
+<script type="text/javascript">
+    // reset list width
+    $("#teamlist-joined ul").css("width", $("#teamlist-joined").width() - 20 + "px");
+    $("#teamlist-created ul").css("width", $("#teamlist-created").width() - 20 + "px");
+    $("#detail-team-modify ul").css("width", $("#detail-team-modify").width() - 20 + "px");
+    $("#detail-user-modify ul").css("width", $("#detail-user-modify").width() - 20 + "px");
+    $("#setting-pwd-modify ul").css("width", $("#setting-pwd-modify").width() - 20 + "px");
+    $("#detail-team-show ul").css("width", $("#detail-team-show").width() - 20 + "px");
+    $("#detail-user-show ul").css("width", $("#detail-user-show").width() - 20 + "px");
+    $("#detail-user-show div.detail ul").css("width", $("#detail-user-show div.detail").width() - 20 + "px");
+
+
+    $("#team-new a[name='logo']").click(function () {
+        var f = $("#team-new input[name='input-logo']")[0];
+        $(f).click();
+        $(f).change(function () {
+            console.log(this.files);
+            var str = window.URL.createObjectURL(this.files.item(0));
+            $("#team-new img[name='team-logo']").attr("src", str);
+        });
+    });
+
+    var containers = [$("#teamlist-joined"), $("#teamlist-created"),
+        $("#buglist"), $("#detail-team-modify"),
+        $("#detail-team-modify"), $("#detail-user-modify"),
+        $("#setting-pwd-modify"), $("#detail-team-show"),
+        $("#detail-user-show"), $("#team-new"), $("#bug-new"),
+        $("#bug-modify")];
+
+    // hide all div first
+    function hideAll() {
+        for (var i = 0; i < containers.length; i++) {
+            containers[i].hide();
+        }
+    }
+
+    hideAll();
+
+    //====================================================
+    //
+    // get team list and show it
+    //
+    //====================================================
+    function showTeamList() {
+        if (arguments.length < 2) {
+            return;
+        }
+        var filter = arguments[0];
+        var obj = arguments[1];
+        var div = obj;
+        var item = $(div).find("ul").first()[0];
+        item.style.display = "";
+        div.innerHTML = "";
+
+        TeamListFilter.reset();
+        TeamListFilter.creator = filter.creator || "";
+        TeamListFilter.creatorId = filter.creatorId || -1;
+        TeamListFilter.member = filter.member || "";
+        TeamListFilter.memberId = filter.memberId || -1;
+        TeamListFilter.go();
+        var tl = TeamListFilter.json();
+
+        for (var i = 0; i < tl.team.length; i++) {
+            var oneTeam = item.cloneNode(true);
+            $(oneTeam).find("[name='team-name']").text(tl.team[i].name).click(
+                    showTeamDetail
+            );
+            $(oneTeam).find("[name='team-id']").text(tl.team[i].id).click(
+                    showTeamDetail
+            );
+            $(oneTeam).find("[name='team-leader']").text(tl.team[i].leader).click(
+                    showUserDetail
+            );
+            $(oneTeam).find("[name='date']").text(tl.team[i].create_date);
+            div.appendChild(oneTeam);
+        }
+        if (tl.team.length == 0) {
+            item.style.display = "none";
+            div.appendChild(item);
+        }
+
+    }
+
+    function showUserDetail() {
+        hideAll();
+        var detail = $("#detail-user-show");
+
+        UserFilter.reset();
+
+        console.log(this.name + "=" + this.innerText);
+        UserFilter.id = this.name == "user-id" ? this.innerText : -1;
+        UserFilter.nicky = (this.name == "user-nicky" || this.name == "team-leader" ? this.innerText : "");
+        UserFilter.go();
+        var u = UserFilter.json();
+
+
+        detail.find("[name='portrait']").attr("src", u.user.portrait);
+        detail.find("[name='id']").text(u.user.id);
+        detail.find("[name='nicky']").text(u.user.nicky);
+        detail.find("[name='email']").text(u.user.email);
+
+        var joined = detail.find("[name='teamlist-joined']")[0];
+        var created = detail.find("[name='teamlist-created']")[0];
+        showTeamList({memberId: this.innerText}, joined);
+        showTeamList({creatorId: this.innerText}, created);
+
+        detail.show();
+    }
+
+    function showBuglist() {
+        hideAll();
+        var detail = $("#buglist");
+
+        BugListFilter.reset();
+        BugListFilter.handler = this.name == "nav-buglist" ? document.body.getAttribute("data-user") : "";
+        BugListFilter.team_id = this.name == "team-id" ? this.innerText : "";
+        BugListFilter.go();
+        var bl = BugListFilter.json();
+
+        var tab = detail.find("table[name='buglist']")[0];
+        var trh = $(tab).find("tr[name='header']")[0];
+        var trd = $(tab).find("tr[name!='header']")[0];
+        tab.innerHTML = "";
+        tab.appendChild(trh);
+        trd.style.display = "";
+        for (var i = 0; i < bl.bugs.length; i++) {
+            var one = trd.cloneNode(true);
+            $(one).find("[name='id']").text(bl.bugs[i].id);
+            $(one).find("[name='handler']").text(bl.bugs[i].handler).unbind("click").click(showUserDetail);
+            $(one).find("[name='priority']").text(bl.bugs[i].priority);
+            $(one).find("[name='status']").text(bl.bugs[i].status);
+            $(one).find("[name='created_by']").text(bl.bugs[i].created_by).unbind("click").click(showUserDetail);
+            $(one).find("[name='date']").text(bl.bugs[i].date);
+            $(one).find("[name='title']").text(bl.bugs[i].title).unbind("click").click(showBugModify);
+            tab.appendChild(one);
+        }
+        if (bl.bugs.length == 0) {
+            trd.style.display = "none";
+            tab.appendChild(trd);
+        }
+
+        detail.show();
+    }
+
+    function showTeamDetail() {
+
+        hideAll();
+
+        // get team detail information first
+        TeamFilter.reset();
+        if (this.name == "team-id") {
+            TeamFilter.id = this.innerText;
+        } else if (this.name == "team-name") {
+            TeamFilter.name = this.innerText;
+        }
+        TeamFilter.go();
+        var t = TeamFilter.json();
+
+        // set it into html elements
+        var detail = $("#detail-team-show");
+        detail.find("[name='team-id']").text(t.team.id);
+        detail.find("[name='team-name']").text(t.team.name);
+        detail.find("[name='team-leader']").text(t.team.leader).unbind("click").click(showUserDetail);
+        detail.find("[name='date']").text(t.team.create_date);
+        detail.find("[name='bug-tab']").text(t.team.bug_tab);
+        detail.find("[name='bug-tab-status']").text(t.team.bug_tab_status);
+        detail.find("[name='status']").text(t.team.status);
+        detail.find("[name='team-goal']").text(t.team.goal);
+        detail.find("[name='buglist']").unbind("click").click(showBuglist);
+        detail.find("[name='op_modify']").unbind("click").click(showTeamModify).attr("data-team-id", t.team.id);
+
+        // get memberlist
+        MemberListFilter.reset();
+        MemberListFilter.team_id = t.team.id;
+        MemberListFilter.go();
+        var m = MemberListFilter.json();
+        var div = detail.find("[name='team-members']")[0];
+        var item = $(div).find("ul")[0];
+        item.style.display = "";
+
+        div.innerHTML = "";
+        for (var i = 0; i < m.members.length; i++) {
+            var oneTeam = item.cloneNode(true);
+            $(oneTeam).find("[name='portrait']").attr("src", m.members[i].portrait);
+            $(oneTeam).find("[name='user-id']").text(m.members[i].id).unbind("click").click(
+                    showUserDetail
+            );
+            $(oneTeam).find("[name='user-nicky']").text(m.members[i].nicky).unbind("click").click(
+                    showUserDetail
+            );
+            $(oneTeam).find("[name='user-email']").text(m.members[i].email);
+            div.appendChild(oneTeam);
+        }
+        if (m.members.length <= 0) {
+            item.style.display = "none";
+            div.appendChild(item);
+        }
+
+        detail.show();
+    }
+
+    function showTeamModify() {
+        hideAll();
+        if (this.name != "op_modify") {
+            console.log("invalid operation from: " + this.name);
+            return;
+        }
+
+        TeamFilter.reset();
+        TeamFilter.id = this.getAttribute("data-team-id");
+        TeamFilter.go();
+        var t = TeamFilter.json();
+
+        var detail = $("#detail-team-modify");
+        detail.find("[name='team-id']").text(t.team.id);
+        detail.find("[name='team-name']").val(t.team.name);
+        detail.find("[name='team-leader']").text(t.team.leader).unbind("click").click(showUserDetail);
+        detail.find("[name='date']").text(t.team.create_date);
+        detail.find("[name='bug-tab']").text(t.team.bug_tab);
+        detail.find("[name='bug-tab-status']").text(t.team.bug_tab_status);
+        detail.find("[name='status']").text(t.team.status);
+        detail.find("[name='team-goal']").text(t.team.goal);
+        detail.find("[name='check-active']").attr("checked", t.team.status == "active" ? "checked" : "");
+
+
+        // get memberlist
+        MemberListFilter.reset();
+        MemberListFilter.team_id = t.team.id;
+        MemberListFilter.go();
+        var m = MemberListFilter.json();
+        var div = detail.find("[name='team-members']")[0];
+        var item = $(div).find("ul")[0];
+        item.style.display = "";
+
+        div.innerHTML = "";
+        for (var i = 0; i < m.members.length; i++) {
+            var oneTeam = item.cloneNode(true);
+            $(oneTeam).find("[name='portrait']").attr("src", m.members[i].portrait);
+            $(oneTeam).find("[name='user-id']").text(m.members[i].id).unbind("click").click(
+                    showUserDetail
+            );
+            $(oneTeam).find("[name='user-nicky']").text(m.members[i].nicky).unbind("click").click(
+                    showUserDetail
+            );
+            $(oneTeam).find("[name='user-email']").text(m.members[i].email);
+            div.appendChild(oneTeam);
+        }
+        if (m.members.length <= 0) {
+            item.style.display = "none";
+            div.appendChild(item);
+        }
+
+        detail.show();
+    }
+
+    function showBugModify() {
+        hideAll();
+        $("#bug-modify").show();
+    }
+
+
+    //====================================================
+    //
+    // NAV bar click functions
+    //
+    //====================================================
+    $("#nav [name='nav-teamlist']").click(function () {
+        hideAll();
+
+        showTeamList({member: "wystan"}, $("#teamlist-joined [name='team-list']")[0]);
+        showTeamList({creator: "wystan"}, $("#teamlist-created [name='team-list']")[0]);
+
+        $("#teamlist-joined").show();
+        $("#teamlist-created").show();
+    });
+
+    $("#nav [name='nav-buglist']").click(showBuglist);
+
+    $("#nav [name='nav-stat']").click(function () {
+        hideAll();
+    });
+
+    $("#nav [name='nav-setting']").click(function () {
+        hideAll();
+        $("#detail-user-modify").show();
+        $("#setting-pwd-modify").show();
+    });
+
+    $("#buglist [name='op-new']").click(function () {
+        hideAll();
+        $("#bug-new").show();
+    });
+
+    //====================================================
+    //
+    // bind team-new div
+    //
+    //====================================================
+    $("#teamlist-created [name='op-new']").click(function () {
+        hideAll();
+        $("#team-new").show();
+    })
+
+    //====================================================
+    //
+    // bug list click functions
+    //
+    //====================================================
+    $("#buglist tr a").click(function () {
+        var _name = $(this).attr("name");
+        if (_name == "creator" || _name == "handler") {
+            hideAll();
+            $("#detail-user-show").show();
+        }
+    });
+
+
+    //====================================================
+    //
+    // detail-user-show click functions
+    //
+    //====================================================
+    $("#detail-user-show ul a").click(function () {
+        var _name = $(this).attr("name");
+        if (_name == "team-id" || _name == "team-name") {
+            hideAll();
+            $("#detail-team-show").show();
+        } else if (_name == "team-leader") {
+            hideAll();
+            $("#detail-user-show").show();
+        }
+    });
+
+
+    //====================================================
+    //
+    // detail-team-modify click functions
+    //
+    //====================================================
+    $("#detail-team-modify ul a").click(function () {
+        var _name = $(this).attr("name");
+        if (_name == "team-leader" || _name == "team-member") {
+            hideAll();
+            $("#detail-team-show").show();
+        }
+    });
+
+</script>
+
+</html>

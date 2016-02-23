@@ -1,0 +1,634 @@
+/*
+***************************************************************
+*
+*
+*
+***************************************************************
+*/
+
+body {
+    padding: 0;
+    margin: 0;
+    font-family: skia;
+    font-size: 18px;
+    background-color: #e8e8e8;
+}
+
+input, textarea, select {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #cbcbcb;
+    font-family: skia;
+    font-size: 18px;
+    padding: 16px;
+    display: inline-block;
+}
+input[type='submit'] {
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+select {
+    height: 50px;
+    border-radius: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+/*
+***************************************************************
+*
+*
+*
+***************************************************************
+*/
+#nav {
+    background: -webkit-linear-gradient(top, #1eb493 10%, #24c5a1 100%);
+    background-color: #0090b1;
+    color: #ffffff;
+    min-width: 900px;
+    padding: 0;
+    margin: 0;
+}
+
+#nav a {
+    color: white;
+}
+
+#nav h3 {
+    display: inline-block;
+    font-size: 3em;
+    padding: 0 0 0 32px;
+    margin: 0;
+
+    font-weight: 400;
+    vertical-align: middle;
+}
+
+#nav ul {
+    list-style-type: none;
+    display: inline-block;
+}
+
+#nav ul li {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+
+#nav ul li a {
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    margin: 0;
+    padding: 16px 20px;
+    border-radius: 2px;
+    transition: background-color 0.3s ease;
+
+    font-size: 16px;
+}
+#nav ul li a:hover {
+    background-color: #00ab1c;
+}
+
+#nav img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid white;
+    vertical-align: middle;
+}
+
+#nav .userinfo {
+    float: right;
+    position: relative;
+    right: 32px;
+}
+
+#nav .userinfo a:hover {
+    background-color: transparent;
+}
+
+/*
+***************************************************************
+*
+*
+*
+***************************************************************
+*/
+.footer {
+    display: block;
+    width: 100%;
+    padding: 20px 0 20px 0;
+    margin: 2px 0 0px 0;
+
+    background-color: #1eb493;
+    color: #ffffff;
+
+    font-size: 14px;
+    text-align: center;
+
+    min-width: 900px;
+}
+/*
+***************************************************************
+*
+*
+*
+***************************************************************
+*/
+.btn {
+    background-color: #00ad33;
+    display: inline-block;
+    border-style: none;
+    color: white;
+    padding: 16px 20px;
+    border-radius: 2px;
+}
+.btn:hover {
+    background-color: #00cb3a;
+}
+.btn:active {
+    background-color: #00be38;
+}
+
+.orange {
+    background-color: #e47700;
+    color: white;
+    border-style: none;
+}
+.orange:hover {
+    background-color: #f78900;
+}
+.orange:active {
+    background-color: #ec7d00;
+}
+.blanker {
+    clear: both;
+    height: 10px;
+    width: 100%;
+}
+/*
+***************************************************************
+*
+* container
+*
+***************************************************************
+*/
+.team-id {
+    width: 4em;
+}
+.user-id {
+    width: 4em;
+}
+.team-name {
+    width: 14em;
+}
+.user-nicky {
+    width: 12em;
+}
+.email {
+    width: 14em;
+}
+.date {
+    width: 10em;
+}
+.team-list {
+    max-height: 300px;
+    overflow: auto;
+}
+.user-list {
+    max-height: 300px;
+    overflow: auto;
+}
+.operation {
+    text-align: center;
+    margin: 10px 0;
+}
+
+/*
+***************************************************************
+*
+* container
+*
+***************************************************************
+*/
+.container {
+    display: inline-block;
+    background-color: white;
+    box-shadow: 2px 2px 2px #bbb;
+    color: #555555;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #cecece;
+    border-radius: 4px;
+    padding: 0;
+    margin: 4px;
+    text-align: left;
+}
+
+.container h3 {
+    color: white;
+    font-size: 1.1em;
+    margin: 0;
+    padding: 16px;
+    background-color: #1eb493;
+    border-radius: 4px 4px 0 0;
+    font-weight: 400;
+}
+.container h4 {
+    color: #d500d8;
+    font-size: 1em;
+    margin: 0;
+    padding: 16px;
+    font-weight: 500;
+}
+
+.container ul {
+    padding: 16px 10px;
+    margin: 0;
+    border-radius: 4px;
+    font-size: 0.9em;
+    list-style-type: none;
+    border-style: solid;
+    border-width: 0 0 1px 0;
+    border-color: #bbbbbb;
+}
+
+.container ul:hover {
+    background-color: #e8e8e8;
+}
+
+.container ul li {
+    display: inline-block;
+    padding: 0 8px;
+}
+
+
+/*
+***************************************************************
+*
+* buglist
+*
+***************************************************************
+*/
+#buglist ul {
+    border-style: solid;
+    border-width: 0 0 1px 0;
+
+    border-color: #cbcbcb;
+}
+
+#buglist ul li {
+    width: 340px;
+    padding: 4px 0;
+}
+
+#buglist ul li:before {
+    display: inline-block;
+    width: 110px;
+    line-height: 50px;
+    content: attr(data-label) ":";
+    text-align: right;
+    padding-right: 8px;
+    font-weight: 500;
+    font-size: 0.9em;
+}
+
+#buglist ul input {
+    width: 180px;
+}
+
+#buglist .page-section {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+#buglist .page-section a {
+    display: inline-block;
+    padding: 16px 24px;
+}
+
+#buglist .page-section a:hover {
+    background-color: #cbcbcb;
+    border-radius: 1px;
+}
+
+#buglist .command-section {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+#buglist table, tr {
+    width: 98%;
+    border-style: solid;
+    border-collapse: collapse;
+    border-width: 1px;
+    border-color: #cbcbcb;
+    font-size: 0.9em;
+}
+
+#buglist table th {
+    background-color: #868d9b;
+    color: #c5c5c5;
+    padding: 20px 0;
+    text-align: center;
+    font-weight: 400;
+}
+
+#buglist table th a {
+    color: white;
+}
+
+#buglist table {
+    margin: 0px 10px;
+}
+
+#buglist th, td{
+    padding: 16px 2px;
+    text-align: center;
+}
+#buglist th.date {
+    width: 80px;
+ }
+#buglist th.id {
+    width: 60px;
+}
+#buglist th.user {
+    width: 100px;
+}
+#buglist th.priority {
+     width: 100px;
+}
+#buglist th.status {
+     width: 100px;
+}
+
+#buglist tr:nth-child(odd) {
+    background-color: #e8e8e8;
+}
+#buglist td:last-child {
+    text-align: left;
+}
+
+/*
+***************************************************************
+*
+* detail-team-modify
+*
+***************************************************************
+*/
+
+#detail-team-modify .logo,
+#detail-team-show .logo {
+    width: 100%;
+}
+#detail-team-modify textarea {
+    line-height: 1.4em;
+    font-size: 1.2em;
+    width: 96%;
+}
+#detail-team-modify ul.labeled li,
+#detail-team-show ul.labeled li {
+    width: 280px;
+    padding: 4px 0;
+}
+
+#detail-team-modify ul li.filled {
+    width: 90%;
+}
+
+#detail-team-modify ul.labeled li:before,
+#detail-team-show ul.labeled li:before {
+    display: inline-block;
+    width: 150px;
+    content: attr(data-label) ":";
+    text-align: right;
+    padding-right: 8px;
+    font-weight: 600;
+    font-size: 0.9em;
+}
+
+#detail-team-modify img.portrait,
+#detail-team-show img.portrait,
+#team-new img.portrait {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#detail-team-modify .users,
+#detail-team-show .users {
+    max-height: 300px;
+    overflow: auto;
+    border-style: solid;
+    border-width: 0 0 1px 0;
+    border-color: #bbbbbb;
+    display: block;
+}
+
+#detail-team-modify ul.user-list li,
+#detail-team-show ul.user-list li {
+    height: 32px;
+    width: auto;
+    line-height: 32px;
+}
+
+#detail-team-modify ul.user-list li.user-id,
+#detail-team-show ul.user-list li.user-id  {
+    width: 32px;
+}
+
+#detail-team-modify ul.user-list li.user-nicky,
+#detail-team-show ul.user-list li.user-nicky {
+    width: 100px;
+}
+
+#detail-team-modify ul.user-list li.email,
+#detail-team-show ul.user-list li.email {
+    width: 140px;
+}
+
+/*
+***************************************************************
+*
+* detail-user-modify
+*
+***************************************************************
+*/
+#detail-user-modify ul.labeled li:before,
+#detail-user-show ul.labeled li:before,
+#team-new ul.labeled li:before,
+#bug-new ul.labeled li:before,
+#bug-modify ul.labeled li:before,
+#setting-pwd-modify ul.labeled li:before {
+    display: inline-block;
+    width: 120px;
+    content: attr(data-label) ":";
+    text-align: right;
+    padding-right: 8px;
+    font-weight: 600;
+    font-size: 0.9em;
+}
+
+#detail-user-modify ul.labeled li,
+#detail-user-show ul.labeled li,
+#setting-pwd-modify ul.labeled li {
+    width: 360px;
+    margin: 4px 0;
+}
+
+#detail-user-modify input[type="file"] {
+    width: 185px;
+}
+
+/*
+***************************************************************
+*
+* detail-user-show
+*
+***************************************************************
+*/
+#detail-user-show .portrait {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    width: 20%;
+    float: left;
+}
+#detail-user-show .portrait img {
+    padding: 4px;
+    width: 100%;
+    border-radius: 50%;
+}
+#detail-user-show .detail {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    width: 78%;
+    vertical-align: middle;
+    float: right;
+}
+
+#detail-user-show .detail ul {
+    padding: 30px 10px;
+    border-style: none;
+    margin: 0;
+}
+#detail-user-show .detail ul:hover {
+    background-color: transparent;
+}
+
+
+/*
+***************************************************************
+*
+*
+*
+***************************************************************
+*/
+#team-new textarea {
+    width: 480px;
+    height: 100px;
+    line-height: 1.5em;
+}
+#team-new [name='input-section'] input {
+    width: 480px;
+}
+#team-new ul {
+    width: 100%;
+    margin: 0 0; padding: 4px 0;
+}
+#team-new ul li {
+    padding: 4px 0;
+}
+#team-new ul li.filled {
+    display: block;
+}
+
+/*
+***************************************************************
+*
+*
+*
+***************************************************************
+*/
+
+#bug-new textarea {
+    width: 600px;
+    height: 100px;
+    line-height: 1.5em;
+}
+#bug-new input[name="title"] {
+    width: 600px;
+}
+#bug-new ul {
+    width: 100%;
+    margin: 0;
+    padding: 4px 0;
+}
+#bug-new ul li {
+    margin: 0 30px;
+    padding: 4px 0;
+    min-width: 350px;
+}
+#bug-new ul li.filled {
+    display:block;
+}
+#bug-new select {
+    width: 216px;
+    margin: 0;
+}
+
+
+/*
+***************************************************************
+*
+*
+*
+***************************************************************
+*/
+#bug-modify textarea {
+    width: 600px;
+    height: 100px;
+    line-height: 1.5em;
+}
+#bug-modify input[name="title"] {
+    width: 600px;
+}
+
+#bug-modify ul {
+    width: 100%;
+    margin: 0;
+    padding: 4px 0;
+}
+#bug-modify ul li {
+    margin: 0 30px;
+    padding: 4px 0;
+    min-width: 260px;
+}
+#bug-modify ul li.filled {
+    display: block;
+}
+
+#bug-modify li p {
+    line-height: 1.3em;
+}
+
+/*
+***************************************************************
+*
+*
+*
+***************************************************************
+*/
+
+
+
