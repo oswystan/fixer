@@ -6,7 +6,7 @@
  ************************************************
  */
 
-var baseUrl = "http://localhost:63342/studyweb/html";
+var baseUrl = "/filter";
 
 var TeamListFilter = {
     creator: "",
@@ -61,7 +61,7 @@ var TeamFilter = {
     result: "",
 
     go: function () {
-        var url = baseUrl + "/team.html";
+        var url = baseUrl + "/teamlist.html";
         if (this.name != "") {
             url = url + "?name=" + this.name;
         } else if (this.id != -1) {

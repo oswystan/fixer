@@ -18,6 +18,9 @@ func NewRouter() *mux.Router {
 	r := mux.NewRouter().StrictSlash(true)
 	r.HandleFunc("/login.html", controller.ShowLogin).Methods("GET")
 	r.HandleFunc("/user.html", controller.ServeUser).Methods("POST")
+	r.HandleFunc("/filter/teamlist.html", controller.ServeFilterTeamList).Methods("GET")
+	r.HandleFunc("/filter/memberlist.html", controller.ServeFilterMemberList).Methods("GET")
+	r.HandleFunc("/filter/buglist.html", controller.ServeFilterBugList).Methods("GET")
 	r.PathPrefix("/static/").HandlerFunc(controller.ServeStaticFile).Methods("GET")
 	return r
 }

@@ -17,6 +17,8 @@ fixer:
 	@echo "done."
 
 clean:
+	@echo "start cleaning..."
 	@rm -f fixer
+	@echo "done."
 
 #######################################################################

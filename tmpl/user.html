@@ -67,7 +67,7 @@
             <ul>
                 <li class="team-id"><a name="team-id" href="javascript: void(0)">1</a></li>
                 <li class="team-name"><a name="team-name" href="javascript: void(0)">FOX</a></li>
-                <li class="date">2012-12-25</li>
+                <li class="date" name="date">2012-12-25</li>
             </ul>
         </div>
     </div>
@@ -508,21 +508,25 @@
         TeamListFilter.go();
         var tl = TeamListFilter.json();
 
-        for (var i = 0; i < tl.team.length; i++) {
+        for (var i = 0; i < tl.teams.length; i++) {
             var oneTeam = item.cloneNode(true);
-            $(oneTeam).find("[name='team-name']").text(tl.team[i].name).click(
+            $(oneTeam).find("[name='team-name']").text(tl.teams[i].name).click(
                     showTeamDetail
             );
-            $(oneTeam).find("[name='team-id']").text(tl.team[i].id).click(
+            $(oneTeam).find("[name='team-id']").text(tl.teams[i].id).click(
                     showTeamDetail
             );
-            $(oneTeam).find("[name='team-leader']").text(tl.team[i].leader).click(
+            $(oneTeam).find("[name='team-leader']").text(tl.teams[i].leader).click(
                     showUserDetail
             );
-            $(oneTeam).find("[name='date']").text(tl.team[i].create_date);
+
+            var date = new Date(tl.teams[i].create_date);
+            var str = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay();
+            console.log(str);
+            $(oneTeam).find("[name='date']").text(str);
             div.appendChild(oneTeam);
         }
-        if (tl.team.length == 0) {
+        if (tl.teams.length == 0) {
             item.style.display = "none";
             div.appendChild(item);
         }
