@@ -16,7 +16,7 @@ fixer:
 	@go build
 	@echo "done."
 
-install: fixer db/pg.sql
+install: fixer datastore/pg.sql
 	@echo "installing ..."	
 	@./install.sh
 	@echo "done."

@@ -33,7 +33,8 @@ do_work()
     log_start
 
     ## install the database
-    psql -f ./db/pg.sql
+    psql -f ./datastore/pg.sql
+    psql -f ./datastore/test-data.sql
 
     log_end
 }

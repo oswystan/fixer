@@ -19,7 +19,7 @@ create table users (
     id serial not null,
     nicky varchar(64) not null,
     email varchar(64) not null,
-    pwd char(128) not null,
+    pwd char(32) not null,
     portrait varchar(128),
     register_date timestamp,
     last_login_time timestamp,
@@ -33,12 +33,20 @@ create table team (
     leader int not null,
     goal varchar(1024),
     created_date timestamp,
-    bug_table char(64),
+    bug_table char(32),
     bug_table_status char,
     status char,
     logo varchar(128),
 
     primary key(id)
+);
+
+create table user_team (
+    user_id int not null,
+    team_id int not null,
+    join_date timestamp not null,
+
+    primary key(user_id, team_id)
 );
 
 create unique index users_nicky on users(nicky);
@@ -50,20 +58,4 @@ alter table team owner to pgtest;
 alter sequence users_id_seq owner to pgtest;
 alter sequence team_id_seq owner to pgtest;
 
----------------------------------------------------------------------------------
--- test data here
-
-insert into users(nicky, email, pwd, register_date, last_login_time) 
-       values ('john', 'john@gmail.com', '123456', now(), now());
-insert into users(nicky, email, pwd, register_date, last_login_time) 
-       values ('sherlock', 'sherlock@gmail.com', '123456', now(), now());
-
-
-insert into team(name, leader, created_date, bug_table, bug_table_status, status) 
-    values('frog', 1, now(), '3eefab', '1', '1');
-insert into team(name, leader, created_date, bug_table, bug_table_status, status) 
-    values('lion', 2, now(), '3aefab', '1', '1');
-
-select * from users order by id;
-select * from team order by id;
 ---------------------------------------------------------------------------------
