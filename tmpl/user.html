@@ -521,9 +521,7 @@
             );
 
             var date = new Date(tl.teams[i].create_date);
-            var str = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay();
-            console.log(str);
-            $(oneTeam).find("[name='date']").text(str);
+            $(oneTeam).find("[name='date']").text(date.Format("YYYY-MM-DD"));
             div.appendChild(oneTeam);
         }
         if (tl.teams.length == 0) {
@@ -797,6 +795,15 @@
         }
     });
 
+    Date.prototype.Format = function(fmt) {
+
+        str = fmt;
+        str = str.replace(/yyyy|YYYY/, this.getFullYear());
+        str = str.replace(/MM/, this.getMonth()>=9 ? this.getMonth()+1 : '0' + (this.getMonth()+1));
+        str = str.replace(/DD/, this.getDate());
+
+        return str;
+    }
 </script>
 
 </html>

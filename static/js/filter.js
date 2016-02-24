@@ -247,6 +247,13 @@ var BugListFilter = {
  *
  ************************************************
  */
+Date.prototype.Format = function(fmt) {
+
+    str = fmt;
+    str = str.replace(/yyyy|YYYY/, this.getFullYear());
+
+    return str;
+}
 
 
 /*
