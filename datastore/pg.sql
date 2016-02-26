@@ -50,17 +50,25 @@ CREATE TABLE user_team (
 );
 
 CREATE TABLE bugs (
-    id INT NOT NULL,
-    created_by INT NOT NULL,
-    title VARCHAR(128) not null,
-    priority INT NOT NULL,
-    desc VARCHAR(4096), 
-    attachments VARCHAR(512), 
+    id              SERIAL NOT NULL,
+    created_by      INT NOT NULL,
+    title           VARCHAR(128) not null,
+    priority        INT NOT NULL,
+    detail          VARCHAR(4096), 
+    attachments     VARCHAR(512), 
     current_handler INT NOT NULL,
-    status INT, 
-    last_update TIMESTAMP,
+    status          INT, 
+    last_update     TIMESTAMP,
 
     PRIMARY KEY(id)
+);
+
+CREATE TABLE buglog (
+    bug_id          INT NOT NULL,
+    who             INT NOT NULL,
+    action_type     INT NOT NULL,
+    action          VARCHAR(512), 
+    action_time     TIMESTAMP
 );
 
 -- index of tables
@@ -68,13 +76,11 @@ CREATE UNIQUE INDEX users_nicky ON users(nicky);
 CREATE UNIQUE INDEX team_name ON team(name);
 CREATE INDEX team_leader ON team(leader_id);
 
--- views
-CREATE VIEW team_created AS SELECT t.id, t.name, t.created_date, t.leader_id, u.nicky AS leader_name FROM team AS t INNER JOIN users AS u ON t.leader_id = u.id ORDER BY t.id;
-
 ALTER TABLE users OWNER TO pgtest;
 ALTER TABLE team OWNER TO pgtest;
 ALTER TABLE user_team OWNER TO pgtest;
 ALTER TABLE bugs OWNER TO pgtest;
+ALTER TABLE buglog OWNER TO pgtest;
 ALTER SEQUENCE users_id_seq OWNER TO pgtest;
 ALTER SEQUENCE team_id_seq OWNER TO pgtest;
 
