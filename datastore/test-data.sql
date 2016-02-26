@@ -24,7 +24,7 @@ insert into team(name, leader_id, created_date, bug_table, bug_table_status, sta
 insert into team(name, leader_id, created_date, bug_table, bug_table_status, status) 
     values('john-whale', 1, now(), '3aaaaa', 1, 1);
 insert into team(name, leader_id, created_date, bug_table, bug_table_status, status, goal) 
-    values('sherlock-lion', 2, now(), '1bbbbb', 1, 1, 'lion team');
+    values('sherlock-lion', 2, now(), '1bbbbb', 1, 0, 'lion team');
 insert into team(name, leader_id, created_date, bug_table, bug_table_status, status, goal) 
     values('sherlock-tiger', 2, now(), '2bbbbb', 1, 1, 'tiger team');
 

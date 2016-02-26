@@ -88,6 +88,7 @@ func (tl *teamlist) GetTeamLikeName(name string) ([]model.Team, error) {
 func (tl *teamlist) GetTeamList(f *FilterTeamList) ([]model.TeamCreatedOrJoined, error) {
 	var ts []model.TeamCreatedOrJoined
 	var err error
+	var u *model.User
 
 	db := GetDB()
 
@@ -95,6 +96,16 @@ func (tl *teamlist) GetTeamList(f *FilterTeamList) ([]model.TeamCreatedOrJoined,
 		_, err = db.pg.Query(&ts, teamCreated, f.LeaderId)
 	} else if f.MemberId > 0 {
 		_, err = db.pg.Query(&ts, teamJoined, f.MemberId)
+	} else if len(f.LeaderName) > 0 {
+		u, err = tl.user.GetUserByNicky(f.LeaderName)
+		if err == nil && u != nil {
+			_, err = db.pg.Query(&ts, teamCreated, u.Id)
+		}
+	} else if len(f.MemberName) > 0 {
+		u, err = tl.user.GetUserByNicky(f.MemberName)
+		if err == nil && u != nil {
+			_, err = db.pg.Query(&ts, teamJoined, u.Id)
+		}
 	}
 	if err != nil {
 		return nil, err

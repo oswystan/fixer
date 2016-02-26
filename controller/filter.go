@@ -127,5 +127,32 @@ func ServeFilterTeamList(w http.ResponseWriter, r *http.Request) {
 func ServeFilterBugList(w http.ResponseWriter, r *http.Request) {
 	log.Printf("serve bug list %s", r.URL.Path)
 }
+func ServeUserDetail(w http.ResponseWriter, r *http.Request) {
+	log.Printf("serve userdetail %s", r.URL.Path)
+	var err error
+	us := datastore.NewStoreUser()
+	ret := &model.ResultUserDetail{}
+
+	query := r.URL.Query()
+	for k, v := range query {
+		switch k {
+		case "id":
+			id, _ := strconv.Atoi(v[0])
+			ret.User, err = us.GetUserById(id)
+		case "nicky":
+			ret.User, err = us.GetUserByNicky(v[0])
+		case "_":
+		default:
+			err = fmt.Errorf("bad request query")
+		}
+	}
+	if err != nil {
+		log.Printf("ERROR: %s", err)
+		marshalResult(w, nil, http.StatusInternalServerError)
+		return
+	}
+
+	marshalResult(w, ret, http.StatusOK)
+}
 
 //==================================== END ======================================

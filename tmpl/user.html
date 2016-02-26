@@ -143,8 +143,8 @@
             <li name="team-id" data-label="ID">1</li>
             <li data-label="LEADER"><a name="team-leader" href="javascript:void(0)">wystan</a></li>
             <li name="date" data-label="DATE">2012-08-25</li>
-            <li name="bug_tab" data-label="BUG_TAB">aef45612234</li>
-            <li name="but_tab_status" data-label="BUG_TAB_STATUS">ACTIVE</li>
+            <li name="bug-tab" data-label="BUG_TAB">aef45612234</li>
+            <li name="but-tab-status" data-label="BUG_TAB_STATUS">ACTIVE</li>
             <li name="status" data-label="STATUS">ACTIVE</li>
         </ul>
         <ul class="labeled">
@@ -289,7 +289,7 @@
             <ul>
                 <li class="team-id"><a name="team-id" href="javascript:void(0)">2</a></li>
                 <li class="team-name"><a name="team-name" href="javascript:void(0)">wystan-studio-font</a></li>
-                <li class="date">2015-10-28</li>
+                <li class="date" name="date">2015-10-28</li>
             </ul>
         </div>
     </div>
@@ -551,8 +551,8 @@
 
         var joined = detail.find("[name='teamlist-joined']")[0];
         var created = detail.find("[name='teamlist-created']")[0];
-        showTeamList({memberId: this.innerText}, joined);
-        showTeamList({creatorId: this.innerText}, created);
+        showTeamList({member: this.innerText}, joined);
+        showTeamList({creator: this.innerText}, created);
 
         detail.show();
     }
@@ -665,15 +665,16 @@
         var t = TeamFilter.json();
 
         var detail = $("#detail-team-modify");
+        date = new Date(t.team.created_date)
         detail.find("[name='team-id']").text(t.team.id);
         detail.find("[name='team-name']").val(t.team.name);
-        detail.find("[name='team-leader']").text(t.team.leader).unbind("click").click(showUserDetail);
-        detail.find("[name='date']").text(t.team.create_date);
-        detail.find("[name='bug-tab']").text(t.team.bug_tab);
-        detail.find("[name='bug-tab-status']").text(t.team.bug_tab_status);
+        detail.find("[name='team-leader']").text(t.team.leader_name).unbind("click").click(showUserDetail);
+        detail.find("[name='date']").text(date.Format("YYYY-MM-DD"));
+        detail.find("[name='bug-tab']").text(t.team.bug_table);
+        detail.find("[name='bug-tab-status']").text(t.team.bug_table_status);
         detail.find("[name='status']").text(t.team.status);
         detail.find("[name='team-goal']").text(t.team.goal);
-        detail.find("[name='check-active']").attr("checked", t.team.status == "active" ? "checked" : "");
+        detail.find("[name='check-active']").attr("checked", t.team.status == 1 ? true : false);
 
 
         // get memberlist
