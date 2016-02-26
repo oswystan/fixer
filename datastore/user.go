@@ -17,9 +17,9 @@ import (
 	"github.com/oswystan/fixer/model"
 )
 
-var sqlById = "select * from users where id = ?"
-var sqlByNicky = "select * from users where nicky = ?"
-var sqlLikeNicky = "select * from users where nicky like '%s%%';"
+var userById = "select * from users where id = ?"
+var userByNicky = "select * from users where nicky = ?"
+var userLikeNicky = "select * from users where nicky like '%s%%';"
 
 type StoreUser interface {
 	GetUserById(id int) (*model.User, error)
@@ -36,7 +36,7 @@ type user struct {
 
 func (u *user) GetUserById(id int) (*model.User, error) {
 	usr := &model.User{}
-	_, err := GetDB().pg.QueryOne(usr, sqlById, id)
+	_, err := GetDB().pg.QueryOne(usr, userById, id)
 	if err != nil {
 		return nil, err
 	}
@@ -45,7 +45,7 @@ func (u *user) GetUserById(id int) (*model.User, error) {
 
 func (u *user) GetUserByNicky(nicky string) (*model.User, error) {
 	usr := &model.User{}
-	_, err := GetDB().pg.QueryOne(usr, sqlByNicky, nicky)
+	_, err := GetDB().pg.QueryOne(usr, userByNicky, nicky)
 	if err != nil {
 		return nil, err
 	}
@@ -54,7 +54,7 @@ func (u *user) GetUserByNicky(nicky string) (*model.User, error) {
 
 func (u *user) GetUserLikeNicky(nicky string) ([]model.User, error) {
 	var usr []model.User
-	sql := fmt.Sprintf(sqlLikeNicky, nicky)
+	sql := fmt.Sprintf(userLikeNicky, nicky)
 	log.Println(sql)
 	_, err := GetDB().pg.Query(&usr, sql)
 	if err != nil {

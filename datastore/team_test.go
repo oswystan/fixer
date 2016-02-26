@@ -12,19 +12,8 @@ package datastore
 
 import "testing"
 
-//func connectDB() error {
-//    db := GetDB()
-//    err := db.Open("pgtest", "123456", "fixer")
-//    return err
-//}
-//func closeDB() error {
-//    db := GetDB()
-//    err := db.Close()
-//    return err
-//}
-
 func TestGetTeamList(t *testing.T) {
-	if err := connectDB(); err != nil {
+	if err := openDB(); err != nil {
 		t.Error("fail to connect db")
 	}
 	defer closeDB()
@@ -53,6 +42,28 @@ func TestGetTeamList(t *testing.T) {
 	if len(ts) <= 0 {
 		t.Errorf("none joined team list returned")
 		return
+	}
+}
+
+func TestTeamGetBy(t *testing.T) {
+	if err := openDB(); err != nil {
+		t.Fatal("fail to connect db")
+	}
+	defer closeDB()
+
+	tl := NewStoreTeamList()
+	tm, err := tl.GetTeamById(1)
+	if err != nil || tm == nil {
+		t.Fatalf("fail to get team by id [%s]", err)
+	}
+
+	tm, err = tl.GetTeamByName("john-frog")
+	if err != nil || tm == nil {
+		t.Fatalf("fail to get team by name [%s]", err)
+	}
+	ts, err := tl.GetTeamLikeName("john")
+	if err != nil || len(ts) == 0 {
+		t.Fatalf("fail to get team like name [%s]", err)
 	}
 }
 

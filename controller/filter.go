@@ -21,6 +21,12 @@ import (
 )
 
 func marshalResult(w http.ResponseWriter, v interface{}, code int) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	if v == nil {
+		w.WriteHeader(code)
+		return
+	}
+
 	bs, err := json.MarshalIndent(v, "", "\t")
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -31,12 +37,37 @@ func marshalResult(w http.ResponseWriter, v interface{}, code int) {
 	w.Write(bs)
 }
 
+func ServeFilterTeam(w http.ResponseWriter, r *http.Request) {
+	log.Printf("serve team %s", r.URL.Path)
+
+	var err error
+
+	ret := &model.ResultTeam{}
+	tl := datastore.NewStoreTeamList()
+	query := r.URL.Query()
+	for k, v := range query {
+		switch k {
+		case "id":
+			id, _ := strconv.Atoi(v[0])
+			ret.Team, err = tl.GetTeamById(id)
+		case "name":
+			ret.Team, err = tl.GetTeamByName(v[0])
+		}
+	}
+
+	if err != nil {
+		marshalResult(w, nil, http.StatusInternalServerError)
+		return
+	}
+
+	marshalResult(w, ret, http.StatusOK)
+}
+
 func ServeFilterMemberList(w http.ResponseWriter, r *http.Request) {
 	log.Printf("serve member list %s", r.URL.Path)
 }
 
 func ServeFilterTeamList(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	var err error
 
 	l := &model.ResultTeamList{}
@@ -61,7 +92,7 @@ func ServeFilterTeamList(w http.ResponseWriter, r *http.Request) {
 
 	l.Teams, err = tl.GetTeamList(filter)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
+		marshalResult(w, nil, http.StatusInternalServerError)
 		return
 	}
 

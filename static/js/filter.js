@@ -61,7 +61,7 @@ var TeamFilter = {
     result: "",
 
     go: function () {
-        var url = baseUrl + "/teamlist.html";
+        var url = baseUrl + "/team.html";
         if (this.name != "") {
             url = url + "?name=" + this.name;
         } else if (this.id != -1) {

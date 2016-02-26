@@ -12,19 +12,8 @@ package datastore
 
 import "testing"
 
-func connectDB() error {
-	db := GetDB()
-	err := db.Open("pgtest", "123456", "fixer")
-	return err
-}
-func closeDB() error {
-	db := GetDB()
-	err := db.Close()
-	return err
-}
-
 func TestGetById(t *testing.T) {
-	if err := connectDB(); err != nil {
+	if err := openDB(); err != nil {
 		t.Error("fail to connect db")
 	}
 	defer closeDB()
