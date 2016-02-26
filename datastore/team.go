@@ -13,12 +13,12 @@ package datastore
 import "github.com/oswystan/fixer/model"
 
 var sqlJoined = `select t.id, t.name, t.leader_id, u.nicky as leader_name, t.created_date 
-				  from user_team as ut inner join team as t on ut.team_id = t.id 
-				  inner join users as u on t.leader_id = u.id where ut.user_id = ? order by t.id;`
+				  from user_team as ut inner join team as t on ut.user_id = ? and ut.team_id = t.id
+				  inner join users as u on t.leader_id = u.id order by t.id;`
 
 var sqlCreated = `select t.id, t.name, t.leader_id, u.nicky as leader_name, t.created_date
                   from team as t inner join users as u 
-				  on t.leader_id = u.id where t.leader_id = ? order by t.id;`
+				  on t.leader_id = ? and t.leader_id = u.id order by t.id;`
 
 type FilterTeamList struct {
 	LeaderId   int
