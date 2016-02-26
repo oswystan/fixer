@@ -12,6 +12,7 @@ package controller
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -56,6 +57,7 @@ func ServeFilterTeam(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err != nil {
+		log.Printf("ERROR: %s", err)
 		marshalResult(w, nil, http.StatusInternalServerError)
 		return
 	}
@@ -64,7 +66,30 @@ func ServeFilterTeam(w http.ResponseWriter, r *http.Request) {
 }
 
 func ServeFilterMemberList(w http.ResponseWriter, r *http.Request) {
-	log.Printf("serve member list %s", r.URL.Path)
+	var err error
+
+	l := &model.ResultMemberList{}
+	tl := datastore.NewStoreTeamList()
+
+	query := r.URL.Query()
+
+	for k, v := range query {
+		switch k {
+		case "team_id":
+			id, _ := strconv.Atoi(v[0])
+			l.Members, err = tl.GetMemberList(id)
+		case "_":
+		default:
+			err = fmt.Errorf("bad request")
+		}
+	}
+
+	if err != nil {
+		marshalResult(w, nil, http.StatusInternalServerError)
+		return
+	}
+
+	marshalResult(w, l, http.StatusOK)
 }
 
 func ServeFilterTeamList(w http.ResponseWriter, r *http.Request) {

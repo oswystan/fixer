@@ -16,7 +16,7 @@ type Team struct {
 	Id             int32     `json:"id"`
 	Name           string    `json:"name"`
 	LeaderId       int32     `json:"leader_id"`
-	LeaderName     int32     `json:"leader_name"`
+	LeaderName     string    `json:"leader_name"`
 	Goal           string    `json:"goal"`
 	CreatedDate    time.Time `json:"created_date"`
 	BugTable       string    `json:"bug_table"`
@@ -41,6 +41,11 @@ type ResultTeamList struct {
 type ResultTeam struct {
 	Error int   `json:"error"`
 	Team  *Team `json:"team"`
+}
+
+type ResultMemberList struct {
+	Error   int    `json:"error"`
+	Members []User `json:"members"`
 }
 
 //==================================== END ======================================

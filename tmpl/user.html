@@ -609,13 +609,14 @@
         var t = TeamFilter.json();
 
         // set it into html elements
+        var date = new Date(t.team.created_date)
         var detail = $("#detail-team-show");
         detail.find("[name='team-id']").text(t.team.id);
         detail.find("[name='team-name']").text(t.team.name);
-        detail.find("[name='team-leader']").text(t.team.leader).unbind("click").click(showUserDetail);
-        detail.find("[name='date']").text(t.team.create_date);
-        detail.find("[name='bug-tab']").text(t.team.bug_tab);
-        detail.find("[name='bug-tab-status']").text(t.team.bug_tab_status);
+        detail.find("[name='team-leader']").text(t.team.leader_name).unbind("click").click(showUserDetail);
+        detail.find("[name='date']").text(date.Format("YYYY-MM-DD"));
+        detail.find("[name='bug-tab']").text(t.team.bug_table);
+        detail.find("[name='bug-tab-status']").text(t.team.bug_table_status);
         detail.find("[name='status']").text(t.team.status);
         detail.find("[name='team-goal']").text(t.team.goal);
         detail.find("[name='buglist']").unbind("click").click(showBuglist);

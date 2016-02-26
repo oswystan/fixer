@@ -12,13 +12,13 @@ package model
 import "time"
 
 type User struct {
-	Id            int32     `json: "id"`
-	Nicky         string    `json: "nicky"`
-	Email         string    `json: "email"`
-	Pwd           string    `json: "-"`
-	Portrait      string    `json: "portrait"`
-	RegisterDate  time.Time `json: "register_date"`
-	LastLoginTime time.Time `json: "last_login_time"`
+	Id            int32     `json:"id"`
+	Nicky         string    `json:"nicky"`
+	Email         string    `json:"email"`
+	Pwd           string    `json:"-"`
+	Portrait      string    `json:"portrait"`
+	RegisterDate  time.Time `json:"register_date"`
+	LastLoginTime time.Time `json:"last_login_time"`
 }
 
 //==================================== END ======================================

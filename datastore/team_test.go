@@ -67,4 +67,20 @@ func TestTeamGetBy(t *testing.T) {
 	}
 }
 
+func TestGetMemberList(t *testing.T) {
+	if err := openDB(); err != nil {
+		t.Fatal("fail to connect db")
+	}
+	defer closeDB()
+
+	tl := NewStoreTeamList()
+	tm, err := tl.GetMemberList(1)
+	if err != nil || tm == nil {
+		t.Fatalf("fail to get member by id [%s]", err)
+	}
+	if len(tm) == 0 {
+		t.Fatal("no members returned")
+	}
+}
+
 //==================================== END ======================================

@@ -23,9 +23,14 @@ var teamJoined = `select t.id, t.name, t.leader_id, u.nicky as leader_name, t.cr
 var teamCreated = `select t.id, t.name, t.leader_id, u.nicky as leader_name, t.created_date
                   from team as t inner join users as u 
 				  on t.leader_id = ? and t.leader_id = u.id order by t.id;`
-var teamById = `select * from team where id = ?`
-var teamByName = `select * from team where name = ?`
-var teamLikeName = `select * from team where name like '%s%%'`
+
+var teamById = `select t.*, u.nicky as leader_name from team as t inner join users as u 
+					on t.id = ? and u.id = t.leader_id;`
+var teamByName = `select t.*, u.nicky as leader_name from team as t inner join users as u 
+					on t.name = ? and u.id = t.leader_id;`
+var teamLikeName = `select t.*, u.nicky as leader_name from team as t inner join users as u 
+                    on t.name like '%s%%' and u.id = t.leader_id;`
+var memberById = `select u.* from user_team as ut inner join users as u on ut.team_id = ? and ut.user_id = u.id;`
 
 type FilterTeamList struct {
 	LeaderId   int
@@ -45,6 +50,7 @@ func (f *FilterTeamList) Reset() {
 
 type StoreTeamList interface {
 	GetTeamList(filter *FilterTeamList) ([]model.TeamCreatedOrJoined, error)
+	GetMemberList(id int) ([]model.User, error)
 	GetTeamById(id int) (*model.Team, error)
 	GetTeamByName(name string) (*model.Team, error)
 	GetTeamLikeName(name string) ([]model.Team, error)
@@ -52,6 +58,12 @@ type StoreTeamList interface {
 
 type teamlist struct {
 	user StoreUser
+}
+
+func (tl *teamlist) GetMemberList(id int) ([]model.User, error) {
+	var ul []model.User
+	_, err := GetDB().pg.Query(&ul, memberById, id)
+	return ul, err
 }
 
 func (tl *teamlist) GetTeamById(id int) (*model.Team, error) {
