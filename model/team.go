@@ -13,18 +13,28 @@ package model
 import "time"
 
 type Team struct {
-	Id         int       `json:"id"`
-	Name       string    `json:"name"`
-	Leader     string    `json:"leader"`
-	CreateDate time.Time `json:"create_date"`
-	Status     string    `json:"status"`
-	BugTab     string    `json:"bug_tab"`
-	Goal       string    `json:"goal"`
+	Id               int32  `json:"id"`
+	Name             string `json:"name"`
+	LeaderId         int32  `json:"leader_id"`
+	LeaderName       string `json:"leader_name"`
+	Goal             string `json:"goal"`
+	Bug_Table        string `json:"bug_table"`
+	Status           int32  `json:"status"`
+	Logo             string `json:"logo"`
+	Bug_table_status int    `json:"bug_table_status"`
+}
+
+type TeamCreatedOrJoined struct {
+	Id          int32     `json:"id"`
+	Name        string    `json:"name"`
+	LeaderId    int32     `json:"leader_id"`
+	LeaderName  string    `json:"leader_name"`
+	CreatedDate time.Time `json:"created_date"`
 }
 
 type ResultTeamList struct {
-	Error int    `json:"error"`
-	Teams []Team `json:"teams"`
+	Error int                   `json:"error"`
+	Teams []TeamCreatedOrJoined `json:"teams"`
 }
 
 type ResultTeam struct {

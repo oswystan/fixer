@@ -8,54 +8,59 @@
 -- 
 ---------------------------------------------------------------------------------
 
-drop database if exists fixer;
-create database fixer;
+DROP DATABASE IF EXISTS fixer;
+CREATE DATABASE fixer;
 \c fixer;
 
-drop user if exists pgtest;
-create user pgtest with CREATEDB LOGIN PASSWORD '123456';
+DROP USER IF EXISTS pgtest;
+CREATE USER pgtest WITH CREATEDB LOGIN PASSWORD '123456';
 
-create table users (
-    id serial not null,
-    nicky varchar(64) not null,
-    email varchar(64) not null,
-    pwd char(32) not null,
-    portrait varchar(128),
-    register_date timestamp,
-    last_login_time timestamp,
+CREATE TABLE users (
+    id                  SERIAL NOT NULL,
+    nicky               VARCHAR(64) NOT NULL,
+    email               VARCHAR(64) NOT NULL,
+    pwd                 CHAR(32) NOT NULL,
+    portrait            VARCHAR(128),
+    register_date       TIMESTAMP,
+    last_login_time     TIMESTAMP,
 
-    primary key(id)
+    PRIMARY KEY(id)
 );
 
-create table team (
-    id serial not null, 
-    name varchar(64) not null,
-    leader int not null,
-    goal varchar(1024),
-    created_date timestamp,
-    bug_table char(32),
-    bug_table_status char,
-    status char,
-    logo varchar(128),
+CREATE TABLE team (
+    id                  SERIAL NOT NULL, 
+    name                VARCHAR(64) NOT NULL,
+    leader_id           INT NOT NULL,
+    goal                VARCHAR(1024),
+    created_date        TIMESTAMP,
+    bug_table           CHAR(32),
+    bug_table_status    INT,
+    status              INT,
+    logo                VARCHAR(128),
 
-    primary key(id)
+    PRIMARY KEY(id)
 );
 
-create table user_team (
-    user_id int not null,
-    team_id int not null,
-    join_date timestamp not null,
+CREATE TABLE user_team (
+    user_id             INT NOT NULL,
+    team_id             INT NOT NULL,
+    join_date           TIMESTAMP NOT NULL,
 
-    primary key(user_id, team_id)
+    PRIMARY KEY(user_id, team_id)
 );
 
-create unique index users_nicky on users(nicky);
-create unique index team_name on team(name);
-create index team_leader on team(leader);
+-- index of tables
+CREATE UNIQUE INDEX users_nicky ON users(nicky);
+CREATE UNIQUE INDEX team_name ON team(name);
+CREATE INDEX team_leader ON team(leader_id);
 
-alter table users owner to pgtest;
-alter table team owner to pgtest;
-alter sequence users_id_seq owner to pgtest;
-alter sequence team_id_seq owner to pgtest;
+-- views
+CREATE VIEW team_created AS SELECT t.id, t.name, t.created_date, t.leader_id, u.nicky AS leader_name FROM team AS t INNER JOIN users AS u ON t.leader_id = u.id ORDER BY t.id;
+
+ALTER TABLE users OWNER TO pgtest;
+ALTER TABLE team OWNER TO pgtest;
+ALTER TABLE user_team OWNER TO pgtest;
+ALTER SEQUENCE users_id_seq OWNER TO pgtest;
+ALTER SEQUENCE team_id_seq OWNER TO pgtest;
 
 ---------------------------------------------------------------------------------

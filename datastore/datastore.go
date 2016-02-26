@@ -13,7 +13,6 @@ package datastore
 import (
 	"fmt"
 
-	"github.com/oswystan/fixer/model"
 	"gopkg.in/pg.v3"
 )
 
@@ -56,21 +55,6 @@ func (db *Database) Close() error {
 
 func GetDB() *Database {
 	return database
-}
-
-type TeamListFilter struct {
-	Name       string
-	LeaderId   int
-	LeaderName string
-	MemberId   int
-	MemberName string
-
-	Offset int
-	Count  int
-}
-
-type TeamListStore interface {
-	GetTeamList(*TeamListFilter) ([]model.Team, error)
 }
 
 //==================================== END ======================================

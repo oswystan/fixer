@@ -20,18 +20,23 @@ import (
 func main() {
 	log.Printf("start server ...")
 
+	// connect database
+	//TODO: put connect options into environment variables
 	db := datastore.GetDB()
 	err := db.Open("pgtest", "123456", "fixer")
 	if err != nil {
 		log.Printf("ERROR: %s", err)
 		return
 	}
+	defer db.Close()
 	log.Printf("database connected.")
 
 	r := router.NewRouter()
-	http.ListenAndServe(":8000", r)
+	err = http.ListenAndServe(":8000", r)
+	if err != nil {
+		log.Printf("fail to start http(s) server: %s", err)
+	}
 
-	db.Close()
 	return
 }
 

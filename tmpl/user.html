@@ -516,11 +516,11 @@
             $(oneTeam).find("[name='team-id']").text(tl.teams[i].id).click(
                     showTeamDetail
             );
-            $(oneTeam).find("[name='team-leader']").text(tl.teams[i].leader).click(
+            $(oneTeam).find("[name='team-leader']").text(tl.teams[i].leader_name).click(
                     showUserDetail
             );
 
-            var date = new Date(tl.teams[i].create_date);
+            var date = new Date(tl.teams[i].created_date);
             $(oneTeam).find("[name='date']").text(date.Format("YYYY-MM-DD"));
             div.appendChild(oneTeam);
         }

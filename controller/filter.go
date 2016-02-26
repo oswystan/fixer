@@ -14,8 +14,8 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
-	"time"
 
+	"github.com/oswystan/fixer/datastore"
 	"github.com/oswystan/fixer/model"
 )
 
@@ -24,18 +24,18 @@ func ServeFilterMemberList(w http.ResponseWriter, r *http.Request) {
 }
 
 func ServeFilterTeamList(w http.ResponseWriter, r *http.Request) {
-	log.Printf("serve team list %s", r.URL.Path)
-
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	var err error
+
 	l := &model.ResultTeamList{}
-	l.Teams = make([]model.Team, 1)
-	l.Teams[0].Id = 1
-	l.Teams[0].Name = "jugar"
-	l.Teams[0].Leader = "wystan"
-	l.Teams[0].Status = "ACTIVE"
-	l.Teams[0].BugTab = "ef001233"
-	l.Teams[0].Goal = "this is a team for wystan."
-	l.Teams[0].CreateDate = time.Now()
+	tl := datastore.NewStoreTeamList()
+	filter := &datastore.FilterTeamList{LeaderId: 1}
+
+	l.Teams, err = tl.GetTeamList(filter)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
 
 	bs, err := json.MarshalIndent(l, "", "\t")
 	if err != nil {
