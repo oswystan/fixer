@@ -49,6 +49,20 @@ CREATE TABLE user_team (
     PRIMARY KEY(user_id, team_id)
 );
 
+CREATE TABLE bugs (
+    id INT NOT NULL,
+    created_by INT NOT NULL,
+    title VARCHAR(128) not null,
+    priority INT NOT NULL,
+    desc VARCHAR(4096), 
+    attachments VARCHAR(512), 
+    current_handler INT NOT NULL,
+    status INT, 
+    last_update TIMESTAMP,
+
+    PRIMARY KEY(id)
+);
+
 -- index of tables
 CREATE UNIQUE INDEX users_nicky ON users(nicky);
 CREATE UNIQUE INDEX team_name ON team(name);
@@ -60,6 +74,7 @@ CREATE VIEW team_created AS SELECT t.id, t.name, t.created_date, t.leader_id, u.
 ALTER TABLE users OWNER TO pgtest;
 ALTER TABLE team OWNER TO pgtest;
 ALTER TABLE user_team OWNER TO pgtest;
+ALTER TABLE bugs OWNER TO pgtest;
 ALTER SEQUENCE users_id_seq OWNER TO pgtest;
 ALTER SEQUENCE team_id_seq OWNER TO pgtest;
 

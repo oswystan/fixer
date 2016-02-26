@@ -127,7 +127,7 @@ func ServeFilterTeamList(w http.ResponseWriter, r *http.Request) {
 func ServeFilterBugList(w http.ResponseWriter, r *http.Request) {
 	log.Printf("serve bug list %s", r.URL.Path)
 }
-func ServeUserDetail(w http.ResponseWriter, r *http.Request) {
+func ServeFilterUser(w http.ResponseWriter, r *http.Request) {
 	log.Printf("serve userdetail %s", r.URL.Path)
 	var err error
 	us := datastore.NewStoreUser()
