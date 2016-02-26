@@ -717,8 +717,8 @@
     $("#nav [name='nav-teamlist']").click(function () {
         hideAll();
 
-        showTeamList({member: "wystan"}, $("#teamlist-joined [name='team-list']")[0]);
-        showTeamList({creator: "wystan"}, $("#teamlist-created [name='team-list']")[0]);
+        showTeamList({memberId: "1"}, $("#teamlist-joined [name='team-list']")[0]);
+        showTeamList({creatorId: "1"}, $("#teamlist-created [name='team-list']")[0]);
 
         $("#teamlist-joined").show();
         $("#teamlist-created").show();
