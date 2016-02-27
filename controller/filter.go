@@ -74,11 +74,15 @@ func ServeFilterMemberList(w http.ResponseWriter, r *http.Request) {
 
 	query := r.URL.Query()
 
+LOOP:
 	for k, v := range query {
 		switch k {
 		case "team_id":
 			id, _ := strconv.Atoi(v[0])
 			l.Members, err = tl.GetMemberList(id)
+			if err != nil {
+				break LOOP
+			}
 		case "_":
 		default:
 			err = fmt.Errorf("bad request")
