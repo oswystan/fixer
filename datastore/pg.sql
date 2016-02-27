@@ -63,6 +63,9 @@ DECLARE
     name VARCHAR;
 BEGIN
     SELECT nicky FROM users WHERE id = user_id INTO name;
+    IF NOT FOUND THEN
+        name = '';
+    END IF;
     RETURN name;
 END;
 $$ LANGUAGE PLPGSQL;
