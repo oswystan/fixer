@@ -17,10 +17,11 @@ type Bug struct {
 	CreatedBy      int32     `json:"created_by"`
 	Title          string    `json:"title"`
 	Priority       int32     `json:"priority"`
-	Desc           string    `json:"desc"`
+	Detail         string    `json:"detail"`
 	Attachments    string    `json:"attchments"`
 	CurrentHandler string    `json:"current_handler"`
 	Status         int32     `json:"status"`
+	CreatedTime    time.Time `json:"created_time"`
 	LastUpdate     time.Time `json:"last_update"`
 }
 

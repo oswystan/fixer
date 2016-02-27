@@ -201,14 +201,16 @@ var BugListFilter = {
 
     go: function () {
         var url = baseUrl + "/buglist.html";
-        url = url + (this.team_id != -1 ? "?team_id=" + this.team_id : "");
-        url = url + (this.priority != "" ? "?priority=" + this.priority : "");
-        url = url + (this.handler != "" ? "?handler=" + this.handler : "");
-        url = url + (this.created_by != "" ? "?created_by=" + this.created_by : "");
-        url = url + (this.status != "" ? "?status=" + this.status : "");
-        url = url + (this.date_from != "" ? "?date_from=" + this.date_from : "");
-        url = url + (this.date_to != "" ? "?date_to=" + this.date_to : "");
+        str = "";
+        str = str + (this.team_id != 0 ? "?team_id=" + this.team_id : "");
+        str = str + (this.priority != "" ? "&priority=" + this.priority : "");
+        str = str + (this.handler != "" ? "&handler=" + this.handler : "");
+        str = str + (this.created_by != "" ? "&created_by=" + this.created_by : "");
+        str = str + (this.status != "" ? "&status=" + this.status : "");
+        str = str + (this.date_from != "" ? "&date_from=" + this.date_from : "");
+        str = str + (this.date_to != "" ? "&date_to=" + this.date_to : "");
 
+        url += str;
 
         var ret = $.ajax({url: url, async: false, cache: false});
         if (ret.status == 200) {

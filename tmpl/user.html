@@ -229,7 +229,7 @@
             <li name="bug-tab" data-label="BUG_TAB">aef45612234</li>
             <li name="bug-tab-status" data-label="BUG_TAB_STATUS">ACTIVE</li>
             <li name="status" data-label="STATUS">ACTIVE</li>
-            <li data-label="BUGLIST"><a name="buglist" href="javascript:void(0)">buglist</a></li>
+            <li data-label="BUGLIST"><a name="buglist" data-holder="1" href="javascript:void(0)">buglist</a></li>
         </ul>
         <ul>
             <p name="team-goal" style="line-height: 1.4em; font-size: 1.2em;">A team is a group of people or other
@@ -563,7 +563,7 @@
 
         BugListFilter.reset();
         BugListFilter.handler = this.name == "nav-buglist" ? document.body.getAttribute("data-user") : "";
-        BugListFilter.team_id = this.name == "team-id" ? this.innerText : "";
+        BugListFilter.team_id = 1;
         BugListFilter.go();
         var bl = BugListFilter.json();
 
@@ -573,18 +573,19 @@
         tab.innerHTML = "";
         tab.appendChild(trh);
         trd.style.display = "";
-        for (var i = 0; i < bl.bugs.length; i++) {
+        for (var i = 0; i < bl.length; i++) {
             var one = trd.cloneNode(true);
-            $(one).find("[name='id']").text(bl.bugs[i].id);
-            $(one).find("[name='handler']").text(bl.bugs[i].handler).unbind("click").click(showUserDetail);
-            $(one).find("[name='priority']").text(bl.bugs[i].priority);
-            $(one).find("[name='status']").text(bl.bugs[i].status);
-            $(one).find("[name='created_by']").text(bl.bugs[i].created_by).unbind("click").click(showUserDetail);
-            $(one).find("[name='date']").text(bl.bugs[i].date);
-            $(one).find("[name='title']").text(bl.bugs[i].title).unbind("click").click(showBugModify);
+            var date = new Date(bl[i].created_time);
+            $(one).find("[name='id']").text(bl[i].id);
+            $(one).find("[name='handler']").text(bl[i].current_handler).unbind("click").click(showUserDetail);
+            $(one).find("[name='priority']").text(bl[i].priority);
+            $(one).find("[name='status']").text(bl[i].status);
+            $(one).find("[name='created_by']").text(bl[i].created_by).unbind("click").click(showUserDetail);
+            $(one).find("[name='date']").text(date.Format("YYYY-MM-DD"));
+            $(one).find("[name='title']").text(bl[i].title).unbind("click").click(showBugModify);
             tab.appendChild(one);
         }
-        if (bl.bugs.length == 0) {
+        if (bl.length == 0) {
             trd.style.display = "none";
             tab.appendChild(trd);
         }

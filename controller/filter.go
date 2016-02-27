@@ -214,7 +214,6 @@ LOOP:
 			err = fmt.Errorf("invalid query string [%s]", k)
 		}
 	}
-	log.Printf("%v", f)
 
 	if err != nil {
 		log.Printf("ERROR: %s [query=%s]", err, r.URL.RawQuery)
@@ -224,6 +223,7 @@ LOOP:
 
 	bl, err := bugs.GetBugs(f)
 	if err != nil {
+		log.Printf("ERROR: %s", err)
 		marshalResult(w, nil, http.StatusInternalServerError)
 		return
 	}
