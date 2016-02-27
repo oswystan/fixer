@@ -52,13 +52,14 @@ CREATE TABLE user_team (
 CREATE TABLE bugs (
     id              SERIAL NOT NULL,
     created_by      INT NOT NULL,
-    title           VARCHAR(128) not null,
-    priority        INT NOT NULL,
-    detail          VARCHAR(4096), 
-    attachments     VARCHAR(512), 
     current_handler INT NOT NULL,
+    priority        INT NOT NULL,
     status          INT, 
+    created_time    TIMESTAMP,
     last_update     TIMESTAMP,
+    title           VARCHAR(128) not null,
+    attachments     VARCHAR(512), 
+    detail          VARCHAR(4096), 
 
     PRIMARY KEY(id)
 );
@@ -67,20 +68,28 @@ CREATE TABLE buglog (
     bug_id          INT NOT NULL,
     who             INT NOT NULL,
     action_type     INT NOT NULL,
-    action          VARCHAR(512), 
-    action_time     TIMESTAMP
+    action_time     TIMESTAMP,
+    action          VARCHAR(4096) 
 );
 
 -- index of tables
-CREATE UNIQUE INDEX users_nicky ON users(nicky);
-CREATE UNIQUE INDEX team_name ON team(name);
-CREATE INDEX team_leader ON team(leader_id);
+CREATE UNIQUE INDEX idx_users_nicky ON users(nicky);
+CREATE UNIQUE INDEX idx_team_name ON team(name);
+CREATE INDEX idx_team_leader ON team(leader_id);
+CREATE INDEX idx_bugs_createdby ON bugs(created_by);
+CREATE INDEX idx_bugs_priority ON bugs(priority);
+CREATE INDEX idx_bugs_handler ON bugs(current_handler);
+CREATE INDEX idx_bugs_status ON bugs(status);
+CREATE INDEX idx_bugs_created_time ON bugs(created_time);
+CREATE INDEX idx_bugs_last_update ON bugs(last_update);
+CREATE INDEX idx_buglog_bugid ON buglog(bug_id);
 
 ALTER TABLE users OWNER TO pgtest;
 ALTER TABLE team OWNER TO pgtest;
 ALTER TABLE user_team OWNER TO pgtest;
 ALTER TABLE bugs OWNER TO pgtest;
 ALTER TABLE buglog OWNER TO pgtest;
+
 ALTER SEQUENCE users_id_seq OWNER TO pgtest;
 ALTER SEQUENCE team_id_seq OWNER TO pgtest;
 
