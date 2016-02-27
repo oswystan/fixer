@@ -11,6 +11,7 @@ package datastore
 
 import (
 	"fmt"
+	"log"
 	"strings"
 	"time"
 
@@ -61,6 +62,28 @@ func (b *storebugs) buildSql(f *BugFilter) (string, error) {
 	}
 
 	sql := fmt.Sprintf(sqlBuglist, strings.TrimSpace(t.BugTable))
+	str := ""
+	if f.Handler != 0 {
+		str = fmt.Sprintf("%s and current_handler = %d", str, f.Handler)
+	}
+	if f.CreatedBy != 0 {
+		str = fmt.Sprintf("%s and created_by = %d", str, f.CreatedBy)
+	}
+	if f.Status != 0 {
+		str = fmt.Sprintf("%s and status = %d", str, f.Status)
+	}
+	if f.Count != 0 {
+		str = fmt.Sprintf("%s limit %d", str, f.Count)
+	}
+	if f.Offset != 0 {
+		str = fmt.Sprintf("%s offset %d", str, f.Offset)
+	}
+
+	if len(str) != 0 {
+		str = strings.Replace(str, "and", "where", 1)
+		sql += str
+	}
+	log.Println(sql)
 
 	return sql, nil
 }
