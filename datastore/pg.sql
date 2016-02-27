@@ -58,11 +58,25 @@ ALTER TABLE users OWNER TO pgtest;
 ALTER TABLE team OWNER TO pgtest;
 ALTER TABLE user_team OWNER TO pgtest;
 
+-- FUNCTIONS
+
 CREATE FUNCTION get_nicky(user_id INT) RETURNS VARCHAR AS $$
 DECLARE
     name VARCHAR;
 BEGIN
     SELECT nicky FROM users WHERE id = user_id INTO name;
+    IF NOT FOUND THEN
+        name = '';
+    END IF;
+    RETURN name;
+END;
+$$ LANGUAGE PLPGSQL;
+
+CREATE FUNCTION get_team_name(team_id INT) RETURNS VARCHAR AS $$
+DECLARE
+    name VARCHAR;
+BEGIN
+    SELECT name FROM team WHERE id = team_id INTO name;
     IF NOT FOUND THEN
         name = '';
     END IF;

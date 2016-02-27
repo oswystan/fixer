@@ -16,13 +16,12 @@ import (
 	"github.com/oswystan/fixer/model"
 )
 
-var teamJoined = `select t.id, t.name, t.leader_id, u.nicky as leader_name, t.created_date 
+var teamJoined = `select t.id, t.name, t.leader_id, get_nicky(t.leader_id) as leader_name, t.created_date 
 				  from user_team as ut inner join team as t on ut.user_id = ? and ut.team_id = t.id
-				  inner join users as u on t.leader_id = u.id order by t.id;`
+				  order by t.id;`
 
-var teamCreated = `select t.id, t.name, t.leader_id, u.nicky as leader_name, t.created_date
-                  from team as t inner join users as u 
-				  on t.leader_id = ? and t.leader_id = u.id order by t.id;`
+var teamCreated = `select t.id, t.name, t.leader_id, get_nicky(t.leader_id) as leader_name, t.created_date
+                  from team as t where t.leader_id = ?;`
 
 var teamById = `select t.*, u.nicky as leader_name from team as t inner join users as u 
 					on t.id = ? and u.id = t.leader_id;`
