@@ -539,7 +539,7 @@
 
         console.log(this.name + "=" + this.innerText);
         UserFilter.id = this.name == "user-id" ? this.innerText : -1;
-        UserFilter.nicky = (this.name == "user-nicky" || this.name == "team-leader" ? this.innerText : "");
+        UserFilter.nicky = (this.name == "user-nicky" || this.name == "team-leader" || this.name=="created_by" || this.name == "handler" ? this.innerText : "");
         UserFilter.go();
         var u = UserFilter.json();
 
