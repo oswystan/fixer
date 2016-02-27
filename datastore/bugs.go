@@ -10,13 +10,14 @@
 package datastore
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/oswystan/fixer/model"
 )
 
 type StoreBugs interface {
-	GetBugs() ([]model.Bug, error)
+	GetBugs(*BugFilter) ([]model.Bug, error)
 	GetBugById(id int32) (*model.Bug, error)
 	Create(*model.Bug) error
 	Update(*model.Bug) error
@@ -30,22 +31,28 @@ type StoreBuglog interface {
 }
 
 type BugFilter struct {
-	TeamId    int32
-	Priority  int32
-	Handler   int32
-	CreatedBy int32
-	Status    int32
+	TeamId    int
+	Priority  int
+	Handler   int
+	CreatedBy int
+	Status    int
 	DateFrom  time.Time
 	DateTo    time.Time
 
-	Offset uint32
-	Count  uint32
+	Offset int
+	Count  int
 }
 
 type storebugs struct {
+	t StoreTeamList
 }
 
 func (b *storebugs) GetBugs(f *BugFilter) ([]model.Bug, error) {
+	if f.TeamId == 0 {
+		return nil, fmt.Errorf("need to set a team id")
+	}
+
+	// get bug_table and status of the team
 	return nil, nil
 }
 
@@ -66,7 +73,7 @@ func (b *storebugs) Delete(*model.Bug) error {
 }
 
 func NewStoreBugs() StoreBugs {
-	return nil
+	return &storebugs{t: NewStoreTeamList()}
 }
 
 func NewStoreBuglog() StoreBuglog {

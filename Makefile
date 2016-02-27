@@ -3,7 +3,7 @@
 ##
 ## 
 #######################################################################
-.PHONY: all build
+.PHONY: all build install clean st ut
 
 
 all: build
@@ -11,7 +11,9 @@ all: build
 
 build: fixer
 
-fixer:
+SRC_FILES := $(shell find . -name "*.go"|grep -v "_test.go")
+
+fixer: $(SRC_FILES)
 	@echo "start building..."
 	@go build
 	@echo "done."
@@ -26,5 +28,15 @@ clean:
 	@./install.sh rm_db
 	@rm -f fixer
 	@echo "done."
+
+st:
+	@echo "start st..."
+	@./fixer &
+	@sleep 1
+	@./st.sh
+	@killall fixer
+	@echo "done."
+ut:
+	@go test `go list  ./* 2>/dev/null`
 
 #######################################################################

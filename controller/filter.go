@@ -16,6 +16,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/oswystan/fixer/datastore"
 	"github.com/oswystan/fixer/model"
@@ -124,9 +125,6 @@ func ServeFilterTeamList(w http.ResponseWriter, r *http.Request) {
 	marshalResult(w, l, http.StatusOK)
 }
 
-func ServeFilterBugList(w http.ResponseWriter, r *http.Request) {
-	log.Printf("serve bug list %s", r.URL.Path)
-}
 func ServeFilterUser(w http.ResponseWriter, r *http.Request) {
 	log.Printf("serve userdetail %s", r.URL.Path)
 	var err error
@@ -153,6 +151,84 @@ func ServeFilterUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	marshalResult(w, ret, http.StatusOK)
+}
+
+func ServeFilterBugList(w http.ResponseWriter, r *http.Request) {
+	log.Printf("serve bug list %s", r.URL.Path)
+	var err error
+	f := &datastore.BugFilter{}
+
+	query := r.URL.Query()
+	bugs := datastore.NewStoreBugs()
+
+LOOP:
+	for k, v := range query {
+		switch k {
+		case "team_id":
+			f.TeamId, err = strconv.Atoi(v[0])
+			if err != nil {
+				break LOOP
+			}
+		case "priority":
+			f.Priority, err = strconv.Atoi(v[0])
+			if err != nil {
+				break LOOP
+			}
+		case "handler":
+			f.Handler, err = strconv.Atoi(v[0])
+			if err != nil {
+				break LOOP
+			}
+		case "created_by":
+			f.CreatedBy, err = strconv.Atoi(v[0])
+			if err != nil {
+				break LOOP
+			}
+		case "status":
+			f.Status, err = strconv.Atoi(v[0])
+			if err != nil {
+				break LOOP
+			}
+		case "offset":
+			f.Offset, err = strconv.Atoi(v[0])
+			if err != nil {
+				break LOOP
+			}
+		case "count":
+			f.Count, err = strconv.Atoi(v[0])
+			if err != nil {
+				break LOOP
+			}
+		case "date_from":
+			f.DateFrom, err = time.Parse("2006-01-02", v[0])
+			if err != nil {
+				break LOOP
+			}
+		case "date_to":
+			f.DateTo, err = time.Parse("2006-01-02", v[0])
+			if err != nil {
+				break LOOP
+			}
+		case "_":
+		default:
+			err = fmt.Errorf("invalid query string [%s]", k)
+		}
+	}
+	log.Printf("%v", f)
+
+	if err != nil {
+		log.Printf("ERROR: %s [query=%s]", err, r.URL.RawQuery)
+		marshalResult(w, nil, http.StatusBadRequest)
+		return
+	}
+
+	bl, err := bugs.GetBugs(f)
+	if err != nil {
+		marshalResult(w, nil, http.StatusInternalServerError)
+		return
+	}
+
+	marshalResult(w, bl, http.StatusOK)
 }
 
 //==================================== END ======================================
