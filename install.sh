@@ -13,10 +13,22 @@ log_start()
     echo ""
 }
 
-log()
+logi()
 {
     strNow=`date +'%Y-%m-%d %H:%M:%S'`
-    echo "[${strNow}] INFO: $*"
+    echo "[${strNow}] INFO:$*"
+}
+
+logw()
+{
+    strNow=`date +'%Y-%m-%d %H:%M:%S'`
+    echo "[${strNow}] WARN:$*"
+}
+
+loge()
+{
+    strNow=`date +'%Y-%m-%d %H:%M:%S'`
+    echo "[${strNow}]ERROR:$*"
 }
 
 log_end()
@@ -28,21 +40,34 @@ log_end()
     echo "[${strNow}]##########################################################"
 }
 
+safe_exec()
+{
+    if [ $# -eq 0 ]; then
+        exit 1
+    fi
+
+    $*
+    if [ $? -ne 0 ]; then
+        loge "fail to do [$*]"
+        exit 1
+    fi
+}
+
 do_work()
 {
     log_start
 
     ## install the database
-    psql -f ./datastore/pg.sql
-    psql -f ./datastore/test-data.sql
+    safe_exec psql -f ./datastore/pg.sql
+    safe_exec psql -f ./datastore/test-data.sql
 
     log_end
 }
 
 rm_db()
 {
-    psql -c "drop database if exists fixer;"
-    psql -c "drop user if exists pgtest;"
+    psql -c 'drop database if exists fixer;'
+    psql -c 'drop user if exists pgtest;'
 }
 
 ################################
