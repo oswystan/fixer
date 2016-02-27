@@ -72,6 +72,12 @@ func (b *storebugs) buildSql(f *BugFilter) (string, error) {
 	if f.Status != 0 {
 		str = fmt.Sprintf("%s and status = %d", str, f.Status)
 	}
+	if !f.DateFrom.IsZero() {
+		str = fmt.Sprintf("%s and created_time >= '%s'", str, f.DateFrom.Format("2006-01-02 15:04:05"))
+	}
+	if !f.DateTo.IsZero() {
+		str = fmt.Sprintf("%s and created_time <= '%s'", str, f.DateTo.Format("2006-01-02 15:04:05"))
+	}
 	if f.Count != 0 {
 		str = fmt.Sprintf("%s limit %d", str, f.Count)
 	}

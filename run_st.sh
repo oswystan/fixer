@@ -54,7 +54,7 @@ safe_exec()
 
 do_bug()
 {
-    safe_exec curl -XGET "http://localhost:8000/filter/buglist.html?team_id=1&handler=1&created_by=2&status=1&priority=1&date_from=2012-01-01&date_to=2015-01-01&offset=0&count=10" -w %{http_code}
+    safe_exec curl -XGET "http://localhost:8000/filter/buglist.html?team_id=1&handler=1&created_by=2&status=1&priority=1&date_from=2012-01-01&date_to=2017-01-01&offset=0&count=10" -w %{http_code}
     echo ""
 }
 
