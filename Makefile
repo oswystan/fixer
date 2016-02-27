@@ -33,7 +33,7 @@ st:
 	@echo "start st..."
 	@./fixer &
 	@sleep 1
-	@./st.sh
+	@./run_st.sh
 	@killall fixer
 	@echo "done."
 ut:
