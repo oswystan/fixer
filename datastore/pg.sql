@@ -58,7 +58,13 @@ ALTER TABLE users OWNER TO pgtest;
 ALTER TABLE team OWNER TO pgtest;
 ALTER TABLE user_team OWNER TO pgtest;
 
-ALTER SEQUENCE users_id_seq OWNER TO pgtest;
-ALTER SEQUENCE team_id_seq OWNER TO pgtest;
+CREATE FUNCTION get_nicky(user_id INT) RETURNS VARCHAR AS $$
+DECLARE
+    name VARCHAR;
+BEGIN
+    SELECT nicky FROM users WHERE id = user_id INTO name;
+    RETURN name;
+END;
+$$ LANGUAGE PLPGSQL;
 
 ---------------------------------------------------------------------------------

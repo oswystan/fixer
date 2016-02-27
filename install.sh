@@ -1,5 +1,4 @@
 #!/bin/bash
-log_file="log.txt"
 
 ################################
 # some basic functions for log

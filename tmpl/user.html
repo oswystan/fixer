@@ -577,10 +577,10 @@
             var one = trd.cloneNode(true);
             var date = new Date(bl[i].created_time);
             $(one).find("[name='id']").text(bl[i].id);
-            $(one).find("[name='handler']").text(bl[i].current_handler).unbind("click").click(showUserDetail);
+            $(one).find("[name='handler']").text(bl[i].handler_nicky).unbind("click").click(showUserDetail);
             $(one).find("[name='priority']").text(bl[i].priority);
             $(one).find("[name='status']").text(bl[i].status);
-            $(one).find("[name='created_by']").text(bl[i].created_by).unbind("click").click(showUserDetail);
+            $(one).find("[name='created_by']").text(bl[i].created_nicky).unbind("click").click(showUserDetail);
             $(one).find("[name='date']").text(date.Format("YYYY-MM-DD"));
             $(one).find("[name='title']").text(bl[i].title).unbind("click").click(showBugModify);
             tab.appendChild(one);

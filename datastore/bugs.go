@@ -17,7 +17,7 @@ import (
 	"github.com/oswystan/fixer/model"
 )
 
-var sqlBuglist = "select * from bugs_%s"
+var sqlBuglist = "select b.*, get_nicky(b.current_handler) as handler_nicky, get_nicky(b.created_by) as created_nicky from bugs_%s as b"
 
 type StoreBugs interface {
 	GetBugs(*BugFilter) ([]model.Bug, error)

@@ -13,13 +13,15 @@ package model
 import "time"
 
 type Bug struct {
-	Id             int32     `json:"id"`
+	Id             int       `json:"id"`
 	CreatedBy      int32     `json:"created_by"`
+	CreatedNicky   string    `json:"created_nicky"`
 	Title          string    `json:"title"`
-	Priority       int32     `json:"priority"`
+	Priority       int       `json:"priority"`
 	Detail         string    `json:"detail"`
 	Attachments    string    `json:"attchments"`
-	CurrentHandler string    `json:"current_handler"`
+	CurrentHandler int       `json:"current_handler"`
+	HandlerNicky   string    `json:"handler_nicky"`
 	Status         int32     `json:"status"`
 	CreatedTime    time.Time `json:"created_time"`
 	LastUpdate     time.Time `json:"last_update"`

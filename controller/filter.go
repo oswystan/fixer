@@ -132,16 +132,25 @@ func ServeFilterUser(w http.ResponseWriter, r *http.Request) {
 	ret := &model.ResultUserDetail{}
 
 	query := r.URL.Query()
+
+LOOP:
 	for k, v := range query {
 		switch k {
 		case "id":
 			id, _ := strconv.Atoi(v[0])
 			ret.User, err = us.GetUserById(id)
+			if err != nil {
+				break LOOP
+			}
 		case "nicky":
 			ret.User, err = us.GetUserByNicky(v[0])
+			if err != nil {
+				break LOOP
+			}
 		case "_":
 		default:
 			err = fmt.Errorf("bad request query")
+			break LOOP
 		}
 	}
 	if err != nil {
