@@ -25,6 +25,49 @@ func NewRouter() *mux.Router {
 	r.HandleFunc("/filter/teamlist.html", controller.ServeFilterTeamList).Methods("GET")
 	r.HandleFunc("/filter/memberlist.html", controller.ServeFilterMemberList).Methods("GET")
 	r.HandleFunc("/filter/buglist.html", controller.ServeFilterBugList).Methods("GET")
+
+	r.HandleFunc("/users", controller.ServeUnsupported).Methods("GET")
+	r.HandleFunc("/users", controller.ServeUnsupported).Methods("POST")
+	r.HandleFunc("/users", controller.ServeUnsupported).Methods("DELETE")
+	r.HandleFunc("/users/{id:[0-9]+}", controller.ServeUnsupported).Methods("GET")
+	r.HandleFunc("/users/{id:[0-9]+}", controller.ServeUnsupported).Methods("PUT")
+	r.HandleFunc("/users/{id:[0-9]+}", controller.ServeUnsupported).Methods("DELETE")
+	r.HandleFunc("/users/{id:[0-9]+}/teams/joined", controller.ServeUnsupported).Methods("GET")
+	r.HandleFunc("/users/{id:[0-9]+}/teams/created", controller.ServeUnsupported).Methods("GET")
+
+	r.HandleFunc("/teams", controller.ServeUnsupported).Methods("GET")
+	r.HandleFunc("/teams", controller.ServeUnsupported).Methods("POST")
+	r.HandleFunc("/teams", controller.ServeUnsupported).Methods("DELETE")
+	r.HandleFunc("/teams/{id:[0-9]+}", controller.ServeUnsupported).Methods("GET")
+	r.HandleFunc("/teams/{id:[0-9]+}", controller.ServeUnsupported).Methods("PUT")
+	r.HandleFunc("/teams/{id:[0-9]+}", controller.ServeUnsupported).Methods("DELETE")
+	r.HandleFunc("/teams/{id:[0-9]+}/users", controller.ServeUnsupported).Methods("GET")
+	r.HandleFunc("/teams/{id:[0-9]+}/users", controller.ServeUnsupported).Methods("DELETE")
+	r.HandleFunc("/teams/{id:[0-9]+}/users/{uid:[0-9]+}", controller.ServeUnsupported).Methods("PUT")
+	r.HandleFunc("/teams/{id:[0-9]+}/users/{uid:[0-9]+}", controller.ServeUnsupported).Methods("DELETE")
+
+	r.HandleFunc("/teams/{id:[0-9]+}/bugs", controller.ServeUnsupported).Methods("GET")
+	r.HandleFunc("/teams/{id:[0-9]+}/bugs", controller.ServeUnsupported).Methods("POST")
+	r.HandleFunc("/teams/{id:[0-9]+}/bugs", controller.ServeUnsupported).Methods("DELETE")
+	r.HandleFunc("/teams/{id:[0-9]+}/bugs/{bid:[0-9]+}", controller.ServeUnsupported).Methods("GET")
+	r.HandleFunc("/teams/{id:[0-9]+}/bugs/{bid:[0-9]+}", controller.ServeUnsupported).Methods("PUT")
+	r.HandleFunc("/teams/{id:[0-9]+}/bugs/{bid:[0-9]+}", controller.ServeUnsupported).Methods("DELETE")
+	r.HandleFunc("/teams/{id:[0-9]+}/bugs/{bid:[0-9]+}/logs", controller.ServeUnsupported).Methods("GET")
+	r.HandleFunc("/teams/{id:[0-9]+}/bugs/{bid:[0-9]+}/logs", controller.ServeUnsupported).Methods("POST")
+	r.HandleFunc("/teams/{id:[0-9]+}/bugs/{bid:[0-9]+}/logs", controller.ServeUnsupported).Methods("DELETE")
+
+	r.HandleFunc("/teams/{id:[0-9]+}/templates", controller.ServeUnsupported).Methods("GET")
+	r.HandleFunc("/teams/{id:[0-9]+}/templates", controller.ServeUnsupported).Methods("POST")
+	r.HandleFunc("/teams/{id:[0-9]+}/templates", controller.ServeUnsupported).Methods("DELETE")
+	r.HandleFunc("/teams/{id:[0-9]+}/templates/{tid:[0-9]+}", controller.ServeUnsupported).Methods("GET")
+	r.HandleFunc("/teams/{id:[0-9]+}/templates/{tid:[0-9]+}", controller.ServeUnsupported).Methods("PUT")
+	r.HandleFunc("/teams/{id:[0-9]+}/templates/{tid:[0-9]+}", controller.ServeUnsupported).Methods("DELETE")
+
+	r.HandleFunc("/stats/users", controller.ServeUnsupported).Methods("GET")
+	r.HandleFunc("/stats/teams", controller.ServeUnsupported).Methods("GET")
+	r.HandleFunc("/stats/teams/{id:[0-9]+}/bugs", controller.ServeUnsupported).Methods("GET")
+
+	r.HandleFunc("/syslog", controller.ServeUnsupported).Methods("GET")
 	return r
 }
 
