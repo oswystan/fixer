@@ -103,6 +103,11 @@ do_users()
     #safe_exec curl -XDELETE "http://localhost:8000/users/1"           -w "%{http_code}\n"
     #safe_exec curl -XDELETE "http://localhost:8000/users"           -w "%{http_code}\n"
     #safe_exec curl -XGET    "http://localhost:8000/users"           -w "%{http_code}\n"
+
+    data='{"nicky":"mark", "pwd":"123456a", "portrait":"static/images/1.jpg", "email":"mark@gmail.com"}'
+    curl -XPOST -d "$data" "http://localhost:8000/users" -w "%{http_code}\n"
+    safe_exec curl -XGET    "http://localhost:8000/users"           -w "%{http_code}\n"
+    safe_exec curl -XDELETE "http://localhost:8000/users"           -w "%{http_code}\n"
     logi "done."
 }
 

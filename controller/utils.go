@@ -13,6 +13,8 @@ package controller
 import (
 	"encoding/json"
 	"fmt"
+	"io"
+	"io/ioutil"
 	"net/http"
 	"net/url"
 	"reflect"
@@ -105,6 +107,22 @@ func decode(s []string, v reflect.Value) error {
 	}
 
 	return err
+}
+
+func decodeBody(r *http.Request, v ...interface{}) error {
+	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 8192))
+	if err != nil {
+		return err
+	}
+	r.Body.Close()
+
+	for i := 0; i < len(v); i++ {
+		if err = json.Unmarshal(body, v[i]); err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
 
 //==================================== END ======================================

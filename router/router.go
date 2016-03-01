@@ -27,7 +27,7 @@ func NewRouter() *mux.Router {
 	r.HandleFunc("/filter/buglist.html", controller.ServeFilterBugList).Methods("GET")
 
 	r.HandleFunc("/users", controller.GetUsers).Methods("GET")
-	r.HandleFunc("/users", controller.ServeUnsupported).Methods("POST")
+	r.HandleFunc("/users", controller.PostUser).Methods("POST")
 	r.HandleFunc("/users", controller.DeleteUsers).Methods("DELETE")
 	r.HandleFunc("/users/{id:[0-9]+}", controller.GetUser).Methods("GET")
 	r.HandleFunc("/users/{id:[0-9]+}", controller.ServeUnsupported).Methods("PUT")

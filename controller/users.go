@@ -13,6 +13,7 @@ package controller
 import (
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/gorilla/mux"
 	"github.com/oswystan/fixer/datastore"
@@ -47,11 +48,26 @@ func DeleteUsers(w http.ResponseWriter, r *http.Request) {
 }
 
 func PostUser(w http.ResponseWriter, r *http.Request) {
+	user := &model.User{}
+	pwd := &model.UserPwd{}
+	err := decodeBody(r, user, pwd)
+	if err != nil {
+		JsonErr(w, r, http.StatusBadRequest, err.Error())
+		return
+	}
+	user.RegisterDate = time.Now()
+	user.Pwd = pwd.Pwd
 
+	ds := datastore.NewStoreUsers()
+	newUser, err := ds.Create(user)
+	if err != nil {
+		JsonErr(w, r, http.StatusInternalServerError, err.Error())
+		return
+	}
+	Json(w, newUser, http.StatusOK)
 }
 
 func PutUser(w http.ResponseWriter, r *http.Request) {
-
 }
 
 func GetUser(w http.ResponseWriter, r *http.Request) {

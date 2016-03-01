@@ -20,6 +20,8 @@ var sqlUsers = `select * from users where nicky like '%s%%' offset ? limit ?`
 var sqlUser = `select * from users where id = ?`
 var sqlDelUser = `delete from users where id = ?`
 var sqlDelUsers = `delete from users`
+var sqlCreate = `insert into users(nicky, email, pwd, portrait, register_date) 
+				values (?nicky, ?email, ?pwd, ?portrait, ?register_date) returning *`
 
 type StoreUsers interface {
 	GetUsers(f *model.Filter) ([]model.User, error)
@@ -55,7 +57,9 @@ func (us *storeusers) GetUser(uid int) (*model.User, error) {
 }
 
 func (us *storeusers) Create(u *model.User) (*model.User, error) {
-	return nil, nil
+	db := GetDB()
+	_, err := db.pg.QueryOne(u, sqlCreate, u)
+	return u, err
 }
 
 func (us *storeusers) Update(u *model.User) (*model.User, error) {
