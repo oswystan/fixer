@@ -14,6 +14,7 @@ type Filter struct {
 	Offset int      `json:"offset"`
 	Limit  int      `json:"limit"`
 	UserId int      `json:"-"`
+	TeamId int      `json:"-"`
 	Q      string   `json:"q"`
 	Fields []string `json:"fields"`
 }

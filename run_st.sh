@@ -92,8 +92,11 @@ do_api()
 
 do_users()
 {
-    safe_exec curl -XGET    "http://localhost:8000/users/1/teams/joined" -w "%{http_code}\n"
-    safe_exec curl -XGET    "http://localhost:8000/users/1/teams/created" -w "%{http_code}\n"
+    #safe_exec curl -XGET    "http://localhost:8000/users/1/teams/joined"    -w "%{http_code}\n"
+    #safe_exec curl -XGET    "http://localhost:8000/users/1/teams/created"   -w "%{http_code}\n"
+    #safe_exec curl -XGET    "http://localhost:8000/teams/1"                 -w "%{http_code}\n"
+    #safe_exec curl -XGET    "http://localhost:8000/teams/1/users"           -w "%{http_code}\n"
+    safe_exec curl -XGET    "http://localhost:8000/teams?offset=1&limit=2"           -w "%{http_code}\n"
 }
 
 do_work()
