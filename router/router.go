@@ -26,12 +26,12 @@ func NewRouter() *mux.Router {
 	r.HandleFunc("/filter/memberlist.html", controller.ServeFilterMemberList).Methods("GET")
 	r.HandleFunc("/filter/buglist.html", controller.ServeFilterBugList).Methods("GET")
 
-	r.HandleFunc("/users", controller.ServeUnsupported).Methods("GET")
+	r.HandleFunc("/users", controller.GetUsers).Methods("GET")
 	r.HandleFunc("/users", controller.ServeUnsupported).Methods("POST")
-	r.HandleFunc("/users", controller.ServeUnsupported).Methods("DELETE")
-	r.HandleFunc("/users/{id:[0-9]+}", controller.ServeUnsupported).Methods("GET")
+	r.HandleFunc("/users", controller.DeleteUsers).Methods("DELETE")
+	r.HandleFunc("/users/{id:[0-9]+}", controller.GetUser).Methods("GET")
 	r.HandleFunc("/users/{id:[0-9]+}", controller.ServeUnsupported).Methods("PUT")
-	r.HandleFunc("/users/{id:[0-9]+}", controller.ServeUnsupported).Methods("DELETE")
+	r.HandleFunc("/users/{id:[0-9]+}", controller.DeleteUser).Methods("DELETE")
 	r.HandleFunc("/users/{id:[0-9]+}/teams/joined", controller.GetUserTeamsJoined).Methods("GET")
 	r.HandleFunc("/users/{id:[0-9]+}/teams/created", controller.GetUserTeamsCreated).Methods("GET")
 

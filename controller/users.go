@@ -21,15 +21,29 @@ import (
 
 func GetUsers(w http.ResponseWriter, r *http.Request) {
 	f := model.NewFilter()
-	err := decodeQuery(r.URL.RawPath, f)
+	err := decodeQuery(r.URL.RawQuery, f)
 	if err != nil {
 		JsonErr(w, r, http.StatusBadRequest, err.Error())
 		return
 	}
+
+	ds := datastore.NewStoreUsers()
+	ul, err := ds.GetUsers(f)
+	if err != nil {
+		JsonErr(w, r, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	Json(w, ul, http.StatusOK)
 }
 
 func DeleteUsers(w http.ResponseWriter, r *http.Request) {
-
+	ds := datastore.NewStoreUsers()
+	if err := ds.DeleteUsers(); err != nil {
+		JsonErr(w, r, http.StatusInternalServerError, err.Error())
+		return
+	}
+	Json(w, nil, http.StatusOK)
 }
 
 func PostUser(w http.ResponseWriter, r *http.Request) {
@@ -41,11 +55,27 @@ func PutUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetUser(w http.ResponseWriter, r *http.Request) {
+	id, _ := strconv.Atoi(mux.Vars(r)["id"])
+	ds := datastore.NewStoreUsers()
+	user, err := ds.GetUser(id)
+	if err != nil {
+		JsonErr(w, r, http.StatusInternalServerError, err.Error())
+		return
+	}
 
+	Json(w, user, http.StatusOK)
 }
 
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
+	id, _ := strconv.Atoi(mux.Vars(r)["id"])
+	ds := datastore.NewStoreUsers()
+	err := ds.Delete(id)
+	if err != nil {
+		JsonErr(w, r, http.StatusInternalServerError, err.Error())
+		return
+	}
 
+	Json(w, nil, http.StatusOK)
 }
 
 func GetUserTeamsJoined(w http.ResponseWriter, r *http.Request) {

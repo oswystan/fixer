@@ -21,6 +21,10 @@ type User struct {
 	LastLoginTime time.Time `json:"last_login_time"`
 }
 
+type UserPwd struct {
+	Pwd string `json:"password"`
+}
+
 type ResultUserDetail struct {
 	Error int   `json:"error"`
 	User  *User `json:"user"`
