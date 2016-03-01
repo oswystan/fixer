@@ -11,7 +11,6 @@
 package controller
 
 import (
-	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -21,23 +20,6 @@ import (
 	"github.com/oswystan/fixer/datastore"
 	"github.com/oswystan/fixer/model"
 )
-
-func marshalResult(w http.ResponseWriter, v interface{}, code int) {
-	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	if v == nil {
-		w.WriteHeader(code)
-		return
-	}
-
-	bs, err := json.MarshalIndent(v, "", "\t")
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
-	}
-	bs = append(bs, '\n')
-	w.WriteHeader(code)
-	w.Write(bs)
-}
 
 func ServeFilterTeam(w http.ResponseWriter, r *http.Request) {
 	log.Printf("serve team %s", r.URL.Path)
@@ -59,11 +41,11 @@ func ServeFilterTeam(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		log.Printf("ERROR: %s", err)
-		marshalResult(w, nil, http.StatusInternalServerError)
+		Json(w, nil, http.StatusInternalServerError)
 		return
 	}
 
-	marshalResult(w, ret, http.StatusOK)
+	Json(w, ret, http.StatusOK)
 }
 
 func ServeFilterMemberList(w http.ResponseWriter, r *http.Request) {
@@ -90,11 +72,11 @@ LOOP:
 	}
 
 	if err != nil {
-		marshalResult(w, nil, http.StatusInternalServerError)
+		Json(w, nil, http.StatusInternalServerError)
 		return
 	}
 
-	marshalResult(w, l, http.StatusOK)
+	Json(w, l, http.StatusOK)
 }
 
 func ServeFilterTeamList(w http.ResponseWriter, r *http.Request) {
@@ -122,11 +104,11 @@ func ServeFilterTeamList(w http.ResponseWriter, r *http.Request) {
 
 	l.Teams, err = tl.GetTeamList(filter)
 	if err != nil {
-		marshalResult(w, nil, http.StatusInternalServerError)
+		Json(w, nil, http.StatusInternalServerError)
 		return
 	}
 
-	marshalResult(w, l, http.StatusOK)
+	Json(w, l, http.StatusOK)
 }
 
 func ServeFilterUser(w http.ResponseWriter, r *http.Request) {
@@ -159,11 +141,11 @@ LOOP:
 	}
 	if err != nil {
 		log.Printf("ERROR: %s", err)
-		marshalResult(w, nil, http.StatusInternalServerError)
+		Json(w, nil, http.StatusInternalServerError)
 		return
 	}
 
-	marshalResult(w, ret, http.StatusOK)
+	Json(w, ret, http.StatusOK)
 }
 
 func ServeFilterBugList(w http.ResponseWriter, r *http.Request) {
@@ -230,18 +212,18 @@ LOOP:
 
 	if err != nil {
 		log.Printf("ERROR: %s [query=%s]", err, r.URL.RawQuery)
-		marshalResult(w, nil, http.StatusBadRequest)
+		Json(w, nil, http.StatusBadRequest)
 		return
 	}
 
 	bl, err := bugs.GetBugs(f)
 	if err != nil {
 		log.Printf("ERROR: %s", err)
-		marshalResult(w, nil, http.StatusInternalServerError)
+		Json(w, nil, http.StatusInternalServerError)
 		return
 	}
 
-	marshalResult(w, bl, http.StatusOK)
+	Json(w, bl, http.StatusOK)
 }
 
 //==================================== END ======================================

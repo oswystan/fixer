@@ -31,7 +31,7 @@ func ServeUnsupported(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Unsupported %s on %s", r.Method, r.URL.Path)
 	unsupported.Url = r.URL.RawPath
 	unsupported.Detail = fmt.Sprintf("[%s on %s]NOT supported now, coming soon.", r.Method, r.URL.Path)
-	marshalResult(w, unsupported, http.StatusForbidden)
+	Json(w, unsupported, http.StatusForbidden)
 }
 
 //==================================== END ======================================
