@@ -24,7 +24,7 @@ var sqlCreate = `insert into users(nicky, email, pwd, portrait, register_date)
 				values (?nicky, ?email, ?pwd, ?portrait, ?register_date) returning *`
 var sqlUpdate = `update users set nicky=?nicky, email=?email, pwd=?pwd, portrait=?portrait where id=?id returning *`
 
-type StoreUsers interface {
+type UserStore interface {
 	GetUsers(f *model.Filter) ([]model.User, error)
 	GetUser(uid int) (*model.User, error)
 
@@ -34,10 +34,10 @@ type StoreUsers interface {
 	DeleteUsers() error
 }
 
-type storeusers struct {
+type usertore struct {
 }
 
-func (us *storeusers) GetUsers(f *model.Filter) ([]model.User, error) {
+func (us *usertore) GetUsers(f *model.Filter) ([]model.User, error) {
 	var ul []model.User
 	db := GetDB()
 
@@ -50,39 +50,39 @@ func (us *storeusers) GetUsers(f *model.Filter) ([]model.User, error) {
 	return ul, nil
 }
 
-func (us *storeusers) GetUser(uid int) (*model.User, error) {
+func (us *usertore) GetUser(uid int) (*model.User, error) {
 	user := &model.User{}
 	db := GetDB()
 	_, err := db.pg.QueryOne(user, sqlUser, uid)
 	return user, err
 }
 
-func (us *storeusers) Create(u *model.User) (*model.User, error) {
+func (us *usertore) Create(u *model.User) (*model.User, error) {
 	db := GetDB()
 	_, err := db.pg.QueryOne(u, sqlCreate, u)
 	return u, err
 }
 
-func (us *storeusers) Update(u *model.User) (*model.User, error) {
+func (us *usertore) Update(u *model.User) (*model.User, error) {
 	db := GetDB()
 	_, err := db.pg.QueryOne(u, sqlUpdate, u)
 	return u, err
 }
 
-func (us *storeusers) Delete(id int) error {
+func (us *usertore) Delete(id int) error {
 	db := GetDB()
 	_, err := db.pg.Exec(sqlDelUser, id)
 	return err
 }
 
-func (us *storeusers) DeleteUsers() error {
+func (us *usertore) DeleteUsers() error {
 	db := GetDB()
 	_, err := db.pg.Exec(sqlDelUsers)
 	return err
 }
 
-func NewStoreUsers() StoreUsers {
-	return &storeusers{}
+func NewUserStore() UserStore {
+	return &usertore{}
 }
 
 //==================================== END ======================================

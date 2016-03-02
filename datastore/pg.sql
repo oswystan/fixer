@@ -21,8 +21,8 @@ CREATE TABLE users (
     email               VARCHAR(64) NOT NULL,
     pwd                 CHAR(32) NOT NULL,
     portrait            VARCHAR(128),
-    register_date       TIMESTAMP,
-    last_login_time     TIMESTAMP,
+    register_date       TIMESTAMP WITH TIME ZONE,
+    last_login_time     TIMESTAMP WITH TIME ZONE,
 
     PRIMARY KEY(id)
 );
@@ -32,7 +32,7 @@ CREATE TABLE team (
     name                VARCHAR(64) NOT NULL,
     leader_id           INT NOT NULL,
     goal                VARCHAR(1024),
-    created_date        TIMESTAMP,
+    created_date        TIMESTAMP WITH TIME ZONE,
     bug_table           CHAR(32),
     bug_table_status    INT,
     status              INT,
@@ -44,7 +44,7 @@ CREATE TABLE team (
 CREATE TABLE user_team (
     user_id             INT NOT NULL,
     team_id             INT NOT NULL,
-    join_date           TIMESTAMP NOT NULL,
+    join_date           TIMESTAMP WITH TIME ZONE NOT NULL,
 
     PRIMARY KEY(user_id, team_id)
 );

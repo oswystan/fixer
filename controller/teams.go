@@ -27,7 +27,7 @@ func GetTeams(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ds := datastore.NewStoreTeams()
+	ds := datastore.NewTeamStore()
 	tl, err := ds.GetTeams(f)
 	if err != nil {
 		JsonErr(w, r, http.StatusInternalServerError, err.Error())
@@ -47,7 +47,7 @@ func DeleteTeams(w http.ResponseWriter, r *http.Request) {
 
 func GetTeam(w http.ResponseWriter, r *http.Request) {
 	tid, _ := strconv.Atoi(mux.Vars(r)["id"])
-	ds := datastore.NewStoreTeams()
+	ds := datastore.NewTeamStore()
 	t, err := ds.GetTeam(tid)
 	if err != nil {
 		JsonErr(w, r, http.StatusInternalServerError, err.Error())
@@ -74,7 +74,7 @@ func GetTeamUsers(w http.ResponseWriter, r *http.Request) {
 	}
 
 	f.TeamId, _ = strconv.Atoi(mux.Vars(r)["id"])
-	ds := datastore.NewStoreTeams()
+	ds := datastore.NewTeamStore()
 	ul, err := ds.GetMembers(f)
 	if err != nil {
 		JsonErr(w, r, http.StatusInternalServerError, err.Error())

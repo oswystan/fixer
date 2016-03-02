@@ -28,7 +28,7 @@ func GetUsers(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ds := datastore.NewStoreUsers()
+	ds := datastore.NewUserStore()
 	ul, err := ds.GetUsers(f)
 	if err != nil {
 		JsonErr(w, r, http.StatusInternalServerError, err.Error())
@@ -39,7 +39,7 @@ func GetUsers(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteUsers(w http.ResponseWriter, r *http.Request) {
-	ds := datastore.NewStoreUsers()
+	ds := datastore.NewUserStore()
 	if err := ds.DeleteUsers(); err != nil {
 		JsonErr(w, r, http.StatusInternalServerError, err.Error())
 		return
@@ -58,7 +58,7 @@ func PostUser(w http.ResponseWriter, r *http.Request) {
 	user.RegisterDate = time.Now()
 	user.Pwd = pwd.Pwd
 
-	ds := datastore.NewStoreUsers()
+	ds := datastore.NewUserStore()
 	newUser, err := ds.Create(user)
 	if err != nil {
 		JsonErr(w, r, http.StatusInternalServerError, err.Error())
@@ -82,7 +82,7 @@ func PutUser(w http.ResponseWriter, r *http.Request) {
 	userId, _ := strconv.Atoi(mux.Vars(r)["id"])
 	user.Id = userId
 
-	ds := datastore.NewStoreUsers()
+	ds := datastore.NewUserStore()
 	newUser, err := ds.Update(user)
 	if err != nil {
 		JsonErr(w, r, http.StatusInternalServerError, err.Error())
@@ -93,7 +93,7 @@ func PutUser(w http.ResponseWriter, r *http.Request) {
 
 func GetUser(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(mux.Vars(r)["id"])
-	ds := datastore.NewStoreUsers()
+	ds := datastore.NewUserStore()
 	user, err := ds.GetUser(id)
 	if err != nil {
 		JsonErr(w, r, http.StatusInternalServerError, err.Error())
@@ -105,7 +105,7 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(mux.Vars(r)["id"])
-	ds := datastore.NewStoreUsers()
+	ds := datastore.NewUserStore()
 	err := ds.Delete(id)
 	if err != nil {
 		JsonErr(w, r, http.StatusInternalServerError, err.Error())
@@ -125,7 +125,7 @@ func GetUserTeamsJoined(w http.ResponseWriter, r *http.Request) {
 	}
 
 	f.UserId, _ = strconv.Atoi(mux.Vars(r)["id"])
-	ds := datastore.NewStoreTeams()
+	ds := datastore.NewTeamStore()
 	tl, err := ds.GetTeamsJoined(f)
 	if err != nil {
 		JsonErr(w, r, http.StatusInternalServerError, err.Error())
@@ -145,7 +145,7 @@ func GetUserTeamsCreated(w http.ResponseWriter, r *http.Request) {
 	}
 
 	f.UserId, _ = strconv.Atoi(mux.Vars(r)["id"])
-	ds := datastore.NewStoreTeams()
+	ds := datastore.NewTeamStore()
 	tl, err := ds.GetTeamsCreated(f)
 	if err != nil {
 		JsonErr(w, r, http.StatusInternalServerError, err.Error())

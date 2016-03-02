@@ -26,7 +26,7 @@ var sqlTeamMembers = `select u.id, u.nicky, u.portrait, u.email, u.last_login_ti
 var sqlTeam = `select *, get_nicky(t.leader_id) as leader_name from team as t where id = ?`
 var sqlTeams = `select *, get_nicky(t.leader_id) as leader_name from team as t where name like '%s%%' order by id offset ? limit ?`
 
-type StoreTeams interface {
+type TeamStore interface {
 	GetTeamsJoined(f *model.Filter) ([]model.TeamCreatedOrJoined, error)
 	GetTeamsCreated(f *model.Filter) ([]model.TeamCreatedOrJoined, error)
 	GetMembers(f *model.Filter) ([]model.User, error)
@@ -37,10 +37,10 @@ type StoreTeams interface {
 	Delete(t *model.Team) error
 }
 
-type storeTeams struct {
+type teamstore struct {
 }
 
-func (ds *storeTeams) GetTeamsJoined(f *model.Filter) ([]model.TeamCreatedOrJoined, error) {
+func (ds *teamstore) GetTeamsJoined(f *model.Filter) ([]model.TeamCreatedOrJoined, error) {
 	var tl []model.TeamCreatedOrJoined
 
 	db := GetDB()
@@ -52,7 +52,7 @@ func (ds *storeTeams) GetTeamsJoined(f *model.Filter) ([]model.TeamCreatedOrJoin
 	return tl, nil
 }
 
-func (ds *storeTeams) GetTeamsCreated(f *model.Filter) ([]model.TeamCreatedOrJoined, error) {
+func (ds *teamstore) GetTeamsCreated(f *model.Filter) ([]model.TeamCreatedOrJoined, error) {
 	var tl []model.TeamCreatedOrJoined
 
 	db := GetDB()
@@ -62,7 +62,7 @@ func (ds *storeTeams) GetTeamsCreated(f *model.Filter) ([]model.TeamCreatedOrJoi
 	}
 	return tl, nil
 }
-func (ds *storeTeams) GetMembers(f *model.Filter) ([]model.User, error) {
+func (ds *teamstore) GetMembers(f *model.Filter) ([]model.User, error) {
 	var ul []model.User
 
 	db := GetDB()
@@ -72,7 +72,7 @@ func (ds *storeTeams) GetMembers(f *model.Filter) ([]model.User, error) {
 	}
 	return ul, nil
 }
-func (ds *storeTeams) GetTeams(f *model.Filter) ([]model.Team, error) {
+func (ds *teamstore) GetTeams(f *model.Filter) ([]model.Team, error) {
 	var tl []model.Team
 
 	db := GetDB()
@@ -85,7 +85,7 @@ func (ds *storeTeams) GetTeams(f *model.Filter) ([]model.Team, error) {
 	return tl, nil
 }
 
-func (ds *storeTeams) GetTeam(tid int) (*model.Team, error) {
+func (ds *teamstore) GetTeam(tid int) (*model.Team, error) {
 	t := &model.Team{}
 	db := GetDB()
 	_, err := db.pg.QueryOne(t, sqlTeam, tid)
@@ -94,18 +94,18 @@ func (ds *storeTeams) GetTeam(tid int) (*model.Team, error) {
 	}
 	return t, nil
 }
-func (ds *storeTeams) Create(t *model.Team) (*model.Team, error) {
+func (ds *teamstore) Create(t *model.Team) (*model.Team, error) {
 	return nil, nil
 }
-func (ds *storeTeams) Update(t *model.Team) (*model.Team, error) {
+func (ds *teamstore) Update(t *model.Team) (*model.Team, error) {
 	return nil, nil
 }
-func (ds *storeTeams) Delete(t *model.Team) error {
+func (ds *teamstore) Delete(t *model.Team) error {
 	return nil
 }
 
-func NewStoreTeams() StoreTeams {
-	return &storeTeams{}
+func NewTeamStore() TeamStore {
+	return &teamstore{}
 }
 
 //==================================== END ======================================
