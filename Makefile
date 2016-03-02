@@ -23,12 +23,6 @@ install: fixer datastore/pg.sql
 	@./install.sh
 	@echo "done."
 
-clean:
-	@echo "start cleaning..."
-	@./install.sh rm_db
-	@rm -f fixer
-	@echo "done."
-
 st:
 	@echo "start st..."
 	@./fixer &
@@ -38,5 +32,11 @@ st:
 	@echo "done."
 ut:
 	@go test `go list  ./* 2>/dev/null`
+
+clean:
+	@echo "start cleaning..."
+	@./install.sh rm_db
+	@rm -f fixer
+	@echo "done."
 
 #######################################################################

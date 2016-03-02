@@ -30,7 +30,7 @@ func NewRouter() *mux.Router {
 	r.HandleFunc("/users", controller.PostUser).Methods("POST")
 	r.HandleFunc("/users", controller.DeleteUsers).Methods("DELETE")
 	r.HandleFunc("/users/{id:[0-9]+}", controller.GetUser).Methods("GET")
-	r.HandleFunc("/users/{id:[0-9]+}", controller.ServeUnsupported).Methods("PUT")
+	r.HandleFunc("/users/{id:[0-9]+}", controller.PutUser).Methods("PUT")
 	r.HandleFunc("/users/{id:[0-9]+}", controller.DeleteUser).Methods("DELETE")
 	r.HandleFunc("/users/{id:[0-9]+}/teams/joined", controller.GetUserTeamsJoined).Methods("GET")
 	r.HandleFunc("/users/{id:[0-9]+}/teams/created", controller.GetUserTeamsCreated).Methods("GET")

@@ -68,6 +68,27 @@ func PostUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func PutUser(w http.ResponseWriter, r *http.Request) {
+	user := &model.User{}
+	pwd := &model.UserPwd{}
+	err := decodeBody(r, user, pwd)
+	if err != nil {
+		JsonErr(w, r, http.StatusBadRequest, err.Error())
+		return
+	}
+	user.RegisterDate = time.Now()
+	if len(pwd.Pwd) != 0 {
+		user.Pwd = pwd.Pwd
+	}
+	userId, _ := strconv.Atoi(mux.Vars(r)["id"])
+	user.Id = userId
+
+	ds := datastore.NewStoreUsers()
+	newUser, err := ds.Update(user)
+	if err != nil {
+		JsonErr(w, r, http.StatusInternalServerError, err.Error())
+		return
+	}
+	Json(w, newUser, http.StatusOK)
 }
 
 func GetUser(w http.ResponseWriter, r *http.Request) {

@@ -22,6 +22,7 @@ var sqlDelUser = `delete from users where id = ?`
 var sqlDelUsers = `delete from users`
 var sqlCreate = `insert into users(nicky, email, pwd, portrait, register_date) 
 				values (?nicky, ?email, ?pwd, ?portrait, ?register_date) returning *`
+var sqlUpdate = `update users set nicky=?nicky, email=?email, pwd=?pwd, portrait=?portrait where id=?id returning *`
 
 type StoreUsers interface {
 	GetUsers(f *model.Filter) ([]model.User, error)
@@ -63,7 +64,9 @@ func (us *storeusers) Create(u *model.User) (*model.User, error) {
 }
 
 func (us *storeusers) Update(u *model.User) (*model.User, error) {
-	return nil, nil
+	db := GetDB()
+	_, err := db.pg.QueryOne(u, sqlUpdate, u)
+	return u, err
 }
 
 func (us *storeusers) Delete(id int) error {

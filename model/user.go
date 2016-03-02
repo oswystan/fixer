@@ -12,7 +12,7 @@ package model
 import "time"
 
 type User struct {
-	Id            int32     `json:"id"`
+	Id            int       `json:"id"`
 	Nicky         string    `json:"nicky"`
 	Email         string    `json:"email"`
 	Pwd           string    `json:"-"`
