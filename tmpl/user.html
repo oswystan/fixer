@@ -92,9 +92,9 @@
             </ul>
         </div>
         <div class="operation">
-            <a name="op-search"     class="btn" href="javascript:void(0)">SEARCH..</a>
-            <a name="op-new"        class="btn" href="javascript:void(0)">NEW</a>
-            <a name="op-export"     class="btn" href="javascript:void(0)">EXPORT</a>
+            <a name="op-search" class="btn" href="javascript:void(0)">SEARCH..</a>
+            <a name="op-new" class="btn" href="javascript:void(0)">NEW</a>
+            <a name="op-export" class="btn" href="javascript:void(0)">EXPORT</a>
             <a name="op-export-all" class="btn" href="javascript:void(0)">EXPORT-ALL</a>
         </div>
         <table name="buglist">
@@ -344,20 +344,22 @@
                 <li data-label="TITLE"><input name="title" type="text"></li>
                 <li data-label="DETAIL"><textarea name="detail"></textarea></li>
                 <li data-label="TEAM"><input name="team-name" type="text"></li>
-                <li data-label="ASSIGN TO"><input name="handler" type="text"></li><br>
+                <li data-label="ASSIGN TO"><input name="handler" type="text"></li>
+                <br>
                 <li data-label="TEMPLATE">
                     <select name="template">
                         <option value="1">TMPLATE1</option>
                     </select>
                 </li>
                 <li data-label="PRIORITY">
-                    <select name="priority" >
+                    <select name="priority">
                         <option value="1">normal</option>
                         <option value="2">high</option>
                         <option value="3">suggestion</option>
                         <option value="4">fatal</option>
                     </select>
-                </li><br>
+                </li>
+                <br>
                 <li data-label="ATTACHMENT">
                     <a name="attachment" class="btn" href="javascript:void(0)">ADD</a>
                     <input name="input-attachment" type="file" multiple="multiple" style="display: none;">
@@ -427,7 +429,11 @@
                     </p>
                     <p>
                         2012-12-26 21:12:20<br>
-                        The EP consists entirely of upbeat tracks which have a rock and roll, jazz, and swing feel. It does not contain any examples of the relaxed tempo songs Dire Straits had been known for. It is the first release to feature drummer Terry Williams, who filled the spot after drummer Pick Withers left the group in August 1982. The tracks 'Badges, Posters, Stickers & T-Shirts' and 'If I Had You' have never been released on cd.
+                        The EP consists entirely of upbeat tracks which have a rock and roll, jazz, and swing feel. It
+                        does not contain any examples of the relaxed tempo songs Dire Straits had been known for. It is
+                        the first release to feature drummer Terry Williams, who filled the spot after drummer Pick
+                        Withers left the group in August 1982. The tracks 'Badges, Posters, Stickers & T-Shirts' and 'If
+                        I Had You' have never been released on cd.
                     </p>
                 </li>
             </ul>
@@ -539,7 +545,7 @@
 
         console.log(this.name + "=" + this.innerText);
         UserFilter.id = this.name == "user-id" ? this.innerText : -1;
-        UserFilter.nicky = (this.name == "user-nicky" || this.name == "team-leader" || this.name=="created_by" || this.name == "handler" ? this.innerText : "");
+        UserFilter.nicky = (this.name == "user-nicky" || this.name == "team-leader" || this.name == "created_by" || this.name == "handler" ? this.innerText : "");
         UserFilter.go();
         var u = UserFilter.json();
 
@@ -633,19 +639,22 @@
         item.style.display = "";
 
         div.innerHTML = "";
-        for (var i = 0; i < m.members.length; i++) {
-            var oneTeam = item.cloneNode(true);
-            $(oneTeam).find("[name='portrait']").attr("src", m.members[i].portrait);
-            $(oneTeam).find("[name='user-id']").text(m.members[i].id).unbind("click").click(
-                    showUserDetail
-            );
-            $(oneTeam).find("[name='user-nicky']").text(m.members[i].nicky).unbind("click").click(
-                    showUserDetail
-            );
-            $(oneTeam).find("[name='user-email']").text(m.members[i].email);
-            div.appendChild(oneTeam);
+        if (m.members != null) {
+            for (var i = 0; i < m.members.length; i++) {
+                var oneTeam = item.cloneNode(true);
+                $(oneTeam).find("[name='portrait']").attr("src", m.members[i].portrait);
+                $(oneTeam).find("[name='user-id']").text(m.members[i].id).unbind("click").click(
+                        showUserDetail
+                );
+                $(oneTeam).find("[name='user-nicky']").text(m.members[i].nicky).unbind("click").click(
+                        showUserDetail
+                );
+                $(oneTeam).find("[name='user-email']").text(m.members[i].email);
+                div.appendChild(oneTeam);
+            }
         }
-        if (m.members.length <= 0) {
+
+        if (m.members == null || m.members.length <= 0) {
             item.style.display = "none";
             div.appendChild(item);
         }
@@ -800,11 +809,11 @@
         }
     });
 
-    Date.prototype.Format = function(fmt) {
+    Date.prototype.Format = function (fmt) {
 
         str = fmt;
         str = str.replace(/yyyy|YYYY/, this.getFullYear());
-        str = str.replace(/MM/, this.getMonth()>=9 ? this.getMonth()+1 : '0' + (this.getMonth()+1));
+        str = str.replace(/MM/, this.getMonth() >= 9 ? this.getMonth() + 1 : '0' + (this.getMonth() + 1));
         str = str.replace(/DD/, this.getDate());
 
         return str;

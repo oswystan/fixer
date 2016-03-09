@@ -11,6 +11,8 @@
 package controller
 
 import (
+	"crypto/sha1"
+	"fmt"
 	"net/http"
 	"strconv"
 	"time"
@@ -46,6 +48,9 @@ func PostTeam(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	team.CreatedDate = time.Now()
+	str := fmt.Sprintf("%s%s", team.Name, team.CreatedDate)
+	hdata := sha1.Sum([]byte(str))
+	team.BugTable = fmt.Sprintf("%x", hdata)
 
 	ds := datastore.NewTeamStore()
 	newTeam, err := ds.Create(team)

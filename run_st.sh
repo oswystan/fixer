@@ -112,9 +112,11 @@ do_users()
 do_teams()
 {
     logi "test teams releated features..."
-    safe_exec curl -XGET    "http://localhost:8000/teams/1"                 -w "%{http_code}\n"
-    safe_exec curl -XGET    "http://localhost:8000/teams/1/users"           -w "%{http_code}\n"
-    safe_exec curl -XGET    "http://localhost:8000/teams?q=j&offset=1&limit=2"  -w "%{http_code}\n"
+    #safe_exec curl -XGET    "http://localhost:8000/teams/1"                 -w "%{http_code}\n"
+    #safe_exec curl -XGET    "http://localhost:8000/teams/1/users"           -w "%{http_code}\n"
+    #safe_exec curl -XGET    "http://localhost:8000/teams?q=j&offset=1&limit=2"  -w "%{http_code}\n"
+    data_post='{"name":"sherlock-fox", "leader_id":2, "goal":"make team like a fox", "logo":"static/images/1.jpg"}'
+    curl -XPOST -d "$data_post" "http://localhost:8000/teams"               -w "%{http_code}\n"
 }
 
 do_work()

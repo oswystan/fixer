@@ -33,7 +33,7 @@ CREATE TABLE team (
     leader_id           INT NOT NULL,
     goal                VARCHAR(1024),
     created_date        TIMESTAMP WITH TIME ZONE,
-    bug_table           CHAR(32),
+    bug_table           CHAR(40),
     bug_table_status    INT,
     status              INT,
     logo                VARCHAR(128),
