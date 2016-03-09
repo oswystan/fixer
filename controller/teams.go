@@ -13,6 +13,7 @@ package controller
 import (
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/gorilla/mux"
 	"github.com/oswystan/fixer/datastore"
@@ -38,9 +39,30 @@ func GetTeams(w http.ResponseWriter, r *http.Request) {
 }
 
 func PostTeam(w http.ResponseWriter, r *http.Request) {
+	team := &model.Team{}
+	err := decodeBody(r, team)
+	if err != nil {
+		JsonErr(w, r, http.StatusBadRequest, err.Error())
+		return
+	}
+	team.CreatedDate = time.Now()
+
+	ds := datastore.NewTeamStore()
+	newTeam, err := ds.Create(team)
+	if err != nil {
+		JsonErr(w, r, http.StatusInternalServerError, err.Error())
+		return
+	}
+	Json(w, newTeam, http.StatusOK)
+}
+
+func PutTeam(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func DeleteTeam(w http.ResponseWriter, r *http.Request) {
+
+}
 func DeleteTeams(w http.ResponseWriter, r *http.Request) {
 
 }
@@ -55,14 +77,6 @@ func GetTeam(w http.ResponseWriter, r *http.Request) {
 	}
 
 	Json(w, t, http.StatusOK)
-}
-
-func PutTeam(w http.ResponseWriter, r *http.Request) {
-
-}
-
-func DeleteTeam(w http.ResponseWriter, r *http.Request) {
-
 }
 
 func GetTeamUsers(w http.ResponseWriter, r *http.Request) {

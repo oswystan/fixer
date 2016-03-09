@@ -14,7 +14,7 @@ import "testing"
 
 func openDB() error {
 	db := GetDB()
-	err := db.Open("pgtest", "123456", "fixer")
+	err := db.Open("fixer", "fixer", "fixer")
 	return err
 }
 func closeDB() error {

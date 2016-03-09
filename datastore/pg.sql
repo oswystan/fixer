@@ -12,8 +12,8 @@ DROP DATABASE IF EXISTS fixer;
 CREATE DATABASE fixer;
 \c fixer;
 
-DROP USER IF EXISTS pgtest;
-CREATE USER pgtest WITH CREATEDB LOGIN PASSWORD '123456';
+DROP USER IF EXISTS fixer;
+CREATE USER fixer WITH CREATEDB LOGIN PASSWORD 'fixer';
 
 CREATE TABLE users (
     id                  SERIAL NOT NULL,
@@ -54,9 +54,9 @@ CREATE UNIQUE INDEX idx_users_nicky ON users(nicky);
 CREATE UNIQUE INDEX idx_team_name ON team(name);
 CREATE INDEX idx_team_leader ON team(leader_id);
 
-ALTER TABLE users OWNER TO pgtest;
-ALTER TABLE team OWNER TO pgtest;
-ALTER TABLE user_team OWNER TO pgtest;
+ALTER TABLE users OWNER TO fixer;
+ALTER TABLE team OWNER TO fixer;
+ALTER TABLE user_team OWNER TO fixer;
 
 -- FUNCTIONS
 

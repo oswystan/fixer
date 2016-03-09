@@ -70,8 +70,8 @@ CREATE INDEX idx_bugs_created_time ON bugs_1aaaaa(created_time);
 CREATE INDEX idx_bugs_last_update ON bugs_1aaaaa(last_update);
 CREATE INDEX idx_buglog_bugid ON buglog_1aaaaa(bug_id);
 
-ALTER TABLE bugs_1aaaaa OWNER TO pgtest;
-ALTER TABLE buglog_1aaaaa OWNER TO pgtest;
+ALTER TABLE bugs_1aaaaa OWNER TO fixer;
+ALTER TABLE buglog_1aaaaa OWNER TO fixer;
 
 insert into bugs_1aaaaa
     (created_by, current_handler, priority, status, created_time, last_update, title, attachments, detail) 

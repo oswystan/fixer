@@ -86,30 +86,35 @@ do_api()
     safe_exec curl -XGET    "http://localhost:8000/users/1" -w "%{http_code}\n"
     safe_exec curl -XPUT    "http://localhost:8000/users/1" -w "%{http_code}\n"
     safe_exec curl -XDELETE "http://localhost:8000/users/1" -w "%{http_code}\n"
-    safe_exec curl -XGET    "http://localhost:8000/users/1/teams/joined" -w "%{http_code}\n"
+    safe_exec curl -XGET    "http://localhost:8000/users/1/teams/joined"  -w "%{http_code}\n"
     safe_exec curl -XGET    "http://localhost:8000/users/1/teams/created" -w "%{http_code}\n"
 }
 
 do_users()
 {
     logi "test users releated features..."
-    #safe_exec curl -XGET    "http://localhost:8000/users/1/teams/joined"    -w "%{http_code}\n"
-    #safe_exec curl -XGET    "http://localhost:8000/users/1/teams/created"   -w "%{http_code}\n"
-    #safe_exec curl -XGET    "http://localhost:8000/teams/1"                 -w "%{http_code}\n"
-    #safe_exec curl -XGET    "http://localhost:8000/teams/1/users"           -w "%{http_code}\n"
-    #safe_exec curl -XGET    "http://localhost:8000/teams?offset=1&limit=2"           -w "%{http_code}\n"
-    #safe_exec curl -XGET    "http://localhost:8000/users?q=j"           -w "%{http_code}\n"
-    #safe_exec curl -XGET    "http://localhost:8000/users/2"           -w "%{http_code}\n"
-    #safe_exec curl -XDELETE "http://localhost:8000/users/1"           -w "%{http_code}\n"
-    #safe_exec curl -XDELETE "http://localhost:8000/users"           -w "%{http_code}\n"
-    #safe_exec curl -XGET    "http://localhost:8000/users"           -w "%{http_code}\n"
+    safe_exec curl -XGET    "http://localhost:8000/users/1/teams/joined"    -w "%{http_code}\n"
+    safe_exec curl -XGET    "http://localhost:8000/users/1/teams/created"   -w "%{http_code}\n"
+    safe_exec curl -XGET    "http://localhost:8000/users?q=j"               -w "%{http_code}\n"
+    safe_exec curl -XGET    "http://localhost:8000/users/2"                 -w "%{http_code}\n"
+    safe_exec curl -XDELETE "http://localhost:8000/users/1"                 -w "%{http_code}\n"
+    safe_exec curl -XDELETE "http://localhost:8000/users"                   -w "%{http_code}\n"
+    safe_exec curl -XGET    "http://localhost:8000/users"                   -w "%{http_code}\n"
 
-    data='{"nicky":"mark", "pwd":"123456a", "portrait":"static/images/1.jpg", "email":"mark@gmail.com"}'
-    curl -XPOST -d "$data" "http://localhost:8000/users" -w "%{http_code}\n"
-    safe_exec curl -XGET    "http://localhost:8000/users"           -w "%{http_code}\n"
-    data='{"nicky":"mark", "pwd":"123456a", "portrait":"static/images/1.jpg", "email":"marks@gmail.com"}'
-    curl -XPUT -d "$data"   "http://localhost:8000/users/3"           -w "%{http_code}\n"
+    data_post='{"nicky":"mark", "pwd":"123456a", "portrait":"static/images/1.jpg", "email":"mark@gmail.com"}'
+    data_put='{"nicky":"mark", "pwd":"123456a", "portrait":"static/images/1.jpg", "email":"marks@gmail.com"}'
+    curl -XPOST -d "$data_post" "http://localhost:8000/users"               -w "%{http_code}\n"
+    safe_exec curl -XGET    "http://localhost:8000/users"                   -w "%{http_code}\n"
+    curl -XPUT -d "$data_put"   "http://localhost:8000/users/3"             -w "%{http_code}\n"
     logi "done."
+}
+
+do_teams()
+{
+    logi "test teams releated features..."
+    safe_exec curl -XGET    "http://localhost:8000/teams/1"                 -w "%{http_code}\n"
+    safe_exec curl -XGET    "http://localhost:8000/teams/1/users"           -w "%{http_code}\n"
+    safe_exec curl -XGET    "http://localhost:8000/teams?q=j&offset=1&limit=2"  -w "%{http_code}\n"
 }
 
 do_work()
@@ -121,7 +126,8 @@ do_work()
     #do_member
     #do_user
     #do_api
-    do_users
+    #do_users
+    do_teams
 
     log_end
 }

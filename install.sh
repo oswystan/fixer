@@ -66,7 +66,7 @@ do_work()
 rm_db()
 {
     psql -c 'drop database if exists fixer;'
-    psql -c 'drop user if exists pgtest;'
+    psql -c 'drop user if exists fixer;'
 }
 
 ################################

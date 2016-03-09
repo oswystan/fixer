@@ -25,6 +25,12 @@ var sqlTeamMembers = `select u.id, u.nicky, u.portrait, u.email, u.last_login_ti
 				from users as u inner join user_team as ut on ut.team_id = ? and u.id = ut.user_id offset ? limit ?;`
 var sqlTeam = `select *, get_nicky(t.leader_id) as leader_name from team as t where id = ?`
 var sqlTeams = `select *, get_nicky(t.leader_id) as leader_name from team as t where name like '%s%%' order by id offset ? limit ?`
+var sqlCreateTeam = `insert into team(name, leader_id, goal, created_date, bug_table, bug_table_status, status, logo)
+				values(?name, ?leader_id, ?goal, ?created_date, ?bug_table, ?bug_table_status, ?status, ?logo) returning *`
+var sqlUpdateTeam = `update team set name=?name, leader_id=?leader_id, goal=?goal, created_date=?created_date, 
+				bug_table=?bug_table, bug_table_status=?bug_table_status, status=?status, logo=?logo) returning *`
+var sqlDelTeam = `delete from team where id=?`
+var sqlDelTeams = `delete from team`
 
 type TeamStore interface {
 	GetTeamsJoined(f *model.Filter) ([]model.TeamCreatedOrJoined, error)
@@ -34,7 +40,8 @@ type TeamStore interface {
 	GetTeam(tid int) (*model.Team, error)
 	Create(t *model.Team) (*model.Team, error)
 	Update(t *model.Team) (*model.Team, error)
-	Delete(t *model.Team) error
+	Delete(int) error
+	DeleteAll() error
 }
 
 type teamstore struct {
@@ -74,7 +81,6 @@ func (ds *teamstore) GetMembers(f *model.Filter) ([]model.User, error) {
 }
 func (ds *teamstore) GetTeams(f *model.Filter) ([]model.Team, error) {
 	var tl []model.Team
-
 	db := GetDB()
 
 	sql := fmt.Sprintf(sqlTeams, f.Q)
@@ -89,19 +95,27 @@ func (ds *teamstore) GetTeam(tid int) (*model.Team, error) {
 	t := &model.Team{}
 	db := GetDB()
 	_, err := db.pg.QueryOne(t, sqlTeam, tid)
-	if err != nil {
-		return nil, err
-	}
-	return t, nil
+	return t, err
 }
 func (ds *teamstore) Create(t *model.Team) (*model.Team, error) {
-	return nil, nil
+	db := GetDB()
+	_, err := db.pg.QueryOne(t, sqlCreateTeam, t)
+	return t, err
 }
 func (ds *teamstore) Update(t *model.Team) (*model.Team, error) {
-	return nil, nil
+	db := GetDB()
+	_, err := db.pg.QueryOne(t, sqlCreateTeam, t)
+	return t, err
 }
-func (ds *teamstore) Delete(t *model.Team) error {
-	return nil
+func (ds *teamstore) Delete(tid int) error {
+	db := GetDB()
+	_, err := db.pg.Exec(sqlDelTeam, tid)
+	return err
+}
+func (ds *teamstore) DeleteAll() error {
+	db := GetDB()
+	_, err := db.pg.Exec(sqlDelTeams)
+	return err
 }
 
 func NewTeamStore() TeamStore {

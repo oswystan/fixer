@@ -23,7 +23,7 @@ func main() {
 	// connect database
 	//TODO: put connect options into environment variables
 	db := datastore.GetDB()
-	err := db.Open("pgtest", "123456", "fixer")
+	err := db.Open("fixer", "fixer", "fixer")
 	if err != nil {
 		log.Printf("ERROR: %s", err)
 		return
