@@ -814,7 +814,7 @@
         str = fmt;
         str = str.replace(/yyyy|YYYY/, this.getFullYear());
         str = str.replace(/MM/, this.getMonth() >= 9 ? this.getMonth() + 1 : '0' + (this.getMonth() + 1));
-        str = str.replace(/DD/, this.getDate());
+        str = str.replace(/DD/, this.getDate() >= 9 ? this.getDate() : "0" + this.getDate());
 
         return str;
     }

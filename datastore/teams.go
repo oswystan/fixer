@@ -32,6 +32,10 @@ var sqlUpdateTeam = `update team set name=?name, leader_id=?leader_id, goal=?goa
 var sqlDelTeam = `delete from team where id=?`
 var sqlDelTeams = `delete from team`
 
+var sqlAddMember = `insert into user_team(team_id, user_id, join_date) values(?, ?, now())`
+var sqlDeleteMember = `delete from user_team where team_id = ? and user_id = ?`
+var sqlDeleteMembers = `delete from user_team where team_id = ?`
+
 type TeamStore interface {
 	GetTeamsJoined(f *model.Filter) ([]model.TeamCreatedOrJoined, error)
 	GetTeamsCreated(f *model.Filter) ([]model.TeamCreatedOrJoined, error)
@@ -42,6 +46,10 @@ type TeamStore interface {
 	Update(t *model.Team) (*model.Team, error)
 	Delete(int) error
 	DeleteAll() error
+
+	AddMember(tid int, uid int) error
+	DeleteMember(tid int, uid int) error
+	DeleteMembers(tid int) error
 }
 
 type teamstore struct {
@@ -115,6 +123,21 @@ func (ds *teamstore) Delete(tid int) error {
 func (ds *teamstore) DeleteAll() error {
 	db := GetDB()
 	_, err := db.pg.Exec(sqlDelTeams)
+	return err
+}
+func (ds *teamstore) AddMember(tid, uid int) error {
+	db := GetDB()
+	_, err := db.pg.Exec(sqlAddMember, tid, uid)
+	return err
+}
+func (ds *teamstore) DeleteMember(tid, uid int) error {
+	db := GetDB()
+	_, err := db.pg.Exec(sqlDeleteMember, tid, uid)
+	return err
+}
+func (ds *teamstore) DeleteMembers(tid int) error {
+	db := GetDB()
+	_, err := db.pg.Exec(sqlDeleteMembers, tid)
 	return err
 }
 

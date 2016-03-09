@@ -42,9 +42,9 @@ func NewRouter() *mux.Router {
 	r.HandleFunc("/teams/{id:[0-9]+}", controller.ServeUnsupported).Methods("PUT")
 	r.HandleFunc("/teams/{id:[0-9]+}", controller.DeleteTeam).Methods("DELETE")
 	r.HandleFunc("/teams/{id:[0-9]+}/users", controller.GetTeamUsers).Methods("GET")
-	r.HandleFunc("/teams/{id:[0-9]+}/users", controller.ServeUnsupported).Methods("DELETE")
-	r.HandleFunc("/teams/{id:[0-9]+}/users/{uid:[0-9]+}", controller.ServeUnsupported).Methods("PUT")
-	r.HandleFunc("/teams/{id:[0-9]+}/users/{uid:[0-9]+}", controller.ServeUnsupported).Methods("DELETE")
+	r.HandleFunc("/teams/{id:[0-9]+}/users", controller.DeleteTeamUsers).Methods("DELETE")
+	r.HandleFunc("/teams/{id:[0-9]+}/users/{uid:[0-9]+}", controller.PutTeamUser).Methods("PUT")
+	r.HandleFunc("/teams/{id:[0-9]+}/users/{uid:[0-9]+}", controller.DeleteTeamUser).Methods("DELETE")
 
 	r.HandleFunc("/teams/{id:[0-9]+}/bugs", controller.ServeUnsupported).Methods("GET")
 	r.HandleFunc("/teams/{id:[0-9]+}/bugs", controller.ServeUnsupported).Methods("POST")

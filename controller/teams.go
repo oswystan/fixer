@@ -118,15 +118,40 @@ func GetTeamUsers(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteTeamUsers(w http.ResponseWriter, r *http.Request) {
-
+	id, _ := strconv.Atoi(mux.Vars(r)["id"])
+	ds := datastore.NewTeamStore()
+	err := ds.DeleteMembers(id)
+	if err != nil {
+		JsonErr(w, r, http.StatusInternalServerError, err.Error())
+		return
+	}
+	Json(w, nil, http.StatusOK)
 }
 
 func PutTeamUser(w http.ResponseWriter, r *http.Request) {
+	id, _ := strconv.Atoi(mux.Vars(r)["id"])
+	uid, _ := strconv.Atoi(mux.Vars(r)["uid"])
 
+	ds := datastore.NewTeamStore()
+	err := ds.AddMember(id, uid)
+	if err != nil {
+		JsonErr(w, r, http.StatusInternalServerError, err.Error())
+		return
+	}
+	Json(w, nil, http.StatusOK)
 }
 
 func DeleteTeamUser(w http.ResponseWriter, r *http.Request) {
+	id, _ := strconv.Atoi(mux.Vars(r)["id"])
+	uid, _ := strconv.Atoi(mux.Vars(r)["uid"])
 
+	ds := datastore.NewTeamStore()
+	err := ds.DeleteMember(id, uid)
+	if err != nil {
+		JsonErr(w, r, http.StatusInternalServerError, err.Error())
+		return
+	}
+	Json(w, nil, http.StatusOK)
 }
 
 //==================================== END ======================================
