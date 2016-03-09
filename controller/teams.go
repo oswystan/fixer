@@ -62,7 +62,21 @@ func PostTeam(w http.ResponseWriter, r *http.Request) {
 }
 
 func PutTeam(w http.ResponseWriter, r *http.Request) {
+	team := &model.Team{}
+	err := decodeBody(r, team)
+	if err != nil {
+		JsonErr(w, r, http.StatusBadRequest, err.Error())
+		return
+	}
+	team.Id, _ = strconv.Atoi(mux.Vars(r)["id"])
 
+	ds := datastore.NewTeamStore()
+	newTeam, err := ds.Update(team)
+	if err != nil {
+		JsonErr(w, r, http.StatusInternalServerError, err.Error())
+		return
+	}
+	Json(w, newTeam, http.StatusOK)
 }
 
 func DeleteTeam(w http.ResponseWriter, r *http.Request) {

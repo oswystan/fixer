@@ -13,7 +13,7 @@ package model
 import "time"
 
 type Team struct {
-	Id             int32     `json:"id"`
+	Id             int       `json:"id"`
 	Name           string    `json:"name"`
 	LeaderId       int32     `json:"leader_id"`
 	LeaderName     string    `json:"leader_name"`

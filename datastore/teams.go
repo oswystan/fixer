@@ -27,8 +27,7 @@ var sqlTeam = `select *, get_nicky(t.leader_id) as leader_name from team as t wh
 var sqlTeams = `select *, get_nicky(t.leader_id) as leader_name from team as t where name like '%s%%' order by id offset ? limit ?`
 var sqlCreateTeam = `insert into team(name, leader_id, goal, created_date, bug_table, bug_table_status, status, logo)
 				values(?name, ?leader_id, ?goal, ?created_date, ?bug_table, ?bug_table_status, ?status, ?logo) returning *`
-var sqlUpdateTeam = `update team set name=?name, leader_id=?leader_id, goal=?goal, created_date=?created_date, 
-				bug_table=?bug_table, bug_table_status=?bug_table_status, status=?status, logo=?logo) returning *`
+var sqlUpdateTeam = `update team set name=?name, goal=?goal, status=?status, logo=?logo where id = ?id returning *`
 var sqlDelTeam = `delete from team where id=?`
 var sqlDelTeams = `delete from team`
 
@@ -112,7 +111,7 @@ func (ds *teamstore) Create(t *model.Team) (*model.Team, error) {
 }
 func (ds *teamstore) Update(t *model.Team) (*model.Team, error) {
 	db := GetDB()
-	_, err := db.pg.QueryOne(t, sqlCreateTeam, t)
+	_, err := db.pg.QueryOne(t, sqlUpdateTeam, t)
 	return t, err
 }
 func (ds *teamstore) Delete(tid int) error {
