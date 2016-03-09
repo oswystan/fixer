@@ -66,10 +66,24 @@ func PutTeam(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteTeam(w http.ResponseWriter, r *http.Request) {
+	id, _ := strconv.Atoi(mux.Vars(r)["id"])
+	ds := datastore.NewTeamStore()
+	err := ds.Delete(id)
+	if err != nil {
+		JsonErr(w, r, http.StatusInternalServerError, err.Error())
+		return
+	}
 
+	Json(w, nil, http.StatusOK)
 }
 func DeleteTeams(w http.ResponseWriter, r *http.Request) {
-
+	ds := datastore.NewTeamStore()
+	err := ds.DeleteAll()
+	if err != nil {
+		JsonErr(w, r, http.StatusInternalServerError, err.Error())
+		return
+	}
+	Json(w, nil, http.StatusOK)
 }
 
 func GetTeam(w http.ResponseWriter, r *http.Request) {
