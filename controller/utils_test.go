@@ -10,22 +10,20 @@
 
 package controller
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/oswystan/fixer/model"
+)
 
 func TestDecodeQuery(t *testing.T) {
-	qstr := "offset=1&limit=10&q=john"
-	type Filter struct {
-		Offset int    `json:"offset"`
-		Limit  int    `json:"limit"`
-		Q      string `json:"q"`
-	}
-
-	f := &Filter{}
+	qstr := "offset=1&limit=10&q=john&handler=1&handler=2&handler=3&fields=a&fields=b&date_from=20110101"
+	f := &model.Filter{}
 	err := decodeQuery(qstr, f)
 	if err != nil {
-		t.Errorf("fail to decode %s", qstr)
-		return
+		t.Fatalf("fail to decode %s, error=%s", qstr, err)
 	}
+	t.Fatalf("fail to decode int array %s , decode %#v", qstr, f)
 }
 
 //==================================== END ======================================

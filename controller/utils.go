@@ -81,6 +81,8 @@ LOOP:
 
 func decode(s []string, v reflect.Value) error {
 	var err error = nil
+
+OUT:
 	switch v.Kind() {
 	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
 		i, err := strconv.ParseInt(s[0], 10, 64)
@@ -102,6 +104,34 @@ func decode(s []string, v reflect.Value) error {
 			break
 		}
 		v.SetBool(b)
+	case reflect.Slice:
+		typ := v.Type()
+		v.Set(reflect.MakeSlice(typ, len(s), len(s)))
+		switch typ.Elem().Kind() {
+		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+			for i := 0; i < len(s); i++ {
+				vi, err := strconv.ParseInt(s[i], 10, 64)
+				if err != nil {
+					break OUT
+				}
+				v.Index(i).SetInt(vi)
+			}
+		case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+			for i := 0; i < len(s); i++ {
+				vi, err := strconv.ParseUint(s[0], 10, 64)
+				if err != nil {
+					break OUT
+				}
+				v.Index(i).SetUint(vi)
+			}
+		case reflect.String:
+			for i := 0; i < len(s); i++ {
+				v.Index(i).SetString(s[i])
+			}
+		default:
+			err = fmt.Errorf("unsupported slice type: %d", typ.Elem().Kind())
+		}
+
 	default:
 		return fmt.Errorf("unsupported type :%d", v.Kind())
 	}
