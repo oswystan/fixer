@@ -128,14 +128,14 @@ do_teams()
 
 do_bugs()
 {
-    safe_exec curl -XGET "http://localhost:8000/teams/1/bugs?offset=0&limit=9&handler=1&handler=2" -w "%{http_code}\n"
-    safe_exec curl -XGET "http://localhost:8000/teams/1/bugs/1" -w "%{http_code}\n"
-    safe_exec curl -XDELETE "http://localhost:8000/teams/1/bugs/1" -w "%{http_code}\n"
+    safe_exec curl -XGET "http://localhost:8000/teams/1/bugs?offset=0&limit=9&handler=1&date_from=20150101000001&date_to=20170101000001" -w "%{http_code}\n"
+    #safe_exec curl -XGET "http://localhost:8000/teams/1/bugs/1" -w "%{http_code}\n"
+    #safe_exec curl -XDELETE "http://localhost:8000/teams/1/bugs/1" -w "%{http_code}\n"
 
     data_post='{"created_by":1, "current_handler":1, "priority":2, "status":1, "title":"system crashed", "attachments":"", "detail":"system core dump"}'
     data_put='{"created_by":1, "current_handler":1, "priority":1, "status":1, "title":"system crashed", "attachments":"", "detail":"system core dump"}'
-    curl -XPOST -d "$data_post" "http://localhost:8000/teams/1/bugs"               -w "%{http_code}\n"
-    curl -XPUT -d "$data_put" "http://localhost:8000/teams/1/bugs/3"               -w "%{http_code}\n"
+    #curl -XPOST -d "$data_post" "http://localhost:8000/teams/1/bugs"               -w "%{http_code}\n"
+    #curl -XPUT -d "$data_put" "http://localhost:8000/teams/1/bugs/3"               -w "%{http_code}\n"
 }
 
 do_work()

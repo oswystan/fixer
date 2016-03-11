@@ -20,6 +20,7 @@ import (
 
 var sqlBuglist = "select b.*, get_nicky(b.current_handler) as handler_nicky, get_nicky(b.created_by) as created_nicky from %s as b"
 
+var sqlGetBugs = "select b.*, get_nicky(b.current_handler) as handler_nicky, get_nicky(b.created_by) as created_nicky from %s as b"
 var sqlDelBugs = `delete from %s`
 var sqlDelBug = `delete from %s where id=?`
 var sqlGetBug = `select * from %s where id=?`
@@ -166,29 +167,46 @@ type bugstore struct {
 	bugtab string
 }
 
+func (ds *bugstore) buildOr(field string, vals []int) string {
+	str := ""
+	for i := 0; i < len(vals); i++ {
+		if 0 == i {
+			str = fmt.Sprintf("%s and %s = %d", str, field, vals[i])
+		} else {
+			str = fmt.Sprintf("%s or %s = %d", str, field, vals[i])
+		}
+	}
+	return str
+}
+
 func (ds *bugstore) buildSql(f *model.Filter) (string, error) {
-	sql := fmt.Sprintf(sqlBuglist, ds.bugtab)
+	sql := fmt.Sprintf(sqlGetBugs, ds.bugtab)
 	str := ""
 	if len(f.Handler) != 0 {
+		str = ds.buildOr("current_handler", f.Handler)
 	}
 	if len(f.CreatedBy) != 0 {
-		//str = fmt.Sprintf("%s and created_by = %d", str, f.CreatedBy)
+		str = ds.buildOr("created_by", f.CreatedBy)
 	}
 	if len(f.Status) != 0 {
-		//str = fmt.Sprintf("%s and status = %d", str, f.Status)
+		str = ds.buildOr("status", f.Status)
 	}
 	if len(f.DateFrom) != 0 {
-		//str = fmt.Sprintf("%s and created_time >= '%s'", str, f.DateFrom.Format("2006-01-02 15:04:05"))
+		tm, err := time.Parse("20060102150405", f.DateFrom)
+		if err != nil {
+			return "", err
+		}
+		str = fmt.Sprintf("%s and created_time >= '%s'", str, tm.Format("2006-01-02 15:04:05"))
 	}
 	if len(f.DateTo) != 0 {
-		//str = fmt.Sprintf("%s and created_time <= '%s'", str, f.DateTo.Format("2006-01-02 15:04:05"))
+		tm, err := time.Parse("20060102150405", f.DateTo)
+		if err != nil {
+			return "", err
+		}
+		str = fmt.Sprintf("%s and created_time <= '%s'", str, tm.Format("2006-01-02 15:04:05"))
 	}
-	if f.Limit != 0 {
-		str = fmt.Sprintf("%s limit %d", str, f.Limit)
-	}
-	if f.Offset != 0 {
-		str = fmt.Sprintf("%s offset %d", str, f.Offset)
-	}
+	str = fmt.Sprintf("%s limit %d", str, f.Limit)
+	str = fmt.Sprintf("%s offset %d", str, f.Offset)
 
 	if len(str) != 0 {
 		str = strings.Replace(str, "and", "where", 1)
