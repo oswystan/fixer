@@ -31,6 +31,10 @@ var sqlCreateBug = `insert into %s(created_by, current_handler,	priority, status
 var sqlUpdateBug = `update %s set current_handler=?current_handler, priority=?priority, status=?status, 
 			       last_update=?last_update, title=?title, attachments=?attachments, detail=?detail 
 				   where id=?id returning *`
+var sqlGetLog = `select * from %s where bug_id=? offset ? limit ?;`
+var sqlCreateLog = `insert into %s(bug_id, who, action_type, action_time, action) 
+					values(?bug_id, ?who, ?action_type, now(), ?action) returning *;`
+var sqlDeleteLog = `delete from %s where bug_id=?;`
 
 type StoreBugs interface {
 	GetBugs(*BugFilter) ([]model.Bug, error)
@@ -159,12 +163,13 @@ type BugStore interface {
 
 	GetLogs(bugId int, f *model.Filter) ([]model.Buglog, error)
 	CreateLog(bl *model.Buglog) (*model.Buglog, error)
-	DeleteLog(bl *model.Buglog) error
+	DeleteLog(bugId int) error
 }
 
 type bugstore struct {
 	team   *model.Team
 	bugtab string
+	logtab string
 }
 
 func (ds *bugstore) buildOr(field string, vals []int) string {
@@ -228,6 +233,7 @@ func (ds *bugstore) SetTeam(tid int) error {
 	}
 
 	ds.bugtab = fmt.Sprintf("bugs_%s", strings.TrimSpace(t.BugTable))
+	ds.logtab = fmt.Sprintf("buglog_%s", strings.TrimSpace(t.BugTable))
 	ds.team = t
 	return nil
 }
@@ -289,13 +295,29 @@ func (ds *bugstore) Delete(id int) error {
 }
 
 func (ds *bugstore) GetLogs(bugId int, f *model.Filter) ([]model.Buglog, error) {
-	return nil, nil
+	if ds.team == nil {
+		return nil, fmt.Errorf("should set tid first")
+	}
+	var buglogs []model.Buglog
+	sql := fmt.Sprintf(sqlGetLog, ds.logtab)
+	_, err := GetDB().pg.Query(&buglogs, sql, bugId, f.Offset, f.Limit)
+	return buglogs, err
 }
 func (ds *bugstore) CreateLog(bl *model.Buglog) (*model.Buglog, error) {
-	return nil, nil
+	if ds.team == nil {
+		return nil, fmt.Errorf("should set tid first")
+	}
+	sql := fmt.Sprintf(sqlCreateLog, ds.logtab)
+	_, err := GetDB().pg.QueryOne(bl, sql, bl)
+	return bl, err
 }
-func (ds *bugstore) DeleteLog(bl *model.Buglog) error {
-	return nil
+func (ds *bugstore) DeleteLog(bugId int) error {
+	if ds.team == nil {
+		return fmt.Errorf("should set tid first")
+	}
+	sql := fmt.Sprintf(sqlDeleteLog, ds.logtab)
+	_, err := GetDB().pg.Exec(sql, bugId)
+	return err
 }
 
 func NewBugStore() BugStore {

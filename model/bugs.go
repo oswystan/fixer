@@ -28,11 +28,11 @@ type Bug struct {
 }
 
 type Buglog struct {
-	BugId     int32     `json:"bug_id"`
-	Who       int32     `json:"who"`
-	Type      int32     `json:"type"`
-	Operation string    `json:"operation"`
-	When      time.Time `json:"when"`
+	BugId      int       `json:"bug_id"`
+	Who        int       `json:"who"`
+	ActionType int       `json:"action_type"`
+	ActionTime time.Time `json:"action_time"`
+	Action     string    `json:"action"`
 }
 
 //==================================== END ======================================

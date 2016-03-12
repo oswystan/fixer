@@ -150,15 +150,72 @@ func DeleteBug(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetBuglog(w http.ResponseWriter, r *http.Request) {
+	f := model.NewFilter()
+	err := decodeQuery(r.URL.RawQuery, f)
+	if err != nil {
+		JsonErr(w, r, http.StatusBadRequest, err.Error())
+		return
+	}
 
+	ds := datastore.NewBugStore()
+	tid, _ := strconv.Atoi(mux.Vars(r)["id"])
+	bid, _ := strconv.Atoi(mux.Vars(r)["bid"])
+	err = ds.SetTeam(tid)
+	if err != nil {
+		JsonErr(w, r, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	buglogs, err := ds.GetLogs(bid, f)
+	if err != nil {
+		JsonErr(w, r, http.StatusBadRequest, err.Error())
+		return
+	}
+	Json(w, buglogs, http.StatusOK)
 }
 
 func PostBuglog(w http.ResponseWriter, r *http.Request) {
+	buglog := &model.Buglog{}
+	err := decodeBody(r, buglog)
+	if err != nil {
+		JsonErr(w, r, http.StatusBadRequest, err.Error())
+		return
+	}
 
+	ds := datastore.NewBugStore()
+	tid, _ := strconv.Atoi(mux.Vars(r)["id"])
+	bid, _ := strconv.Atoi(mux.Vars(r)["bid"])
+	err = ds.SetTeam(tid)
+	if err != nil {
+		JsonErr(w, r, http.StatusBadRequest, err.Error())
+		return
+	}
+	buglog.BugId = bid
+
+	newBuglog, err := ds.CreateLog(buglog)
+	if err != nil {
+		JsonErr(w, r, http.StatusInternalServerError, err.Error())
+		return
+	}
+	Json(w, newBuglog, http.StatusOK)
 }
 
 func DeleteBuglog(w http.ResponseWriter, r *http.Request) {
+	ds := datastore.NewBugStore()
+	tid, _ := strconv.Atoi(mux.Vars(r)["id"])
+	bid, _ := strconv.Atoi(mux.Vars(r)["bid"])
+	err := ds.SetTeam(tid)
+	if err != nil {
+		JsonErr(w, r, http.StatusBadRequest, err.Error())
+		return
+	}
 
+	err = ds.DeleteLog(bid)
+	if err != nil {
+		JsonErr(w, r, http.StatusBadRequest, err.Error())
+		return
+	}
+	Json(w, nil, http.StatusOK)
 }
 
 //==================================== END ======================================

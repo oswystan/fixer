@@ -52,9 +52,9 @@ func NewRouter() *mux.Router {
 	r.HandleFunc("/teams/{id:[0-9]+}/bugs/{bid:[0-9]+}", controller.GetBug).Methods("GET")
 	r.HandleFunc("/teams/{id:[0-9]+}/bugs/{bid:[0-9]+}", controller.PutBug).Methods("PUT")
 	r.HandleFunc("/teams/{id:[0-9]+}/bugs/{bid:[0-9]+}", controller.DeleteBug).Methods("DELETE")
-	r.HandleFunc("/teams/{id:[0-9]+}/bugs/{bid:[0-9]+}/logs", controller.ServeUnsupported).Methods("GET")
-	r.HandleFunc("/teams/{id:[0-9]+}/bugs/{bid:[0-9]+}/logs", controller.ServeUnsupported).Methods("POST")
-	r.HandleFunc("/teams/{id:[0-9]+}/bugs/{bid:[0-9]+}/logs", controller.ServeUnsupported).Methods("DELETE")
+	r.HandleFunc("/teams/{id:[0-9]+}/bugs/{bid:[0-9]+}/logs", controller.GetBuglog).Methods("GET")
+	r.HandleFunc("/teams/{id:[0-9]+}/bugs/{bid:[0-9]+}/logs", controller.PostBuglog).Methods("POST")
+	r.HandleFunc("/teams/{id:[0-9]+}/bugs/{bid:[0-9]+}/logs", controller.DeleteBuglog).Methods("DELETE")
 
 	r.HandleFunc("/teams/{id:[0-9]+}/templates", controller.ServeUnsupported).Methods("GET")
 	r.HandleFunc("/teams/{id:[0-9]+}/templates", controller.ServeUnsupported).Methods("POST")

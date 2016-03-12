@@ -138,6 +138,14 @@ do_bugs()
     #curl -XPUT -d "$data_put" "http://localhost:8000/teams/1/bugs/3"               -w "%{http_code}\n"
 }
 
+do_buglogs()
+{
+    safe_exec curl -XGET "http://localhost:8000/teams/1/bugs/1/logs?offset=0&limit=9" -w "%{http_code}\n"
+    data_post='{"bug_id":1, "who":1, "action_type":1, "action":"raised the bug"}'
+    curl -XPOST -d "${data_post}" "http://localhost:8000/teams/1/bugs/1/logs" -w "%{http_code}\n"
+    safe_exec curl -XDELETE "http://localhost:8000/teams/1/bugs/1/logs" -w "%{http_code}\n"
+}
+
 do_work()
 {
     log_start
@@ -149,7 +157,8 @@ do_work()
     #do_api
     #do_users
     #do_teams
-    do_bugs
+    #do_bugs
+    do_buglogs
 
     log_end
 }
