@@ -58,7 +58,7 @@ func PostTeam(w http.ResponseWriter, r *http.Request) {
 		JsonErr(w, r, http.StatusInternalServerError, err.Error())
 		return
 	}
-	Json(w, newTeam, http.StatusOK)
+	Json(w, newTeam, http.StatusCreated)
 }
 
 func PutTeam(w http.ResponseWriter, r *http.Request) {

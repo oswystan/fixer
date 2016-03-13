@@ -65,7 +65,7 @@ func PostBug(w http.ResponseWriter, r *http.Request) {
 		JsonErr(w, r, http.StatusInternalServerError, err.Error())
 		return
 	}
-	Json(w, newBug, http.StatusOK)
+	Json(w, newBug, http.StatusCreated)
 }
 
 func DeleteBugs(w http.ResponseWriter, r *http.Request) {
@@ -197,7 +197,7 @@ func PostBuglog(w http.ResponseWriter, r *http.Request) {
 		JsonErr(w, r, http.StatusInternalServerError, err.Error())
 		return
 	}
-	Json(w, newBuglog, http.StatusOK)
+	Json(w, newBuglog, http.StatusCreated)
 }
 
 func DeleteBuglog(w http.ResponseWriter, r *http.Request) {

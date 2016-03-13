@@ -64,7 +64,7 @@ func PostUser(w http.ResponseWriter, r *http.Request) {
 		JsonErr(w, r, http.StatusInternalServerError, err.Error())
 		return
 	}
-	Json(w, newUser, http.StatusOK)
+	Json(w, newUser, http.StatusCreated)
 }
 
 func PutUser(w http.ResponseWriter, r *http.Request) {
