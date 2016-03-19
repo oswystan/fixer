@@ -23,7 +23,6 @@ func TestDecodeQuery(t *testing.T) {
 	if err != nil {
 		t.Fatalf("fail to decode %s, error=%s", qstr, err)
 	}
-	t.Fatalf("fail to decode int array %s , decode %#v", qstr, f)
 }
 
 //==================================== END ======================================
