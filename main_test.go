@@ -114,6 +114,18 @@ var teampair = []pair{
 			},
 		},
 	},
+	{
+		r: request{method: "GET", url: "http://localhost:8000/teams", data: nil},
+		a: response{
+			code: 200, actual: nil,
+		},
+	},
+	{
+		r: request{method: "GET", url: "http://localhost:8000/teams?q=john", data: nil},
+		a: response{
+			code: 200, actual: nil,
+		},
+	},
 }
 
 func TestTeams(t *testing.T) {

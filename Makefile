@@ -27,7 +27,7 @@ st:
 	@echo "start st..."
 	@./fixer &
 	@sleep 1
-	@./run_st.sh
+	@go test .
 	@killall fixer
 	@echo "done."
 ut:
