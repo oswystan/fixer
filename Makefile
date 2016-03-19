@@ -27,7 +27,8 @@ st:
 	@echo "start st..."
 	@./fixer &
 	@sleep 1
-	@go test . || killall fixer
+	@-go test .
+	@killall fixer
 	@echo "done."
 ut:
 	@go test `go list  ./* 2>/dev/null`
