@@ -96,7 +96,7 @@ func decodeBody(res *http.Response, v interface{}) error {
 	return err
 }
 
-var ps = []pair{
+var teampair = []pair{
 	{
 		r: request{method: "GET", url: "http://localhost:8000/teams/1", data: nil},
 		a: response{
@@ -117,8 +117,8 @@ var ps = []pair{
 }
 
 func TestTeams(t *testing.T) {
-	for i := 0; i < len(ps); i++ {
-		err := do(&ps[i].r, &ps[i].a)
+	for i := 0; i < len(teampair); i++ {
+		err := do(&teampair[i].r, &teampair[i].a)
 		if err != nil {
 			t.Fatal(err)
 		}
