@@ -11,6 +11,7 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -58,6 +59,26 @@ func get(r *request, a *response) error {
 	return nil
 }
 func post(r *request, a *response) error {
+	b, _ := json.Marshal(r.data)
+	res, err := http.Post(r.url, "application/json", bytes.NewReader(b))
+	if err != nil {
+		return err
+	}
+	defer res.Body.Close()
+	if res.StatusCode != a.code {
+		return fmt.Errorf("[%s %s]status code %d != %d", r.method, r.url, res.StatusCode, a.code)
+	}
+
+	if a.actual != nil && a.target != nil {
+		err = decodeBody(res, a.actual)
+		if err != nil {
+			return err
+		}
+		if !a.compare(a.actual, a.target) {
+			return fmt.Errorf("[%s %s]%v <!=> %v", r.method, r.url, a.actual, a.target)
+		}
+	}
+
 	return nil
 }
 func put(r *request, a *response) error {
@@ -126,6 +147,37 @@ var teampair = []pair{
 			code: 200, actual: nil,
 		},
 	},
+	{
+		r: request{
+			method: "POST",
+			url:    "http://localhost:8000/teams",
+			data: &model.Team{
+				Name:     "john-funny",
+				LeaderId: 1,
+				Goal:     "make a funny team",
+				Logo:     "static/images/1.jpg",
+			},
+		},
+		a: response{
+			code: 201, actual: nil,
+		},
+	},
+}
+
+var userpair = []pair{
+	{
+		r: request{method: "GET", url: "http://localhost:8000/users", data: nil},
+		a: response{
+			code: 200, actual: nil,
+		},
+	},
+
+	{
+		r: request{method: "GET", url: "http://localhost:8000/users/1", data: nil},
+		a: response{
+			code: 200, actual: nil,
+		},
+	},
 }
 
 func TestTeams(t *testing.T) {
@@ -135,6 +187,16 @@ func TestTeams(t *testing.T) {
 			t.Error(err)
 		}
 	}
+}
+
+func TestUsers(t *testing.T) {
+	for i := 0; i < len(userpair); i++ {
+		err := do(&userpair[i].r, &userpair[i].a)
+		if err != nil {
+			t.Error(err)
+		}
+	}
+
 }
 
 //==================================== END ======================================
