@@ -120,7 +120,7 @@ func TestTeams(t *testing.T) {
 	for i := 0; i < len(teampair); i++ {
 		err := do(&teampair[i].r, &teampair[i].a)
 		if err != nil {
-			t.Fatal(err)
+			t.Error(err)
 		}
 	}
 }
