@@ -52,7 +52,7 @@ func get(r *request, a *response) error {
 			return err
 		}
 		if !a.compare(a.actual, a.target) {
-			return fmt.Errorf("%v <!=> %v", a.actual, a.target)
+			return fmt.Errorf("[%s %s]%v <!=> %v", r.method, r.url, a.actual, a.target)
 		}
 	}
 	return nil
