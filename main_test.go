@@ -21,6 +21,12 @@ import (
 	"github.com/oswystan/fixer/model"
 )
 
+type httperr struct {
+	Code        int    `json:"code"`
+	Description string `json:"description"`
+	More        string `json:"more"`
+}
+
 type request struct {
 	method string
 	url    string
@@ -38,6 +44,13 @@ type pair struct {
 	a response
 }
 
+func fmterr(r *request, a *response, res *http.Response) error {
+	desc := &httperr{}
+	_ = decodeBody(res, desc)
+	return fmt.Errorf("[%s %s]status code %d != %d detail[%s]",
+		r.method, r.url, res.StatusCode, a.code, desc.Description)
+}
+
 func get(r *request, a *response) error {
 	res, err := http.Get(r.url)
 	if err != nil {
@@ -45,7 +58,7 @@ func get(r *request, a *response) error {
 	}
 	defer res.Body.Close()
 	if res.StatusCode != a.code {
-		return fmt.Errorf("[%s %s]status code %d != %d", r.method, r.url, res.StatusCode, a.code)
+		return fmterr(r, a, res)
 	}
 	if a.actual != nil && a.target != nil {
 		err = decodeBody(res, a.actual)
@@ -66,7 +79,7 @@ func post(r *request, a *response) error {
 	}
 	defer res.Body.Close()
 	if res.StatusCode != a.code {
-		return fmt.Errorf("[%s %s]status code %d != %d", r.method, r.url, res.StatusCode, a.code)
+		return fmterr(r, a, res)
 	}
 
 	if a.actual != nil && a.target != nil {
@@ -82,13 +95,47 @@ func post(r *request, a *response) error {
 	return nil
 }
 func put(r *request, a *response) error {
+	b, _ := json.Marshal(r.data)
+	req, _ := http.NewRequest(r.method, r.url, bytes.NewReader(b))
+	req.Header.Set("Content-Type", "application/json")
+	res, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return err
+	}
+	defer res.Body.Close()
+
+	if res.StatusCode != a.code {
+		return fmterr(r, a, res)
+	}
+
+	if a.actual != nil && a.target != nil {
+		err = decodeBody(res, a.actual)
+		if err != nil {
+			return err
+		}
+		if !a.compare(a.actual, a.target) {
+			return fmt.Errorf("[%s %s]%v <!=> %v", r.method, r.url, a.actual, a.target)
+		}
+	}
+
 	return nil
 }
 func del(r *request, a *response) error {
+	req, _ := http.NewRequest(r.method, r.url, nil)
+	res, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return err
+	}
+	defer res.Body.Close()
+
+	if res.StatusCode != a.code {
+		return fmterr(r, a, res)
+	}
+
 	return nil
 }
 func option(r *request, a *response) error {
-	return nil
+	return fmt.Errorf("unsupportted option operation.")
 }
 func do(r *request, a *response) error {
 	switch r.method {
@@ -160,6 +207,30 @@ var teampair = []pair{
 		},
 		a: response{
 			code: 201, actual: nil,
+		},
+	},
+	{
+		r: request{
+			method: "PUT",
+			url:    "http://localhost:8000/teams/6",
+			data: &model.Team{
+				Name:     "john-funny-wy",
+				LeaderId: 1,
+				Goal:     "make a funny team",
+				Logo:     "static/images/1.jpg",
+			},
+		},
+		a: response{
+			code: 200, actual: nil,
+		},
+	},
+	{
+		r: request{
+			method: "DELETE",
+			url:    "http://localhost:8000/teams/6",
+		},
+		a: response{
+			code: 200, actual: nil,
 		},
 	},
 }
