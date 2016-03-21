@@ -11,6 +11,7 @@
 package controller
 
 import (
+	"log"
 	"net/http"
 	"strconv"
 	"time"
@@ -56,6 +57,7 @@ func PostUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	user.RegisterDate = time.Now()
+	log.Printf("pwd=%s", pwd.Pwd)
 	user.Pwd = pwd.Pwd
 
 	ds := datastore.NewUserStore()

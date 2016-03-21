@@ -249,6 +249,32 @@ var userpair = []pair{
 			code: 200, actual: nil,
 		},
 	},
+
+	{
+		r: request{
+			method: "DELETE",
+			url:    "http://localhost:8000/users",
+		},
+		a: response{
+			code: 200, actual: nil,
+		},
+	},
+
+	{
+		r: request{
+			method: "POST",
+			url:    "http://localhost:8000/users",
+			data: &model.User{
+				Nicky:    "wystan",
+				Pwd:      "123456",
+				Portrait: "static/images/1.jpg",
+				Email:    "wystan@11.com",
+			},
+		},
+		a: response{
+			code: 201, actual: nil,
+		},
+	},
 }
 
 func TestTeams(t *testing.T) {

@@ -22,7 +22,7 @@ type User struct {
 }
 
 type UserPwd struct {
-	Pwd string `json:"password"`
+	Pwd string `json:"pwd"`
 }
 
 type ResultUserDetail struct {
