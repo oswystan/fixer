@@ -21,15 +21,15 @@ var teamJoined = `select t.id, t.name, t.leader_id, get_nicky(t.leader_id) as le
 				  order by t.id;`
 
 var teamCreated = `select t.id, t.name, t.leader_id, get_nicky(t.leader_id) as leader_name, t.created_date
-                  from team as t where t.leader_id = ?;`
+                  from team as t where t.leader_id = ? order by t.id;`
 
 var teamById = `select t.*, u.nicky as leader_name from team as t inner join users as u 
 					on t.id = ? and u.id = t.leader_id;`
 var teamByName = `select t.*, u.nicky as leader_name from team as t inner join users as u 
 					on t.name = ? and u.id = t.leader_id;`
 var teamLikeName = `select t.*, u.nicky as leader_name from team as t inner join users as u 
-                    on t.name like '%s%%' and u.id = t.leader_id;`
-var memberById = `select u.* from user_team as ut inner join users as u on ut.team_id = ? and ut.user_id = u.id;`
+                    on t.name like '%s%%' and u.id = t.leader_id order by t.id;`
+var memberById = `select u.* from user_team as ut inner join users as u on ut.team_id = ? and ut.user_id = u.id order by u.id;`
 
 type FilterTeamList struct {
 	LeaderId   int
