@@ -5,12 +5,16 @@
     <title>Fixer-Your profesional bug tracking helper</title>
 
     <script type="text/javascript" src="/static/js/jquery.js"></script>
+    <script type="text/javascript" src="/static/js/art_template.js"></script>
     <script type="text/javascript" src="/static/js/underscore.js"></script>
     <script type="text/javascript" src="/static/js/backbone.js"></script>
     <script type="text/javascript" src="/static/js/app.js"></script>
 
     <link rel="stylesheet" type="text/css" href="/static/css/fixer.css"/>
 </head>
+
+
+
 <body>
     <div id="nav">
         <h3>fixer</h3>
@@ -27,9 +31,30 @@
         </ul>
     </div>
 
+    <div id="main" align="center">
+    </div>
+
     <div class="blanker"></div>
     <div class="footer"> Copyright (C) wystan 2015 | About Us | Contact Us | Join Us</div>
 </body>
+
+<script id="teams_joined" type="text/html">
+    <div id="teamlist-joined" class="container" style="width: 580px">
+        <h3>TEAM-JOINED</h3>
+        <div class="operation">
+            <input name="op-name" type="text" placeholder="team name to filter...">
+        </div>
+        <div class="team-list" name="team-list">
+            {{each list as value idx}}
+            <ul>
+                <li class="team-id"><a name="team-id" href="javascript:void(0)">{{value.id}}</a></li>
+                <li class="team-name"><a name="team-name" href="javascript:void(0)">{{value.name}}</a></li>
+                <li class="user-nicky"><a name="team-leader" href="javascript:void(0)">{{value.leader_name}}</a></li>
+            </ul>
+            {{/each}}
+        </div>
+    </div>
+</script>
 
 <script type="text/javascript">
     var app = App();

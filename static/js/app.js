@@ -21,26 +21,56 @@ var App = function()
     function makeRouter() {
         var Router = Backbone.Router.extend({
             routes: {
+                // main menu routers
                 "team"      : "showTeamList",
                 "bug"       : "showBugList",
                 "stat"      : "showUnsupported",
                 "setting"   : "showSetting",
-                "logout"    : "doLogout"
+                "logout"    : "doLogout",
+
+                // team releated routers
+                "team/new"          : "showTeamNew",
+                "team/:id/show"     : "showTeamDetail",
+                "team/:id/modify"   : "showTeamModify",
+
+                // user related routers
+                "user/modify"   : "showUserModify",
+                "user/pwd"      : "showUserPwd",
+                "user/:id/show" : "showUserDetail",
+
+                // bugs related routers
+                "bug/:tid/show"         : "showBugs",
+                "bug/:tid/new"          : "showBugNew",
+                "bug/:tid/:bid/show"    : "showBug",
+                "bug/:tid/:bid/modify"  : "showBugModify"
             },
             showTeamList : function(){
                 console.log("show team list");
+                var mock_data = {
+                    list: [
+                        {"id": 1, "name": "fox", "leader_name" : "wystan"},
+                        {"id": 2, "name": "frog", "leader_name" : "winner"}
+                    ]
+                };
+
+                var html = template("teams_joined", mock_data);
+                $("#main").html(html);
             },
             showBugList : function(){
                 console.log("show bug list");
+                $("#main").html("");
             },
             showUnsupported : function(){
                 console.log("unsupported");
+                $("#main").html("");
             },
             showSetting : function(){
                 console.log("show setting");
+                $("#main").html("");
             },
             doLogout : function(){
                 console.log("do logout");
+                $("#main").html("");
             }
         });
         var router = new Router();
@@ -53,9 +83,10 @@ var App = function()
     }
 
     return {
-        initRouter: makeRouter,
+        initRouter  : makeRouter,
         initUserInfo: renderUserInfo
     };
 };
+
 
 /************************************* END **************************************/
