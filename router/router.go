@@ -16,7 +16,8 @@ import (
 
 func NewRouter() *mux.Router {
 	r := mux.NewRouter().StrictSlash(true)
-	r.HandleFunc("/login.html", controller.ShowLogin).Methods("GET")
+	r.HandleFunc("/", controller.ServeFixer).Methods("GET")
+	r.HandleFunc("/login.html", controller.ServeLogin).Methods("GET")
 	r.HandleFunc("/user.html", controller.ServeUser).Methods("POST")
 	r.PathPrefix("/static/").HandlerFunc(controller.ServeStaticFile).Methods("GET")
 

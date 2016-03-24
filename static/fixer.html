@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fixer-Your profesional bug tracking helper</title>
+
+    <script type="text/javascript" src="/static/js/jquery.js"></script>
+    <script type="text/javascript" src="/static/js/underscore.js"></script>
+    <script type="text/javascript" src="/static/js/backbone.js"></script>
+    <script type="text/javascript" src="/static/js/app.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/static/css/fixer.css"/>
+</head>
+<body>
+    <div id="nav">
+        <h3>fixer</h3>
+        <ul>
+            <li><a name="nav-teamlist" href="#team">TEAM</a></li>
+            <li><a name="nav-buglist" href="#bug">BUGS</a></li>
+            <li><a name="nav-stat" href="#stat">STAT</a></li>
+            <li><a name="nav-setting" href="#setting">SETTING</a></li>
+            <li><a name="nav-logout" href="#logout">LOGOUT</a></li>
+        </ul>
+        <ul class="userinfo" name="userinfo">
+            <li><img src="static/images/1.jpg"/></li>
+            <li><a href="javascript: void(0)">winner</a></li>
+        </ul>
+    </div>
+
+    <div class="blanker"></div>
+    <div class="footer"> Copyright (C) wystan 2015 | About Us | Contact Us | Join Us</div>
+</body>
+
+<script type="text/javascript">
+    var app = App();
+    app.initRouter();
+    app.initUserInfo($("#nav").find("[name='userinfo']"));
+</script>
+
+
+</html>
