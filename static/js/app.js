@@ -18,6 +18,11 @@ var App = function()
         portrait: "/static/images/1.jpg"
     };
 
+    var team = Team();
+    var user = User();
+    var bug  = Bug();
+    var tmpl = Template();
+
     function makeRouter() {
         var Router = Backbone.Router.extend({
             routes: {
@@ -88,5 +93,49 @@ var App = function()
     };
 };
 
+var Team = function(){
+    function show(tid) {
+        // get data from server
+
+        // when success render it into #main container.
+    }
+    function list(uid) {
+        // body...
+    }
+    function modify(tid) {
+        // body...
+    }
+    function create(tid) {
+        // body...
+    }
+
+    var TView = function() {
+        function render(t) {
+
+        }
+        return {
+
+        };
+    }
+
+    var TLView = function() {
+        return {};
+    }
+
+    return {};
+};
+
+var User = function(){
+    return {};
+};
+var Bug = function(){
+    return {};
+};
+var Template = function(){
+    return {};
+};
+var Stat = function(){
+    return {};
+};
 
 /************************************* END **************************************/
