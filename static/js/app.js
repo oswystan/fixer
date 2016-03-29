@@ -17,6 +17,7 @@ var App = function () {
             _.extend(this.event_bus, Backbone.Events);
             _.each(this.modules, function (m, key, that) {
                 m.init(this.event_bus);
+                console.log("module " + key + " is initilized.")
             }, this);
             console.log("done.");
 

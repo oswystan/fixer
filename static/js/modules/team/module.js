@@ -22,7 +22,6 @@
 
         // for each function, we are in the team context;
         this.listenTo(eb, "show:team:list", function () {
-            console.log("do show team list in team module");
             getList();
         });
 
@@ -39,9 +38,9 @@
         });
 
         this.listenTo(eb, "current_user", function (id, nicky) {
-            this.cur_user.id   = id;
+            this.cur_user.id    = id;
             this.cur_user.nicky = nicky;
-            console.log("get user:", this.cur_user);
+            console.log("get user:", id, nicky);
         });
     };
 
