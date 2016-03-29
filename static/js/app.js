@@ -10,6 +10,7 @@
  *********************************************************************************
  */
 
+/*
 var App = function()
 {
     var currentUser = {
@@ -17,11 +18,6 @@ var App = function()
         id: 1,
         portrait: "/static/images/1.jpg"
     };
-
-    var team = Team();
-    var user = User();
-    var bug  = Bug();
-    var tmpl = Template();
 
     function makeRouter() {
         var Router = Backbone.Router.extend({
@@ -49,6 +45,7 @@ var App = function()
                 "bug/:tid/:bid/show"    : "showBug",
                 "bug/:tid/:bid/modify"  : "showBugModify"
             },
+
             showTeamList : function(){
                 console.log("show team list");
                 var mock_data = {
@@ -62,8 +59,8 @@ var App = function()
                 $("#main").html(html);
             },
             showBugList : function(){
-                console.log("show bug list");
-                $("#main").html("");
+
+
             },
             showUnsupported : function(){
                 console.log("unsupported");
@@ -92,50 +89,65 @@ var App = function()
         initUserInfo: renderUserInfo
     };
 };
+*/
 
-var Team = function(){
-    function show(tid) {
-        // get data from server
+/*
+console.log("show bug list");
 
-        // when success render it into #main container.
-    }
-    function list(uid) {
-        // body...
-    }
-    function modify(tid) {
-        // body...
-    }
-    function create(tid) {
-        // body...
-    }
+this.showProgress();
 
-    var TView = function() {
-        function render(t) {
+console.log("start...");
+var users = new UserCollection();
+users.on("sync", function () {
+    console.log("sync users done.");
+    _.each(users.models, function (u) {
+        console.log(u.toJSON());
+    });
+});
+users.fetch({   
+    data: $.param({"q":"j"}),
+    reset: true,
+});
 
-        }
-        return {
+var user = new UserModel({id: 1});
+user.on("sync", function (resp) {
+    router.clearMain();
+});
+user.on("error", function (u, resp) {
+    router.showError(resp.responseJSON);
+});
+user.fetch();
 
-        };
-    }
+showProgress: function () {
+    var html = template("work_in_progress", null);
+    $("#main").html(html);
+},
+showError: function (err) {
+    var html = template("error_occurred", err);
+    $("#main").html(html);
+},
+clearMain: function () {
+    $("#main").html("");
+},
+*/
 
-    var TLView = function() {
-        return {};
-    }
+var App = function () {
+    return {
+        init: function () {
+            console.log("app init...");
+            _.extend(this.event_bus, Backbone.Events);
+            _.each(this.modules, function (m, key, that) {
+                m.init(this.event_bus);
+            }, this);
+            console.log("done.");
 
-    return {};
+            this.event_bus.trigger("current_user", "1", "john");
+        },
+        modules: {},
+        event_bus: {}
+    };
 };
 
-var User = function(){
-    return {};
-};
-var Bug = function(){
-    return {};
-};
-var Template = function(){
-    return {};
-};
-var Stat = function(){
-    return {};
-};
+var app = new App();
 
 /************************************* END **************************************/

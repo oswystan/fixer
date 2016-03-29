@@ -94,6 +94,7 @@ func PutUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetUser(w http.ResponseWriter, r *http.Request) {
+	log.Printf("do %s", r.URL.Path)
 	id, _ := strconv.Atoi(mux.Vars(r)["id"])
 	ds := datastore.NewUserStore()
 	user, err := ds.GetUser(id)
