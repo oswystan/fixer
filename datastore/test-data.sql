@@ -19,12 +19,12 @@ insert into users(nicky, email, pwd, register_date, last_login_time, portrait)
        values ('sherlock', 'sherlock@gmail.com', '123456', now(), now(), 'static/images/1.jpg');
 
 -- Add new teams
-insert into team(name, leader_id, created_date, bug_table, bug_table_status, status, logo) 
-    values('john-frog', 1, now(), '1aaaaa', 1, 1, '/static/images/sherlock.jpg');
-insert into team(name, leader_id, created_date, bug_table, bug_table_status, status, logo) 
-    values('john-shark', 1, now(), '2aaaaa', 1, 1, '/static/images/sherlock.jpg');
-insert into team(name, leader_id, created_date, bug_table, bug_table_status, status, logo) 
-    values('john-whale', 1, now(), '3aaaaa', 1, 1, '/static/images/sherlock.jpg');
+insert into team(name, leader_id, created_date, bug_table, bug_table_status, status, goal, logo) 
+    values('john-frog', 1, now(), '1aaaaa', 1, 1, 'we are frogs', '/static/images/sherlock.jpg');
+insert into team(name, leader_id, created_date, bug_table, bug_table_status, status, goal, logo) 
+    values('john-shark', 1, now(), '2aaaaa', 1, 1, 'shark team', '/static/images/1.jpg');
+insert into team(name, leader_id, created_date, bug_table, bug_table_status, status, goal, logo) 
+    values('john-whale', 1, now(), '3aaaaa', 1, 1, 'whale team', '/static/images/sherlock.jpg');
 insert into team(name, leader_id, created_date, bug_table, bug_table_status, status, goal, logo) 
     values('sherlock-lion', 2, now(), '1bbbbb', 1, 0, 'lion team', '/static/images/sherlock.jpg');
 insert into team(name, leader_id, created_date, bug_table, bug_table_status, status, goal, logo) 
