@@ -168,8 +168,57 @@
         </div>
 
         <div name="operation_section" class="operation">
-            <a name="op_modify" class="btn orange" href="javascript:void(0)">MODIFY</a>
+            <a name="op_modify" class="btn orange" href="#team/{{detail.id}}/modify">MODIFY</a>
         </div>
+    </div>
+</script>
+
+<script id="team_edit" type="text/html">
+    <div id="detail-team-modify" class="container" style="width: 800px">
+        <h3>{{detail.name}}</h3>
+        <img name="logo" class="logo" src="static/images/sherlock.jpg" alt=""/>
+        <ul class="labeled">
+            <li name="team-id" data-label="ID">{{detail.id}}</li>
+            <li data-label="LEADER"><a name="team-leader" href="#user/{{detail.id}}/show">{{detail.leader_name}}</a></li>
+            <li name="date" data-label="DATE">{{detail.created_date | dateFormat:'YYYY-mm-dd'}}</li>
+            <li name="bug-tab" data-label="BUG_TAB">{{detail.bug_table}}</li>
+            <li name="but-tab-status" data-label="BUG_TAB_STATUS">{{detail.bug_table_status}}</li>
+            <li name="status" data-label="STATUS">{{detail.status}}</li>
+        </ul>
+        <ul class="labeled">
+            <li class="filled" data-label="NAME">
+                <input type="text" name="team-name" value="{{detail.name}}"></li>
+            <li class="filled" data-label="ACTIVE">
+                {{if detail.status}}
+                <input type="checkbox" name="check-active" value="active" checked="true">
+                {{else}}
+                <input type="checkbox" name="check-active" value="active">
+                {{/if}}
+            </li>
+        </ul>
+        <ul>
+            <textarea name="team-goal" rows="5">{{detail.goal}}</textarea>
+        </ul>
+
+        <div name="team-members" class="users">
+            {{each members as value idx}}
+            <ul class="user-list">
+                <li><input name="check" type="checkbox"></li>
+                <li><img name="portrait" class="portrait" src="{{value.portrait}}"></li>
+                <li class="user-id"><a name="user-id" href="javascript:void(0)">{{value.id}}</a></li>
+                <li class="user-nicky"><a name="user-nicky" href="javascript:void(0)">{{value.nicky}}</a></li>
+                <li name="user-email" class="email">{{value.email}}</li>
+            </ul>
+            {{/each}}
+        </div>
+
+        <div name="opertion" class="operation">
+            <input type="text" value="" name="member-name" placeholder="input member name...">
+            <a name="op-add" class="btn" href="javascript:void(0)">ADD</a>
+            <a name="op-delete" class="btn" href="javascript:void(0)">DELETE</a>
+            <a name="op-submit" class="btn orange" href="javascript:void(0)">SUBMIT</a>
+        </div>
+
     </div>
 </script>
 <!--
