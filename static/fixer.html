@@ -138,6 +138,40 @@
     </div>
 </script>
 
+<script id="team_detail" type="text/html">
+    <div id="detail-team-show" class="container" style="width: 700px">
+        <h3>TEAM-{{detail.name}}</h3>
+        <img name="team-logo" class="logo" src="{{detail.logo}}" alt=""/>
+        <ul name="team-detail" class="labeled">
+            <li name="team-id" data-label="ID">{{detail.id}}</li>
+            <li name="team-name" data-label="NAME">{{detail.name}}</li>
+            <li data-label="LEADER"><a name="team-leader" href="#user/{{detail.leader_id}}/show">{{detail.leader_name}}</a></li>
+            <li name="date" data-label="DATE">{{detail.created_date | dateFormat:'YYYY-mm-dd'}}</li>
+            <li name="bug-tab" data-label="BUG_TAB">{{detail.bug_table}}</li>
+            <li name="bug-tab-status" data-label="BUG_TAB_STATUS">{{detail.bug_table_status}}</li>
+            <li name="status" data-label="STATUS">{{detail.status}}</li>
+            <li data-label="BUGLIST"><a name="buglist" data-holder="1" href="#bug/{{detail.id}}/show">buglist</a></li>
+        </ul>
+        <ul>
+            <p name="team-goal" style="line-height: 1.4em; font-size: 1.2em;">{{detail.goal}}</p>
+        </ul>
+
+        <div class="user-list" name="team-members">
+            {{each members as value index}}
+            <ul>
+                <li><img name="portrait" class="portrait" src="{{value.portrait}}"></li>
+                <li class="user-id"><a name="user-id" href="#user/{{value.id}}/show">{{value.id}}</a></li>
+                <li class="user-nicky"><a name="user-nicky" href="#user/{{value.id}}/show">{{value.nicky}}</a></li>
+                <li name="user-email" class="email">{{value.email}}</li>
+            </ul>
+            {{/each}}
+        </div>
+
+        <div name="operation_section" class="operation">
+            <a name="op_modify" class="btn orange" href="javascript:void(0)">MODIFY</a>
+        </div>
+    </div>
+</script>
 <!--
 =============================================================
 = user related templates from here

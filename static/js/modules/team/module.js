@@ -17,6 +17,14 @@
         id: 0,
         nicky: ""
     };
+    team.list = {
+        joined : null,
+        created : null
+    };
+    team.detail = {
+        detail : null,
+        members : null
+    };
     team.init = function (eb) {
         _.extend(this, Backbone.Events);
 
@@ -30,7 +38,9 @@
         });
 
         this.listenTo(eb, "show:team:detail", function(tid){
-            console.log("team module: show detail");
+            team.detail.detail = team.detail.members = null;
+            getTeamDetail(tid);
+            getTeamMembers(tid);
         });
 
         this.listenTo(eb, "show:team:edit", function(tid){
@@ -43,6 +53,32 @@
             console.log("get user:", id, nicky);
         });
     };
+
+    var TeamModel = Backbone.Model.extend({
+        defaults: {
+            id              : 0,
+            name            : "",
+            leader_id       : 0,
+            leader_name     : "",
+            goal            : "",
+            created_date    : "",
+            bug_tab         : "",
+            bug_tab_status  : "",
+            status          : "",
+            logo            :""
+        },
+        urlRoot:"/teams"
+    });
+    var TeamMember = Backbone.Model.extend({
+        defaults: {
+            id              : 0,
+            nicky           : "",
+            portrait        : "",
+            email           : "",
+            last_login_time : "",
+            register_date   : ""
+        },
+    });
 
     var TeamItem = Backbone.Model.extend({
         defaults:{
@@ -59,27 +95,38 @@
         model: TeamItem,
     });
 
+    var TeamMembers = Backbone.Collection.extend({
+        url: "",
+        model: TeamMember
+    });
+
     function getList() {
         if (team.cur_user.id == 0) {
             console.log("ERROR: set current user first");
             return;
         }
 
-        clearList();
-        var tl = new TeamList();
-        tl.on("sync", function(){
-            renderList("teams_joined", this);
+        clear();
+        team.list.joined = team.list.created = null;
+
+        // get the joined team list
+        var tlJoined = new TeamList();
+        tlJoined.on("sync", function(){
+            team.list.joined = this;
+            renderList();
         });
-        tl.on("error", function(){
+        tlJoined.on("error", function(){
             console.log("error occurred");
+            renderError();
         });
+        tlJoined.url = "/users/" + team.cur_user.id + "/teams/joined";
+        tlJoined.fetch();
 
-        tl.url = "/users/" + team.cur_user.id + "/teams/joined";
-        tl.fetch();
-
+        //get the created team list
         var tlCreated = new TeamList();
         tlCreated.on("sync", function(){
-            renderList("teams_created", this);
+            team.list.created = this;
+            renderList();
         });
         tlCreated.on("error", function(){
             console.log("error occurred");
@@ -89,21 +136,79 @@
         tlCreated.fetch();
     }
 
-    function clearList() {
-        $("#main").html("");
-    }
-    function renderList(which, teams) {
-        var tl = {list:[]};
-        teams.each(function(t) {
-            tl.list.push(t.toJSON());
-        });
+    function getTeamDetail(tid) {
+        if(team.cur_user.id == 0) {
+            console.log("ERROR: set current user first");
+            return;
+        }
 
-        var old = $("#main").html();
-        var html = template(which, tl);
-        $("#main").html(old + html);
+        var teamDetail = new TeamModel({id: tid});
+        teamDetail.on("sync", function () {
+            team.detail.detail = this.toJSON();
+            renderTeam();
+        });
+        teamDetail.on("error", function(){
+            renderError();
+        });
+        teamDetail.fetch();
+    }
+    function getTeamMembers(tid) {
+        if(team.cur_user.id == 0) {
+            console.log("ERROR: set current user first");
+            return;
+        }
+
+        var members = new TeamMembers();
+        members.on("sync", function(){
+            team.detail.members = [];
+            this.each(function(t){
+                team.detail.members.push(t.toJSON());
+            });
+            renderTeam();
+        });
+        members.on("error", function(){
+            renderError();
+        });
+        members.url = "/teams/" + tid + "/users";
+        members.fetch();
+    }
+
+    function clear() {
+        render("");
+    }
+    function renderList() {
+        if (team.list.joined == null || team.list.created == null) {
+            return;
+        }
+        var joined = {list:[]};
+        team.list.joined.each(function(t) {
+            joined.list.push(t.toJSON());
+        });
+        h1 = template("teams_joined", joined);
+        var created = {list:[]};
+        team.list.created.each(function(t) {
+            created.list.push(t.toJSON());
+        });
+        h2 = template("teams_created", created);
+        render(h1 + h2);
+    }
+    function renderTeam() {
+        if (team.detail.detail == null || team.detail.members == null) {
+            return;
+        }
+        console.log(team.detail);
+        var html = template("team_detail", team.detail);
+        render(html);
     }
     function renderNew() {
         var html = template("team_new");
+        render(html);
+    }
+    function renderEdit() {
+    }
+    function renderError() {
+    }
+    function render(html) {
         $("#main").html(html);
     }
 })();
