@@ -13,8 +13,8 @@
 
 
 (function () {
-    var router = app.modules.router = {};
-    router.name = "router";
+    var router = app.namespace("app.modules.router");
+
     router.init = function (eb) {
         var Router = Backbone.Router.extend({
             routes: {

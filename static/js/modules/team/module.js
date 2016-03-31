@@ -11,8 +11,7 @@
  */
 
 (function() {
-    var team = app.modules.team = {};
-    team.name = "team";
+    var team = app.namespace("app.modules.team");
     team.cur_user = {
         id: 0,
         nicky: ""
@@ -25,8 +24,13 @@
         detail: null,
         members: null
     };
+
     team.init = function(eb) {
         _.extend(this, Backbone.Events);
+        _.each(this.views, function (v) {
+            v.init();
+            console.log(v.name, "initialized");
+        });
 
         // for each function, we are in the team context;
         this.listenTo(eb, "show:team:list", function() {
@@ -34,7 +38,9 @@
         });
 
         this.listenTo(eb, "show:team:new", function() {
-            renderNew();
+            if(this.views.new) {
+                this.views.new.render();
+            }
         });
 
         this.listenTo(eb, "show:team:detail", function(tid) {
@@ -195,34 +201,29 @@
         team.list.joined.each(function(t) {
             joined.list.push(t.toJSON());
         });
-        h1 = template("teams_joined", joined);
+
         var created = {
             list: []
         };
         team.list.created.each(function(t) {
             created.list.push(t.toJSON());
         });
-        h2 = template("teams_created", created);
-        render(h1 + h2);
+
+        if (team.views.list) {
+            team.views.list.render(joined, created);
+        }
     }
 
     function renderTeam() {
-        if (team.detail.detail == null || team.detail.members == null) {
-            return;
+        if(team.views.show) {
+            team.views.show.render(team.detail);
         }
-        console.log(team.detail);
-        var html = template("team_detail", team.detail);
-        render(html);
-    }
-
-    function renderNew() {
-        var html = template("team_new");
-        render(html);
     }
 
     function renderEdit() {
-        var html = template("team_edit", team.detail);
-        render(html);
+        if(team.views.edit) {
+            team.views.edit.render(team.detail);
+        }
     }
 
     function renderError() {}

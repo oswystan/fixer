@@ -17,13 +17,25 @@ var App = function () {
             _.extend(this.event_bus, Backbone.Events);
             _.each(this.modules, function (m, key, that) {
                 m.init(this.event_bus);
-                console.log("module " + key + " is initilized.")
+                console.log(m.name, "initilized.");
             }, this);
             console.log("done.");
 
             this.event_bus.trigger("current_user", "1", "john");
         },
-        modules: {},
+        namespace: function(name) {
+            var parts = name.split(".");
+            var tmp = this;
+            _.each(parts, function(p) {
+                if (p == "app") {
+                    return;
+                }
+                tmp[p] = tmp[p] || {};
+                tmp = tmp[p];
+            });
+            tmp.name=name;
+            return tmp;
+        },
         event_bus: {}
     };
 };
