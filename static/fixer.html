@@ -207,7 +207,7 @@
         <div name="team-members" class="users">
             {{each members as value idx}}
             <ul class="user-list">
-                <li><input name="check" type="checkbox"></li>
+                <li><input name="check" type="checkbox" data-id="{{value.id}}"></li>
                 <li><img name="portrait" class="portrait" src="{{value.portrait}}"></li>
                 <li class="user-id"><a name="user-id" href="javascript:void(0)">{{value.id}}</a></li>
                 <li class="user-nicky"><a name="user-nicky" href="javascript:void(0)">{{value.nicky}}</a></li>

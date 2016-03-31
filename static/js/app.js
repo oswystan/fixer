@@ -28,7 +28,7 @@ var App = function () {
             var tmp = this;
             _.each(parts, function(p) {
                 if (p == "app") {
-                    return;
+                    return tmp;
                 }
                 tmp[p] = tmp[p] || {};
                 tmp = tmp[p];

@@ -73,8 +73,8 @@
             leader_name: "",
             goal: "",
             created_date: "",
-            bug_tab: "",
-            bug_tab_status: "",
+            bug_table: "",
+            bug_table_status: "",
             status: "",
             logo: ""
         },
