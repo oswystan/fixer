@@ -16,13 +16,21 @@
     <script type="text/javascript" src="/static/js/lib/backbone.js"></script>
     <script type="text/javascript" src="/static/js/helper.js"></script>
     <script type="text/javascript" src="/static/js/app.js"></script>
+
     <script type="text/javascript" src="/static/js/modules/router/module.js"></script>
+
     <script type="text/javascript" src="/static/js/modules/team/module.js"></script>
+    <script type="text/javascript" src="/static/js/modules/team/model.js"></script>
     <script type="text/javascript" src="/static/js/modules/team/view_new.js"></script>
     <script type="text/javascript" src="/static/js/modules/team/view_show.js"></script>
     <script type="text/javascript" src="/static/js/modules/team/view_list.js"></script>
     <script type="text/javascript" src="/static/js/modules/team/view_edit.js"></script>
+
+    <script type="text/javascript" src="/static/js/modules/user/module.js"></script>
     <script type="text/javascript" src="/static/js/modules/user/model.js"></script>
+    <script type="text/javascript" src="/static/js/modules/user/view_edit.js"></script>
+    <script type="text/javascript" src="/static/js/modules/user/view_show.js"></script>
+    <script type="text/javascript" src="/static/js/modules/user/view_pwd.js"></script>
 
     <link rel="stylesheet" type="text/css" href="/static/css/fixer.css"/>
 </head>
@@ -230,7 +238,48 @@
 = user related templates from here
 =============================================================
 -->
+<script id="user_detail" type="text/html">
+        <div id="detail-user-show" class="container" style="width: 600px">
+        <h3>PROFILE</h3>
+        <div class="portrait">
+            <img name="portrait" src="{{detail.portrait}}" alt="">
+        </div>
+        <div class="detail">
+            <ul class="labeled">
+                <li name="id" data-label="ID">{{detail.id}}</li>
+                <li name="nicky" data-label="NICKY-NAME">{{detail.nicky}}</li>
+                <li name="email" data-label="EMAIL">{{detail.email}}</li>
+            </ul>
+        </div>
+        <div class="blanker"></div>
+        <ul style="height:0; padding: 0 10px;"></ul>
 
+        <h4>TEAMS JOINED</h4>
+        <div class="user-list" name="teamlist-joined">
+            {{each team_joined as value idx}}
+            <ul>
+                <li class="team-id"><a name="team-id" href="#team/{{value.id}}/show">{{value.id}}</a></li>
+                <li class="team-name"><a name="team-name" href="#team/{{value.id}}/show">{{value.name}}</a></li>
+                <li class="user-nicky">
+                    <a name="team-leader" href="#user/{{value.leader_id}}/show">{{value.leader_name}}</a>
+                </li>
+            </ul>
+            {{/each}}
+        </div>
+
+        <div class="blanker"></div>
+        <h4>TEAMS CREATED</h4>
+        <div class="team-list" name="teamlist-created">
+            {{each team_created as value idx}}
+            <ul>
+                <li class="team-id"><a name="team-id" href="#team/{{value.id}}/show">{{value.id}}</a></li>
+                <li class="team-name"><a name="team-name" href="#team/{{value.id}}/show">{{value.name}}</a></li>
+                <li class="date" name="date">{{value.created_date | dateFormat:'YYYY-mm-dd'}}</li>
+            </ul>
+            {{/each}}
+        </div>
+    </div>
+</script>
 
 
 <!--

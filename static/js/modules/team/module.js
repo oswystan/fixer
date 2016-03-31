@@ -65,52 +65,6 @@
         });
     };
 
-    var TeamModel = Backbone.Model.extend({
-        defaults: {
-            id: 0,
-            name: "",
-            leader_id: 0,
-            leader_name: "",
-            goal: "",
-            created_date: "",
-            bug_table: "",
-            bug_table_status: "",
-            status: "",
-            logo: ""
-        },
-        urlRoot: "/teams"
-    });
-    var TeamMember = Backbone.Model.extend({
-        defaults: {
-            id: 0,
-            nicky: "",
-            portrait: "",
-            email: "",
-            last_login_time: "",
-            register_date: ""
-        },
-    });
-
-    var TeamItem = Backbone.Model.extend({
-        defaults: {
-            id: 0,
-            name: "",
-            leader_id: 0,
-            leader_name: "",
-            created_date: "",
-        },
-    });
-
-    var TeamList = Backbone.Collection.extend({
-        url: "",
-        model: TeamItem,
-    });
-
-    var TeamMembers = Backbone.Collection.extend({
-        url: "",
-        model: TeamMember
-    });
-
     function getList() {
         if (team.cur_user.id == 0) {
             console.log("ERROR: set current user first");
@@ -121,7 +75,7 @@
         team.list.joined = team.list.created = null;
 
         // get the joined team list
-        var tlJoined = new TeamList();
+        var tlJoined = new team.models.list();
         tlJoined.on("sync", function() {
             team.list.joined = this;
             renderList();
@@ -134,7 +88,7 @@
         tlJoined.fetch();
 
         //get the created team list
-        var tlCreated = new TeamList();
+        var tlCreated = new team.models.list();
         tlCreated.on("sync", function() {
             team.list.created = this;
             renderList();
@@ -153,7 +107,7 @@
             return;
         }
 
-        var teamDetail = new TeamModel({
+        var teamDetail = new team.models.team({
             id: tid
         });
         teamDetail.on("sync", function() {
@@ -172,7 +126,7 @@
             return;
         }
 
-        var members = new TeamMembers();
+        var members = new team.models.members();
         members.on("sync", function() {
             team.detail.members = [];
             this.each(function(t) {
