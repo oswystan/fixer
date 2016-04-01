@@ -38,8 +38,8 @@
         this.listenTo(eb, "current_user", set_current);
     };
 
-    user.candinates = function(nicky) {
-        return [];
+    user.candinates = function(nicky, callback) {
+        callback([]);
     };
 
     function show_edit() {

@@ -24,13 +24,13 @@
         view.cur_team = model;
         var html = template("team_edit", model);
         $("#main").html(html);
-        $("#main").find("[name='op-submit']").unbind('click').click(do_submit);
-        $("#main").find("[name='op-add']").unbind('click').click(do_add_member);
-        $("#main").find("[name='op-delete']").unbind('click').click(do_del_member);
         $("#main").find("[name='team-name']").unbind('blur').blur(change_name);
         $("#main").find("[name='team-goal']").unbind('blur').blur(change_goal);
         $("#main").find("[name='check-active']").unbind('click').click(change_status);
-
+        $("#main").find("[name='member-name']").unbind('blur').blur(check_user);
+        $("#main").find("[name='op-submit']").unbind('click').click(do_submit);
+        $("#main").find("[name='op-add']").unbind('click').click(do_add_member);
+        $("#main").find("[name='op-delete']").unbind('click').click(do_del_member);
     };
 
     view.validate = function() {
@@ -47,6 +47,13 @@
     function change_status() {
         view.cur_team.detail.status = this.checked ? 1 : 0;
     }
+    function check_user() {
+        var nicky = $.trim(this.value);
+        if(nicky.length == 0) {
+            return;
+        }
+        console.log(nicky);
+    }
 
     // operations
     function do_add_member() {
@@ -60,7 +67,6 @@
         }
         console.log(view.cur_team.detail);
     }
-
 
 })();
 

@@ -10,15 +10,20 @@
     <meta charset="UTF-8">
     <title>Fixer-Your profesional bug tracking helper</title>
 
+    <!-- 3rd-party libs -->
     <script type="text/javascript" src="/static/js/lib/jquery.js"></script>
     <script type="text/javascript" src="/static/js/lib/art_template.js"></script>
     <script type="text/javascript" src="/static/js/lib/underscore.js"></script>
     <script type="text/javascript" src="/static/js/lib/backbone.js"></script>
+
+    <!-- main app and helper utils -->
     <script type="text/javascript" src="/static/js/helper.js"></script>
     <script type="text/javascript" src="/static/js/app.js"></script>
 
+    <!-- router module for history operations -->
     <script type="text/javascript" src="/static/js/modules/router/module.js"></script>
 
+    <!-- team MVC -->
     <script type="text/javascript" src="/static/js/modules/team/module.js"></script>
     <script type="text/javascript" src="/static/js/modules/team/model.js"></script>
     <script type="text/javascript" src="/static/js/modules/team/view_new.js"></script>
@@ -26,11 +31,20 @@
     <script type="text/javascript" src="/static/js/modules/team/view_list.js"></script>
     <script type="text/javascript" src="/static/js/modules/team/view_edit.js"></script>
 
+    <!-- user MVC -->
     <script type="text/javascript" src="/static/js/modules/user/module.js"></script>
     <script type="text/javascript" src="/static/js/modules/user/model.js"></script>
     <script type="text/javascript" src="/static/js/modules/user/view_edit.js"></script>
     <script type="text/javascript" src="/static/js/modules/user/view_show.js"></script>
     <script type="text/javascript" src="/static/js/modules/user/view_pwd.js"></script>
+
+    <!-- TODO bug MVC -->
+
+
+    <!-- TODO template MVC -->
+
+
+    <!-- TODO stat MVC -->
 
     <link rel="stylesheet" type="text/css" href="/static/css/fixer.css"/>
 </head>
@@ -188,10 +202,10 @@
 <script id="team_edit" type="text/html">
     <div id="detail-team-modify" class="container" style="width: 800px">
         <h3>{{detail.name}}</h3>
-        <img name="logo" class="logo" src="static/images/sherlock.jpg" alt=""/>
+        <img name="logo" class="logo" src="{{detail.logo}}" alt=""/>
         <ul class="labeled">
             <li name="team-id" data-label="ID">{{detail.id}}</li>
-            <li data-label="LEADER"><a name="team-leader" href="#user/{{detail.id}}/show">{{detail.leader_name}}</a></li>
+            <li data-label="LEADER"><a name="team-leader" href="#user/{{detail.leader_id}}/show">{{detail.leader_name}}</a></li>
             <li name="date" data-label="DATE">{{detail.created_date | dateFormat:'YYYY-mm-dd'}}</li>
             <li name="bug-tab" data-label="BUG_TAB">{{detail.bug_table}}</li>
             <li name="but-tab-status" data-label="BUG_TAB_STATUS">{{detail.bug_table_status}}</li>
@@ -217,8 +231,10 @@
             <ul class="user-list">
                 <li><input name="check" type="checkbox" data-id="{{value.id}}"></li>
                 <li><img name="portrait" class="portrait" src="{{value.portrait}}"></li>
-                <li class="user-id"><a name="user-id" href="javascript:void(0)">{{value.id}}</a></li>
-                <li class="user-nicky"><a name="user-nicky" href="javascript:void(0)">{{value.nicky}}</a></li>
+                <li class="user-id"><a name="user-id" href="#user/{{value.id}}/show">{{value.id}}</a></li>
+                <li class="user-nicky">
+                    <a name="user-nicky" href="#user/{{value.id}}/show">{{value.nicky}}</a>
+                </li>
                 <li name="user-email" class="email">{{value.email}}</li>
             </ul>
             {{/each}}
