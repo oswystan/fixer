@@ -22,6 +22,8 @@ install: fixer datastore/pg.sql
 	@echo "installing ..."	
 	@./install.sh
 	@echo "done."
+run: install
+	@./fixer
 
 st:
 	@echo "start st..."

@@ -17,7 +17,6 @@
 
     view.init = function(eb) {
         view.search = null;
-        view.eb = eb;
     };
 
     view.render = function(model) {
@@ -37,7 +36,7 @@
         main.find("[name='op-delete']").unbind('click').click(do_del_member);
 
         var search = app.namespace("app.modules.user.search");
-        view.search = search.create(view.eb, main.find("[name='member-name']")[0]);
+        view.search = search.create(main.find("[name='member-name']")[0]);
     };
 
     view.validate = function() {
