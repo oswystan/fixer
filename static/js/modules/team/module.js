@@ -28,7 +28,7 @@
     team.init = function(eb) {
         _.extend(this, Backbone.Events);
         _.each(this.views, function (v) {
-            v.init();
+            v.init(eb);
             console.log(v.name, "initialized");
         });
 

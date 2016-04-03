@@ -19,7 +19,6 @@
 
     view.render = function (model) {
         var html = template("user_detail", model);
-        console.log(model);
         $("#main").html(html);
     };
 })();
