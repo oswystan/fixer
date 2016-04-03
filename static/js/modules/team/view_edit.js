@@ -36,7 +36,7 @@
         main.find("[name='op-add']").unbind('click').click(do_add_member);
         main.find("[name='op-delete']").unbind('click').click(do_del_member);
 
-        var search = app.namespace("app.modules.team.search");
+        var search = app.namespace("app.modules.user.search");
         view.search = search.create(view.eb, main.find("[name='member-name']")[0]);
     };
 

@@ -11,7 +11,7 @@
  */
 
 (function(eb) {
-    var search = app.namespace("app.modules.team.search");
+    var search = app.namespace("app.modules.user.search");
     var editorbox = function(eb, input) {
         _.extend(this, Backbone.Events);
         var that = this;
