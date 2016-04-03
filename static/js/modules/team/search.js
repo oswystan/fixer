@@ -24,7 +24,7 @@
             this.eb.trigger("searchdone:team", err, data);
         };
 
-        $(input).unbind("keyup").keyup(function() {
+        $(input).unbind("change").change(function() {
             var name = $.trim(this.value);
             if (name.length === 0) {
                 return;

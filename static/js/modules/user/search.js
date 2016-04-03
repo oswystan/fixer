@@ -23,7 +23,7 @@
             this.eb.trigger("searchdone:user", err, data);
         };
 
-        $(input).unbind("keyup").keyup(function() {
+        $(input).unbind("change").change(function() {
             var nicky = $.trim(this.value);
             if (nicky.length === 0) {
                 return;
