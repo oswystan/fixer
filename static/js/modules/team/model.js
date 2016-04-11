@@ -60,6 +60,36 @@
         url: "",
         model: models.member
     });
+
+    models.relationship = Backbone.Model.extend({
+        urlRoot: "",
+
+        set_team: function(tid) {
+            this.tid = tid;
+        },
+        add_rs: function(uid, cb_success, cb_err) {
+            if (this.tid === 0 || uid === 0) {
+                return false;
+            }
+            this.set({id: uid});
+            this.on("sync", cb_success);
+            this.on("error", cb_err);
+            this.urlRoot = "/teams/" + this.tid + "/users/";
+            this.save();
+            return true;
+        },
+        del_rs: function(uid, cb_success, cb_err) {
+            if (this.tid === 0 || uid === 0){
+                return false;
+            }
+            this.set({id: uid});
+            this.on("sync", cb_success);
+            this.on("error", cb_err);
+            this.urlRoot = "/teams/" + this.tid + "/users/"
+            this.destroy();
+            return true;
+        }
+    });
 })();
 
 

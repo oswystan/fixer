@@ -152,7 +152,7 @@ func PutTeamUser(w http.ResponseWriter, r *http.Request) {
 		JsonErr(w, r, http.StatusInternalServerError, err.Error())
 		return
 	}
-	Json(w, nil, http.StatusOK)
+	Json(w, nil, http.StatusNoContent)
 }
 
 func DeleteTeamUser(w http.ResponseWriter, r *http.Request) {
@@ -165,7 +165,7 @@ func DeleteTeamUser(w http.ResponseWriter, r *http.Request) {
 		JsonErr(w, r, http.StatusInternalServerError, err.Error())
 		return
 	}
-	Json(w, nil, http.StatusOK)
+	Json(w, nil, http.StatusNoContent)
 }
 
 //==================================== END ======================================

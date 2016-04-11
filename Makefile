@@ -37,7 +37,7 @@ ut:
 
 clean:
 	@echo "start cleaning..."
-	@killall fixer
+	@-killall fixer
 	@./install.sh rm_db
 	@rm -f fixer
 	@echo "done."

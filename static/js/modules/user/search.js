@@ -81,8 +81,7 @@
                 });
                 cb.call(who, null, data);
             });
-            c.once("error", function () {
-                var err = {};
+            c.once("error", function (which, err, resp) {
                 cb.call(who, err, null);
             })
             c.fetch({data: $.param({q:nicky})});
@@ -106,7 +105,5 @@
     };
 
 })();
-
-
 
 /************************************* END **************************************/

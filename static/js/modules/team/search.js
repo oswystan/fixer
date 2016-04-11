@@ -87,7 +87,7 @@
             c.once("error", function() {
                 var err = {};
                 cb.call(who, err, null);
-            })
+            });
             c.fetch({
                 data: $.param({
                     q: name
