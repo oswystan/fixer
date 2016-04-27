@@ -69,6 +69,15 @@ rm_db()
     psql -c 'drop user if exists fixer;'
 }
 
+os_init()
+{
+    os=`uname -s`
+    if [ "#$os" == "#Linux" ]; then
+        sudo -u postgres createuser -s `whoami` -l
+        sudo -u postgres createdb `whoami`
+    fi
+}
+
 ################################
 ## main
 ################################
